@@ -14,8 +14,8 @@ gem 'oauth'
 gem 'twitter'
 
 # Use unicorn as the web server
-#gem 'kgio', '2.2.0'
-#gem 'unicorn', '3.4.0'
+gem 'kgio', '2.2.0'
+gem 'unicorn', '3.4.0'
 
 gem "will_paginate", "~> 3.0.pre2"
 

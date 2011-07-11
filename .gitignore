@@ -2,5 +2,6 @@
 .gems
 config/*.yml
 log/*.log
-tmp/**/*
+tmp/**/*.pid
+tmp/**/*.sock
 Gemfile.lock
