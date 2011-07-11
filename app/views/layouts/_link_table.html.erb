@@ -1,0 +1,10 @@
+<div class="TitleRow">
+  <div class="Tab_header"><%= tab_header %></div>
+</div>
+
+
+<% links.each do |link| %>
+    <% cache link_cache_key(link) do %>
+        <%= render :partial => "layouts/link_item", :locals => {:link => link} %>
+    <% end %>
+<% end %>

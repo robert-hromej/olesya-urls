@@ -1,0 +1,49 @@
+class ApplicationController < ActionController::Base
+  protect_from_forgery
+
+  def current_user
+    @current_user ||= User.find(session[:current_user_id]) if session[:current_user_id]
+  end
+
+  def set_current_user(user)
+    @current_user = user
+    if user
+      session[:current_user_id] = user.id
+    else
+      session[:current_user_id] = nil
+    end
+  end
+
+  def authorized?
+    !!current_user
+  end
+
+  def push_notice_message(msg)
+    session[:system_message] = "" if session[:system_message].blank?
+    session[:system_message] += "<span style=\"color:green;\">" + msg + "</span></br>";
+  end
+
+  def push_error_message(msg)
+    session[:system_message] = "" if session[:system_message].blank?
+    session[:system_message] += "<span style=\"color:red;\">" + msg + "</span></br>";
+  end
+
+  private
+
+  def is_logged?
+    if current_user.blank?
+      respond_to do |format|
+        format.html {
+          redirect_to :controller => :twitter, :action => :login
+        }
+        format.js {
+          push_notice_message "Please login first"
+          render :update do |page|
+            page.replace_html "system_message", system_messages
+          end
+        }
+      end
+    end
+  end
+
+end

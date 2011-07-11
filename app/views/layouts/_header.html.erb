@@ -1,0 +1,44 @@
+<div id="page_header">
+  <% if controller.authorized? %>
+      <div class="menu">
+        <div class="log_in_out">
+          <%= link_to "LOGOUT", :controller => :twitter, :action => :logout %>
+        </div>
+        <div class="log_in_out">
+          <a href="#" onclick="show_element('new_link_form')">ADD LINK</a>
+        </div>
+        <div class="log_in_out">
+          <%= link_to "HOME", root_url %>
+        </div>
+      </div>
+      <div id="ruller"></div>
+      <div id="user_section">
+
+      <div id="user_ava">
+        <img src="<%= controller.current_user.profile_image %>" alt=""/>
+      </div>
+      <div id="greeting">
+        <h3>Welcome <%= controller.current_user.screen_name %></h3>
+      </div>
+      </div>
+  <% else %>
+      <div class="menu">
+        <div class="log_in_out">
+          <%= link_to "Sighup with Twitter", :controller => :twitter, :action => :login %>
+        </div>
+        <div class="log_in_out">
+          <%= link_to "HOME", root_url %>
+        </div>
+      </div>
+  <% end %>
+
+  <div id="new_link_form" style="display:none;">
+    <%= form_tag '/link/create', :id => "new_link", :onSubmit => "return verify_new_link();" do %>
+        <span id="new_link_title_label">Title:</span></br>
+        <%= text_field_tag :new_link_title %> </br>
+        <span id="new_link_url_label">URL:</span></br>
+        <%= text_field_tag :new_link_url %> </br>
+        <%= submit_tag "Create" %>
+    <% end %>
+  </div>
+</div>

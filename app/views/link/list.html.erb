@@ -1,0 +1,12 @@
+<div class="paginator">
+  <%= will_paginate @links %>
+</div>
+
+<div class="cont">
+  <%= render :partial => "layouts/link_table", :locals => {:links => @links, :tab_header=>"Most popular links"} %>
+</div>
+
+
+<div class="paginator">
+  <%= will_paginate @links %>
+</div>

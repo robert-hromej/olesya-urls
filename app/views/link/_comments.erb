@@ -1,0 +1,20 @@
+<tr id="paginator">
+  <td colspan="4" style="text-align:center;"><%= will_paginate @comments %></td>
+</tr>
+<% @comments.each do |comment| %>
+    <% cache comment_cache_key(comment) do %>
+        <tr class="comment_col <%= cycle('odd_tr', 'even_tr') %>">
+          <td class="avatar">
+            <a href="<%= comment.user.profile_url %>">
+              <%= image_tag(comment.user.profile_image) %>
+            </a>
+          </td>
+          <td class="username"><%= comment.user.screen_name %></td>
+          <td class="comment_body"><%= comment.body %></td>
+          <td class="comment_date"><%= comment.created_at %></td>
+        </tr>
+    <% end %>
+<% end %>
+<tr id="paginator">
+  <td colspan="4" style="text-align:center;"><%= will_paginate @comments %></td>
+</tr>

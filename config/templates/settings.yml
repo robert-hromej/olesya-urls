@@ -1,0 +1,15 @@
+development:
+  :twitter:
+    :consumer_token: Z6xprz3wtnLpgqGRZUZg4Q
+    :consumer_secret: DhJtAGauikL527cOfiSSCplDOth6fNDcDLHngaaSCEo
+  :bitly:
+    :api_key: R_202557d52173ce5b0790c0f41d64d788
+    :login: mrtime
+
+staging:
+  :twitter:
+    :consumer_token: Z6xprz3wtnLpgqGRZUZg4Q
+    :consumer_secret: DhJtAGauikL527cOfiSSCplDOth6fNDcDLHngaaSCEo
+  :bitly:
+    :api_key: R_202557d52173ce5b0790c0f41d64d788
+    :login: mrtime

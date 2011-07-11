@@ -1,0 +1,234 @@
+* {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+body {
+    background: url("/images/pattern.png") repeat scroll left top transparent;
+    color: #4A586C;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+#container {
+    margin: -49px auto 0;
+    width: 756px;
+}
+
+#top_bar {
+    background: url("/images/dark-bg.png") repeat scroll center top transparent;
+    height: 49px;
+}
+
+.cont {
+    background: none repeat scroll 0 0 #D5E4E8;
+    border: 3px solid #B5CAD0;
+    margin: 10px auto 20px;
+    padding: 0 25px;
+    width: 700px;
+}
+
+/*#PageHeader {*/
+/*height: 50px;*/
+/*border: 1px solid blue;*/
+/*color: red;*/
+/*width: 650px;*/
+/*margin: 0 auto;*/
+/*}*/
+
+.TitleRow {
+    background-color: #F1F1F1;
+    border-bottom: 3px solid #B5CAD0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    height: 24px;
+    margin: 0 auto 0 -25px;
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 740px;
+}
+
+.PageRow {
+    border-bottom: 3px solid #B5CAD0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    height: 40px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    width: 650px;
+}
+
+.PageRow a {
+    color: #4A586C;
+}
+
+#TableHeader {
+    background-color: #f1f1f1;
+    color: #555;
+    font-size: 16px;
+}
+
+#TableRow {
+    font-size: 13px;
+    height: 20px;
+}
+
+.VoteArrows {
+    float: left; /*float: none;*/
+/*clear: both;*/
+}
+
+.Plus {
+    background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 25px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.Plus:hover {
+    background: url("../images/button_thumbsup_left.png") repeat scroll left -100px transparent;
+}
+
+.Minus {
+    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
+    float: left;
+    height: 25px;
+    margin-left: 5px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.Minus:hover {
+    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
+}
+
+.right_but {
+    background: url("../images/button_thumbs_right.png") no-repeat scroll right 0 transparent;
+    left: 10px;
+    line-height: 22px;
+    margin: 0 0 0 14px;
+    padding: 4px 14px 4px 6px;
+    position: relative;
+}
+
+.RAvatar {
+    width: 80px;
+    float: left;
+
+}
+
+.RVotes {
+    width: 150px;
+    float: left;
+
+}
+
+.RComments {
+    width: 150px;
+    float: left;
+}
+
+.RNew_Com {
+    width: 150px;
+    float: left;
+}
+
+.RName {
+    width: 300px;
+    float: left;
+}
+
+.RCount {
+    width: 120px;
+    float: left;
+}
+
+.Number {
+    color: #1D637D;
+    float: right;
+    font-size: 16px;
+    margin-right: 10px;
+    padding-top: 2px;
+    width: 20px;
+}
+
+.RDate {
+    float: left;
+    font-size: 11px;
+    padding-left: 40px;
+    width: 100px;
+}
+
+.Tab_header {
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.menu {
+    height: 49px;
+}
+
+#page_header {
+
+}
+
+#user_ava {
+    float: left;
+    margin: 5px 0 0 10px;
+}
+
+#greeting {
+    height: 50px;
+    margin-left: 80px;
+    padding-top: 15px;
+
+}
+
+.log_in_out {
+    float: right;
+    padding: 10px;
+}
+
+.log_in_out:hover {
+    border-bottom: 3px solid #F489A7;
+}
+
+.log_in_out a {
+    color: #AFC1C5;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.log_in_out a:hover {
+    color: #F489A7;
+}
+
+#new_link_form {
+    margin: 0 auto;
+    padding: 10px;
+    width: 210px;
+    background: none repeat scroll 0 0 #D5E4E8;
+    border: 3px solid #B5CAD0;
+}
+
+#user_section {
+    background-color: #F1F1F1;
+    border: 2px solid #B5CAD0;
+    border-top: none;
+    margin-bottom: 10px;
+}
+
+#ruller {
+    background: url("/images/ruler.png") repeat-x scroll 0 0 transparent; /*float: left;*/
+    height: 7px;
+}
+
+.pagination {
+    margin: 0 auto;
+    width: 200px;
+}
