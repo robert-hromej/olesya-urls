@@ -1,8 +1,6 @@
 .idea
 .gems
-.bundle
 config/*.yml
-db/*.sqlite3
 log/*.log
 tmp/**/*
 Gemfile.lock
