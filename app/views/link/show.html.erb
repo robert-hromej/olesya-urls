@@ -31,7 +31,6 @@
 <% unless @comment.nil? %>
     <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
         <%= t.hidden_field :link_id %>
-        <%= t.hidden_field :user_id %>
         <%= t.text_area :body, :rows=>9, :cols=>49 %>
         <%= t.submit(:value=>"add comment") %>
     <% end %>

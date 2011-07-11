@@ -39,34 +39,38 @@ class LinkController < ApplicationController
     # link page
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.where({:id => params[:id]}).order("created_at DESC").first
-    unless @link.nil?
-      @comments = Comment.find_all_by_link_id(params[:id], :include => :user, :order=>'created_at desc').paginate(:page=>params[:page], :per_page=>5)
-      @comment = Comment.new(:link_id=>params[:id], :user_id=> session[:current_user_id]) if current_user != nil
-      respond_to do |format|
-        format.html
-        format.js {
-          render :update do |page|
-            page.replace_html "comments", :partial => "comments"
-            page << "matroska('all_comments');observe_element('paginator');"
-          end
-        }
-      end
-    else
-      push_notice_message "There is no such link, but you can add it."
-      redirect_to root_url
+
+    raise "There is no such link, but you can add it." if @link.blank?
+
+    @comments = Comment.find_all_by_link_id(@link.id, :include => :user, :order=>'created_at desc').paginate(:page=>params[:page], :per_page=>5)
+    @comment = Comment.new(:link_id => @link.id, :user_id => current_user.id) if current_user != nil
+    respond_to do |format|
+      format.html
+      format.js {
+        render :update do |page|
+          page.replace_html "comments", :partial => "comments"
+          page << "matroska('all_comments');observe_element('paginator');"
+        end
+      }
     end
+  rescue StandardError => e
+    push_notice_message e
+    redirect_to root_url
   end
 
-    # performe vote
+    # perform vote
   def vote
 
-    vote = Vote.new
-    vote.link_id = params[:link_id]
-    vote.user_id = current_user.id
-    vote.kind = params[:kind].to_i
-    vote.save
-
     link = Link.find(params[:link_id])
+
+    vote = Vote.new
+    vote.link = link
+    vote.user = current_user
+    vote.kind = params[:kind].to_i
+
+    raise "Already voted" if !vote.save
+
+    link.reload
 
     respond_to do |format|
       format.html { redirect_to :back }
@@ -78,12 +82,28 @@ class LinkController < ApplicationController
       }
     end
     expire_fragment(%r{link_id_#{link.id}_author_id_\d*_voted_\d*})
+
+  rescue StandardError => e
+    push_error_message e
+
+    respond_to do |format|
+      format.html { redirect_to :back  }
+      format.js {
+        render :update do |page|
+          page.replace_html "system_message", system_messages
+        end
+      }
+    end
   end
 
     # comment
   def comment
+    # test link
+    link = Link.find(params[:comment][:link_id])
 
+    params[:comment][:user_id] = current_user.id
     comment = Comment.create(params[:comment])
+
     respond_to do |format|
       format.html { redirect_to :back }
       format.js {
@@ -95,6 +115,18 @@ class LinkController < ApplicationController
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
     #redirect_to :back
+
+  rescue StandardError => e
+    push_error_message e
+
+    respond_to do |format|
+      format.html { redirect_to :back  }
+      format.js {
+        render :update do |page|
+          page.replace_html "system_message", system_messages
+        end
+      }
+    end
   end
 
     #
