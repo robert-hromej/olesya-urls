@@ -1,11 +1,9 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  screen_name: MyString
-  oauth_login: MyString
-  oauth_secret: MyString
+  screen_name: roberthromej
+  oauth_token: R3axMdsn57JNYkSh39TTsYzSsEmDdQamOkMX7otC
+  oauth_secret: qg33zIbEbHNEfCHklIjLTnq0FqGTZYQum0mgbrJmO3A
 
 two:
-  screen_name: MyString
-  oauth_login: MyString
-  oauth_secret: MyString
+  screen_name: JaRa_ik
+  oauth_token: oauth_token
+  oauth_secret: oauth_secret

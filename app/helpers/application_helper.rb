@@ -1,13 +1,20 @@
 module ApplicationHelper
   def system_messages
-    if not session[:system_message]
-      return ""
+    return "" if not session[:system_message]
+
+    str = ""
+
+    session[:system_message][:notice].each do |msg|
+      str << notice_msg(msg)
     end
 
-    str = session[:system_message].clone
-    session[:system_message] = ""
+    session[:system_message][:error].each do |msg|
+      str << error_msg(msg)
+    end
 
-    str.html_safe
+    session[:system_message] = {:notice => [], :error => []}
+
+    return str.html_safe
   end
 
   def day_of_week(date)
@@ -18,6 +25,14 @@ module ApplicationHelper
   def month(date)
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     result = months[date.month-1]
+  end
+
+  def notice_msg msg
+    return "<span style=\"color:green;\">#{msg}</span></br>"
+  end
+
+  def error_msg msg
+    return "<span style=\"color:red;\">#{msg}</span></br>"
   end
 
   def link_cache_key(link)

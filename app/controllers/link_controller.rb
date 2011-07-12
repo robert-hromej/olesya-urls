@@ -60,7 +60,6 @@ class LinkController < ApplicationController
 
     # perform vote
   def vote
-
     link = Link.find(params[:link_id])
 
     vote = Vote.new
@@ -87,7 +86,7 @@ class LinkController < ApplicationController
     push_error_message e
 
     respond_to do |format|
-      format.html { redirect_to :back  }
+      format.html { redirect_to :back }
       format.js {
         render :update do |page|
           page.replace_html "system_message", system_messages
@@ -114,13 +113,13 @@ class LinkController < ApplicationController
       }
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-    #redirect_to :back
+      #redirect_to :back
 
   rescue StandardError => e
     push_error_message e
 
     respond_to do |format|
-      format.html { redirect_to :back  }
+      format.html { redirect_to :back }
       format.js {
         render :update do |page|
           page.replace_html "system_message", system_messages

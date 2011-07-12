@@ -36,6 +36,14 @@ class User < ActiveRecord::Base
     "http://twitter.com/#{self.screen_name}"
   end
 
+  def self.login(credentials, result)
+    u = User.where(:screen_name => credentials.screen_name).first
+    if u == nil
+      u = User.create(:screen_name => credentials.screen_name, :oauth_token => result.token, :oauth_secret => result.secret)
+    end
+    return u
+  end
+
   def client
     options = {
         :consumer_key => APP_CONFIG[:twitter][:consumer_token],

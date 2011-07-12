@@ -1,7 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  link_id: 1
+  user_id: 1
   kind: 1
 
 two:
-  kind: 1
+  link_id: 2
+  user_id: 1
+  kind: -1

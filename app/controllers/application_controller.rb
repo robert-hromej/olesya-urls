@@ -7,11 +7,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_user(user)
     @current_user = user
-    if user
-      session[:current_user_id] = user.id
-    else
-      session[:current_user_id] = nil
-    end
+    session[:current_user_id] = (user ? user.id : nil)
   end
 
   def authorized?
@@ -19,13 +15,13 @@ class ApplicationController < ActionController::Base
   end
 
   def push_notice_message(msg)
-    session[:system_message] = "" if session[:system_message].blank?
-    session[:system_message] += "<span style=\"color:green;\">" + msg + "</span></br>";
+    session[:system_message] ||= {:notice => [], :error => []}
+    session[:system_message][:notice] << msg
   end
 
   def push_error_message(msg)
-    session[:system_message] = "" if session[:system_message].blank?
-    session[:system_message] += "<span style=\"color:red;\">" + msg + "</span></br>";
+    session[:system_message] ||= {:notice => [], :error => []}
+    session[:system_message][:error] << msg
   end
 
   private

@@ -1,9 +1,8 @@
 class TwitterController < ApplicationController
+
   before_filter :is_logged?, :except => [:login, :logout, :after_login]
 
   def login
-    callback_url = "http://#{request.host_with_port}/twitter/after_login"
-
     request_token = twitter_oauth.get_request_token(:oauth_callback => callback_url)
 
     session['rtoken'] = request_token.token
@@ -34,11 +33,11 @@ class TwitterController < ApplicationController
     client = Twitter::Client.new(options)
     credentials = client.verify_credentials
 
-    user = User.where(:screen_name => credentials.screen_name).first
-    user = User.create(:screen_name => credentials.screen_name, :oauth_token => result.token, :oauth_secret => result.secret) if user == nil
+    user = User.login(credentials, result)
 
     user.update_avatar
     expire_fragment(%r{link_id_\d*_author_id_#{user.id}_voted_\d*})
+    expire_fragment(%r{comment_id_\d*_author_id_#{user.id}})
 
     set_current_user user
 
@@ -99,6 +98,11 @@ class TwitterController < ApplicationController
         :request_endpoint => "https://api.twitter.com"
     }
     OAuth::Consumer.new(APP_CONFIG[:twitter][:consumer_token], APP_CONFIG[:twitter][:consumer_secret], options)
+  end
+
+  def callback_url
+    @callback_url ||= "http://#{request.host_with_port}/twitter/after_login"
+    return @callback_url
   end
 
 end
