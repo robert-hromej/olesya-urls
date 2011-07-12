@@ -36,7 +36,7 @@ describe LinkController do
         before(:each) do
           login @user
           @comment_attr = {:user_id=>'1', :body=>'this_is_the_comment_body', :link_id=>@link.id}
-          @request.env['HTTP_REFERER'] = "http://localhost:3000/link/show/#{@link.id}"
+          @request.env['HTTP_REFERER'] = "#{DEFAULT_HOST}link/show/#{@link.id}"
         end
 
         it "should be available for comments with signing in" do
@@ -46,7 +46,7 @@ describe LinkController do
 
         it "should create comment" do
           post :comment, :comment => @comment_attr
-          response.should have_selector(:a, :href=>"http://localhost:3000/link/show/#{@link.id}")
+          response.should have_selector(:a, :href=>"#{DEFAULT_HOST}link/show/#{@link.id}")
         end
 
         it "(comment) should appear in the db" do

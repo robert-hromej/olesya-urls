@@ -1,6 +1,3 @@
-<tr id="paginator">
-  <td colspan="4" style="text-align:center;"><%= will_paginate @comments %></td>
-</tr>
 <% @comments.each do |comment| %>
     <% cache comment_cache_key(comment) do %>
         <tr class="comment_col <%= cycle('odd_tr', 'even_tr') %>">
@@ -11,7 +8,7 @@
           </td>
           <td class="username"><%= comment.user.screen_name %></td>
           <td class="comment_body"><%= comment.body %></td>
-          <td class="comment_date"> <%= comment.created_at.to_date.day %> <%= month(comment.created_at.to_date) %> <%= comment.created_at.to_date.year %></td>
+          <td class="comment_date"><%= comment.created_at.strftime("%d %B %Y")%></td>
         </tr>
     <% end %>
 <% end %>

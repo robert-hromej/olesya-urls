@@ -107,7 +107,7 @@ class LinkController < ApplicationController
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
-          page << "add_comment('#{comment.id}','#{comment.body.gsub("\n", " ")}','#{comment.user.profile_image}','#{comment.created_at}','#{comment.user.screen_name}');"
+          page << "add_comment('#{comment.id}','#{comment.body.gsub("\n", " ")}','#{comment.user.profile_image}','#{comment.created_at.strftime("%d %B %Y")}','#{comment.user.screen_name}');"
           page.replace_html "LinkCommentCountId#{comment.link_id}", link_to("Comments #{comment.link.comments_count}", comment_path(:id=>comment.link_id))
         end
       }

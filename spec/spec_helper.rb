@@ -25,6 +25,7 @@ RSpec.configure do |config|
     # instead of true.
   config.use_transactional_fixtures = true
 end
+DEFAULT_HOST = 'http://localhost:3000/'
 
 def login(user)
   session[:current_user_id] = user.nil? ? Factory(:user, :screen_name => Factory.next(:screen_name)) : user
