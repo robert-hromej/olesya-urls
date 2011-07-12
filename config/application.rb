@@ -39,8 +39,8 @@ module AncjaUrls
       # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.action_controller.perform_caching = true
-    config.action_controller.cache_store = :memory_store
+    #config.action_controller.perform_caching = true
+    #config.action_controller.cache_store = :memory_store
     #    config.action_controller.cache_store = :file_store, "tmp/cache"
 
   end

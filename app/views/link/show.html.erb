@@ -1,19 +1,9 @@
-<% content_for :head do %>
-    <%= javascript_include_tag "jquery-1.4.4" %>
-    <%= javascript_include_tag "link_page" %>
-    <%= stylesheet_link_tag "link_page" %>
-    <script type="text/javascript">
-        jQuery(function($) {
-            observe_element('paginator');
-        });
-
-    </script>
-<% end %>
-
 <div class="cont">
-  <% cache link_cache_key(@link) do %>
-      <%= render :partial => "layouts/link_item", :locals => {:link => @link} %>
-  <% end %>
+  <div class="PageRow">
+    <% cache link_cache_key(@link) do %>
+        <%= render :partial => "layouts/link_item", :locals => {:link => @link} %>
+    <% end %>
+  </div>
 </div>
 
 
