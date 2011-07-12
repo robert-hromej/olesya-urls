@@ -1,5 +1,5 @@
 <div class="cont">
-  <div class="PageRow">
+  <div class="PageRow last">
     <% cache link_cache_key(@link) do %>
         <%= render :partial => "layouts/link_item", :locals => {:link => @link} %>
     <% end %>

@@ -1,20 +1,21 @@
 module ApplicationHelper
   def system_messages
-    return "" if not session[:system_message]
+    if session[:system_message].blank?
+      return ""
+    else
+      str = ""
+      session[:system_message][:notice].each do |msg|
+        str << notice_msg(msg)
+      end
 
-    str = ""
+      session[:system_message][:error].each do |msg|
+        str << error_msg(msg)
+      end
 
-    session[:system_message][:notice].each do |msg|
-      str << notice_msg(msg)
+      session[:system_message] = {:notice => [], :error => []}
+
+      return str.html_safe
     end
-
-    session[:system_message][:error].each do |msg|
-      str << error_msg(msg)
-    end
-
-    session[:system_message] = {:notice => [], :error => []}
-
-    return str.html_safe
   end
 
   def day_of_week(date)
