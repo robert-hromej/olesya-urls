@@ -10,35 +10,42 @@
     </script>
 <% end %>
 
-<% cache link_cache_key(@link) do %>
-    <%= render :partial => "layouts/link_item", :locals => {:link => @link} %>
-<% end %>
+<div class="cont">
+  <% cache link_cache_key(@link) do %>
+      <%= render :partial => "layouts/link_item", :locals => {:link => @link} %>
+  <% end %>
+</div>
 
 
-<table id="all_comments" cellpadding="0" cellspacing="0">
-  <tr class="head">
-    <td class="avatar"></td>
-    <td class="username">Username</td>
-    <td class="comment_body">Comment</td>
-    <td class="comment_date">Date</td>
-  </tr>
-  <tbody id="ajax_comments"></tbody>
-  <tbody id="comments">
-  <%= render :partial => "comments" %>
-  </tbody>
+<div class="cont">
+  <table id="all_comments" cellpadding="0" cellspacing="0">
+    <tr class="head">
+      <td class="avatar"></td>
+      <td class="username">Username</td>
+      <td class="comment_body">Comment</td>
+      <td class="comment_date">Date</td>
+    </tr>
+    <tbody id="ajax_comments"></tbody>
+    <tbody id="comments">
+    <%= render :partial => "comments" %>
+    </tbody>
 
-</table>
-<% unless @comment.nil? %>
-    <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
-        <%= t.hidden_field :link_id %>
-        <%= t.text_area :body, :rows=>9, :cols=>49 %>
-        <%= t.submit(:value=>"add comment") %>
-    <% end %>
-<% end %>
+  </table>
+</div>
+<div class="cont">
+  <% unless @comment.nil? %>
+      <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
+          <%= t.hidden_field :link_id %>
+          <%= t.hidden_field :user_id %>
+          <%= t.text_area :body, :rows=>9, :cols=>49 %>
+          <%= t.submit(:value=>"add comment", :class=>"baton") %>
+      <% end %>
+  <% end %>
 
-<% if controller.authorized? %>
-    <%= link_to "Twitt this", {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link" %>
-    <div id="twitt_this">
-      &nbsp;
-    </div>
-<% end %>
+  <% if controller.authorized? %>
+      <%= link_to "twitt this", {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link", :class=>"baton" %>
+      <div id="twitt_this">
+        &nbsp;
+      </div>
+  <% end %>
+</div>

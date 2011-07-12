@@ -8,29 +8,6 @@
   <%= javascript_include_tag "links" %>
   <%= yield :head %>
   <%= csrf_meta_tag %>
-  <script type="text/javascript">
-
-      jQuery(function($) {
-          matroska('all_comments');
-          observe_element('paginator');
-      });
-
-      function vote(kind, link_id, el) {
-          jQuery.ajax({
-              dataType: 'script',
-              url: "/link/vote",
-              data: {
-                  kind: kind,
-                  link_id: link_id
-              },
-              type: 'post',
-              success: function() {
-                  el.parentElement.innerHTML = "";
-              }
-          });
-      }
-
-  </script>
 
 </head>
 <body>

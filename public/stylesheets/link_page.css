@@ -1,29 +1,51 @@
-.avatar{
-    width:50px;
-    height:50px;
+.avatar {
+    width: 50px;
+    height: 50px;
 }
-.username{
-    width:110px;
-    padding:5px;
+
+.username {
+    width: 110px;
+    padding: 5px;
 }
-.comment_body{
-    width:400px;
-    padding:5px;
+
+.comment_body {
+    width: 400px;
+    padding: 5px;
 }
-.comment_date{
-    padding:5px;
+
+.comment_date {
+    padding: 5px;
 }
+
 #comment_body {
     height: 85px;
-    width: 647px;
+    margin-top: 10px;
+    width: 700px;
 }
-.even_tr{
-    background-color: #ebf3fd;
+
+.even_tr {
+    /*background-color: #ebf3fd;*/
+    background-color: #B5CAD0;
 }
-.odd_tr{
-    background-color: #acd1fe;
+
+.odd_tr {
+    /*background-color: #acd1fe;*/
 }
-.head{
-    background-color: #6899d5;
-    text-align:center;
+
+.head {
+    /*background-color: #6899d5;*/
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+#all_comments {
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    width: 700px;
+}
+
+#twitt_this_link {
+    padding: 4px 24px;
+    text-decoration: none;
 }

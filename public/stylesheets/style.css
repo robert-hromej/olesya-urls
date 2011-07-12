@@ -13,6 +13,7 @@ body {
 
 #container {
     margin: -49px auto 0;
+    padding-bottom: 20px;
     width: 756px;
 }
 
@@ -78,7 +79,7 @@ body {
 
 .VoteArrows {
     float: left; /*float: none;*/
-/*clear: both;*/
+    /*clear: both;*/
 }
 
 .Plus {
@@ -231,4 +232,18 @@ body {
 .pagination {
     margin: 0 auto;
     width: 200px;
+}
+
+.baton {
+    background: none repeat scroll 0 0 #B5CAD0;
+    border: 1px solid #435266;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 4px 8px;
+}
+
+.baton:hover {
+    cursor: pointer;
 }

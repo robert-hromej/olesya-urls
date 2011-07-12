@@ -1,38 +1,35 @@
-<div class="PageRow">
-  <div class="RAvatar">
-    <a href="<%= link.user.profile_url %>" target="_blank">
-      <%= image_tag(link.user.profile_image) %>
-    </a>
+<div class="RAvatar">
+  <a href="<%= link.user.profile_url %>" target="_blank">
+    <%= image_tag(link.user.profile_image) %>
+  </a>
+</div>
+
+
+<div class="RName">
+  <a href="<%= link.url %>" target="_blank">
+    <%= link.title %>
+    </br>
+    <%= truncate(link.url.to_s, :length => 50) %>
+  </a>
+</div>
+
+<div class="RCount">
+  <div class="VoteArrows" id="VoteArrowsId<%= link.id %>">
+    <% if controller.current_user != nil and !link.voted? %>
+        <div class="Plus" onclick="vote(1,<%= link.id %>, this)"><span class="right_but"></span></div>
+        <div class="Minus" onclick="vote(-1,<%= link.id %>, this)"><span class="right_but"></span></div>
+    <% end %>
   </div>
-
-
-  <div class="RName">
-    <a href="<%= link.url %>" target="_blank">
-      <%= link.title %>
-      </br>
-      <%= truncate(link.url.to_s, :length => 50) %>
-    </a>
+  <div class="Number" id="VotesCountId<%= link.id %>">
+    <%= link.votes_count %>
   </div>
+</div>
 
-  <div class="RCount">
-    <div class="VoteArrows" id="VoteArrowsId<%= link.id %>">
-      <% if controller.current_user != nil and !link.voted? %>
-          <div class="Plus" onclick="vote(1,<%= link.id %>, this)"><span class="right_but"></span></div>
-          <div class="Minus" onclick="vote(-1,<%= link.id %>, this)"><span class="right_but"></span></div>
-      <% end %>
-    </div>
-    <div class="Number" id="VotesCountId<%= link.id %>">
-      <%= link.votes_count %>
-    </div>
+<div class="RDate">
+  <%= link.updated_at.to_date.day %> <%= month(link.updated_at.to_date) %> <%= link.updated_at.to_date.year %>
+  <br>
+
+  <div id="LinkCommentCountId<%= link.id %>">
+    <%= link_to "Comments #{link.comments_count}", comment_path(:id=>link.id) %>
   </div>
-
-  <div class="RDate">
-    <%= link.updated_at.to_date.day %> <%= month(link.updated_at.to_date) %> <%= link.updated_at.to_date.year %>
-    <br>
-
-    <div id="LinkCommentCountId<%= link.id %>">
-      <%= link_to "Comments #{link.comments_count}", comment_path(:id=>link.id) %>
-    </div>
-  </div>
-
 </div>

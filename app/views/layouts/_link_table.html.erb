@@ -2,9 +2,14 @@
   <div class="Tab_header"><%= tab_header %></div>
 </div>
 
-
 <% links.each do |link| %>
     <% cache link_cache_key(link) do %>
-        <%= render :partial => "layouts/link_item", :locals => {:link => link} %>
+        <%# if index==links.count-1 %>
+        <!--<div class="PageRow last">-->
+        <%# else %>
+        <div class="PageRow">
+          <%# end %>
+          <%= render :partial => "layouts/link_item", :locals => {:link => link} %>
+        </div>
     <% end %>
 <% end %>

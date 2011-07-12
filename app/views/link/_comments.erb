@@ -11,7 +11,7 @@
           </td>
           <td class="username"><%= comment.user.screen_name %></td>
           <td class="comment_body"><%= comment.body %></td>
-          <td class="comment_date"><%= comment.created_at %></td>
+          <td class="comment_date"> <%= comment.created_at.to_date.day %> <%= month(comment.created_at.to_date) %> <%= comment.created_at.to_date.year %></td>
         </tr>
     <% end %>
 <% end %>

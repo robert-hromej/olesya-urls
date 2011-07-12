@@ -14,12 +14,12 @@
       <div id="ruller"></div>
       <div id="user_section">
 
-      <div id="user_ava">
-        <img src="<%= controller.current_user.profile_image %>" alt=""/>
-      </div>
-      <div id="greeting">
-        <h3>Welcome <%= controller.current_user.screen_name %></h3>
-      </div>
+        <div id="user_ava">
+          <img src="<%= controller.current_user.profile_image %>" alt=""/>
+        </div>
+        <div id="greeting">
+          <h3>Welcome <%= controller.current_user.screen_name %></h3>
+        </div>
       </div>
   <% else %>
       <div class="menu">
@@ -38,7 +38,7 @@
         <%= text_field_tag :new_link_title %> </br>
         <span id="new_link_url_label">URL:</span></br>
         <%= text_field_tag :new_link_url %> </br>
-        <%= submit_tag "Create" %>
+        <%= submit_tag "Create", :class=>"baton" %>
     <% end %>
   </div>
 </div>
