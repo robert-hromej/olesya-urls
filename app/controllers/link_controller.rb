@@ -1,10 +1,10 @@
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-    # after create link
+  # after create link
   def create
     link_url = params[:new_link_url]
-    if (!link_url.include?("http://") && !link_url.include?("https://"))
+    unless (/^https?:\/{2}/i === link_url)
       link_url = "http://" + link_url
     end
 
@@ -12,31 +12,55 @@ class LinkController < ApplicationController
 
     if link
       push_notice_message "Link with such URL is already added. You can comment it or give you vote"
-      redirect_to :action => :show, :id => link.id
-      return
-    end
-
-    link = Link.new
-    link.title = params[:new_link_title]
-    link.url = link_url
-    link.user = current_user
-    link.save
-
-    if link.save
-      push_notice_message "Link successfully added"
-      redirect_to :action => :show, :id => link.id
+      js_for_respond = "window.location='/link/show/#{link.id}'"
+      html_for_respond = comment_path(:id=>link.id)
     else
-      push_notice_message "Link not added"
-      redirect_to :action => :list
+
+      begin
+        url = URI.parse(link_url)
+        res = Net::HTTP.start(url.host, url.port) { |http| http.get('/')}
+        code = res.code
+      rescue StandardError => e
+      end
+
+      if /[23](\d){2}/i === code
+        link = Link.new(:title => params[:new_link_title],
+        :url => link_url,
+        :user => current_user)
+
+
+
+        if link.save()
+          push_notice_message "Link successfully added"
+          js_for_respond = "window.location='/link/show/#{link.id}'"
+          html_for_respond = comment_path(:id=>link.id)
+        else
+          js_for_respond = "show_message('Link is not added',false)"
+          html_for_respond = previous_url
+        end
+      else
+        js_for_respond = "show_message('Link is not valid',true)"
+        html_for_respond = previous_url
+      end
+    end
+    respond_to do |format|
+      format.html {
+        push_notice_message('Link is not added')
+        redirect_to(html_for_respond)}
+      format.js {
+        render :update do |page|
+          page << "#{js_for_respond};"
+        end
+      }
     end
   end
 
-    # show all
+  # show all
   def list
     @links = Link.select("links.*").join_voted_field(current_user).join_users.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-    # link page
+  # link page
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.where({:id => params[:id]}).order("created_at DESC").first
 
@@ -58,7 +82,7 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-    # perform vote
+  # perform vote
   def vote
     link = Link.find(params[:link_id])
 
@@ -95,7 +119,7 @@ class LinkController < ApplicationController
     end
   end
 
-    # comment
+  # comment
   def comment
     # test link
     link = Link.find(params[:comment][:link_id])
@@ -113,7 +137,7 @@ class LinkController < ApplicationController
       }
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-      #redirect_to :back
+    #redirect_to :back
 
   rescue StandardError => e
     push_error_message e
@@ -128,8 +152,8 @@ class LinkController < ApplicationController
     end
   end
 
-    #
-    # show ajax form for twitt this
+  #
+  # show ajax form for twitt this
   def twitt_this
     render :update do |page|
       begin
@@ -155,6 +179,10 @@ class LinkController < ApplicationController
         page.replace_html :system_message, system_messages
       end
     end
+  end
+  private
+  def previous_url
+     request.nil? ? '/' : request.env['HTTP_REFERER']
   end
 
 end

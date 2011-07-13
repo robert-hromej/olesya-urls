@@ -5,10 +5,17 @@ function show_element(element) {
         jQuery("#" + element).slideToggle("slow");
     });
 }
+function hide_element(element) {
+    jQuery(document).ready(function() {
+        jQuery("#" + element).slideUp("slow");
+    });
+}
+
 
 jQuery(function($) {
     matroska('all_comments');
     observe_element('paginator');
+    jQuery('#new_link_form').css('display','none');
 });
 
 function vote(kind, link_id, el) {
@@ -68,7 +75,7 @@ function matroska(id) {
 function add_comment(id, body, image, created, name) {
     if (jQuery('a.previous_page').length != 0 || (jQuery('.comment_body').length >= 6 && jQuery('a.next_page').length == 0)) {
         jQuery('#ajax_comments').html('');
-        var url = jQuery('a.previous_page').attr('href');
+        var url = jQuery('a[rel=start]').attr('href');
         jQuery.ajax({
             dataType:'script',
             url:url,
@@ -106,7 +113,7 @@ function verify_new_link() {
     else
         $("new_link_title_label").style.color = "#000000";
 
-    var url_regexp = /[A-Za-z0-9\.-]{3,}\.[A-Za-z]{2}/;
+    var url_regexp = /[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/;
     if (!url_regexp.test($("new_link_url").value)) {
         $("new_link_url_label").style.color = "#ff0000";
         errors++;
@@ -114,6 +121,11 @@ function verify_new_link() {
     else
         $("new_link_url_label").style.color = "#000000";
 
-    return (errors > 0) ? false : true;
+    return (errors < 0);
+}
+function show_message(message,paint_url){
+    $("new_link_url_label").style.color = (!paint_url) ? "#000000" :  "#ff0000";
+    jQuery('#system_message').html('');
+    jQuery('<span style="color: green;">'+message+'</span>').appendTo('#system_message');
 }
 

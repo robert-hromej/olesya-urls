@@ -79,7 +79,6 @@ describe LinkController do
           get :show, :id => @link.id
           response.should have_selector(:span, :content=>'Link with such URL is already added')
         end
-
       end
     end
   end
