@@ -202,11 +202,11 @@ body {
 }
 
 #new_link_form {
-    margin: 0 auto;
-    padding: 10px;
-    width: 210px;
     background: none repeat scroll 0 0 #D5E4E8;
     border: 3px solid #B5CAD0;
+    margin: 0 auto;
+    padding: 10px 10px 0;
+    width: 210px;
 }
 
 #user_section {
@@ -239,4 +239,16 @@ body {
 }
 .last{
     border-bottom:none;
+}
+.inp{
+    width:205px;
+}
+#close_but{
+    background-image:url("/images/pcCloseButton.png");
+    height: 14px;
+    margin: -8px 0 0 204px;
+    width: 14px;
+}
+.tw_body{
+    width:100%;
 }

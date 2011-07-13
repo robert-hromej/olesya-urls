@@ -1,7 +1,10 @@
+# This class aggregate all functionality for working with Twitter API. Twitter login and tweeting are implemented here.
+# all methods requires authorization, except ones for for authorization
 class TwitterController < ApplicationController
 
   before_filter :is_logged?, :except => [:login, :logout, :after_login]
 
+  # perform first step in oauth authenticating - get request token and redirect to Twitter's authenticating page
   def login
     request_token = twitter_oauth.get_request_token(:oauth_callback => callback_url)
 
@@ -15,11 +18,15 @@ class TwitterController < ApplicationController
     redirect_to "/"
   end
 
+  # simply clean current user value in session
   def logout
     set_current_user(nil)
     redirect_to "/"
   end
 
+  # is redirected by Twitter after authenticating. Sets current user variable. Creates record in table user for new user
+  # and use exiting record for already registered users. Searching is performed by screen_name returned by Twitter.
+  # Updates user profile image and cleans cache fragments
   def after_login
     raise "You deny access to Twitter" if params[:denied]
 
@@ -56,6 +63,7 @@ class TwitterController < ApplicationController
     redirect_to "/"
   end
 
+  # ajax method for twitting message on twitter. if twitter error occured during process - shows it using ajax.
   def twitt
     message = params[:body]
     user = current_user
@@ -92,6 +100,7 @@ class TwitterController < ApplicationController
 
   private
 
+  # return OAuth::Consumer object
   def twitter_oauth
     options = {
         :site => "https://api.twitter.com",
@@ -100,6 +109,7 @@ class TwitterController < ApplicationController
     OAuth::Consumer.new(APP_CONFIG[:twitter][:consumer_token], APP_CONFIG[:twitter][:consumer_secret], options)
   end
 
+  # generate callback url for twitter login
   def callback_url
     @callback_url ||= "http://#{request.host_with_port}/twitter/after_login"
     return @callback_url

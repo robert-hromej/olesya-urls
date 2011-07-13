@@ -1,3 +1,5 @@
+# Link's text comment. After adding new comment special trigger is performed, which recalculate comments count and
+# stores this value in 'comments_count' field.
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :link

@@ -1,3 +1,5 @@
+# Main entity - Link. Contains title, url and creator user reference. Calculating votes and comments count is performed
+# by MySQL triggers, which are called after vote or comment record creating.
 class Link < ActiveRecord::Base
   belongs_to :user
   has_many :comments, :dependent => :delete_all

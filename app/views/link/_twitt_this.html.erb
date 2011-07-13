@@ -1,5 +1,6 @@
 <%= form_tag '/twitter/twitt', :remote => true do %>
     Body: </br>
-    <%= text_area_tag :body, body %>
-    <%= submit_tag "Twitt" %>
+    <%= text_area_tag :body, body,:class=>"tw_body" %>
+    </br>
+    <%= submit_tag "Twitt", :class=>"baton" %>
 <% end %>

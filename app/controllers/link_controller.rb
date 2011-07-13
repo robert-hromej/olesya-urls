@@ -1,10 +1,13 @@
+# main functional controller. contain functionality for creating new links, displaying, voting and tweeting them.
+# all method requires authorization, except list and show
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-    # after create link
+  # creates new link. Allows create only unique links, if user try to create link which is already created
+  # he will be redirected onto page of that link, with promt to comment or vote for that
   def create
     link_url = params[:new_link_url]
-    if (!link_url.include?("http://") && !link_url.include?("https://"))
+    unless (/^https?:\/{2}/i === link_url)
       link_url = "http://" + link_url
     end
 
@@ -12,31 +15,55 @@ class LinkController < ApplicationController
 
     if link
       push_notice_message "Link with such URL is already added. You can comment it or give you vote"
-      redirect_to :action => :show, :id => link.id
-      return
-    end
-
-    link = Link.new
-    link.title = params[:new_link_title]
-    link.url = link_url
-    link.user = current_user
-    link.save
-
-    if link.save
-      push_notice_message "Link successfully added"
-      redirect_to :action => :show, :id => link.id
+      js_for_respond = "window.location='/link/show/#{link.id}'"
+      html_for_respond = comment_path(:id=>link.id)
     else
-      push_notice_message "Link not added"
-      redirect_to :action => :list
+
+      begin
+        url = URI.parse(link_url)
+        res = Net::HTTP.start(url.host, url.port) { |http| http.get('/')}
+        code = res.code
+      rescue StandardError => e
+      end
+
+      if /[23](\d){2}/i === code
+        link = Link.new(:title => params[:new_link_title],
+        :url => link_url,
+        :user => current_user)
+
+
+
+        if link.save()
+          push_notice_message "Link successfully added"
+          js_for_respond = "window.location='/link/show/#{link.id}'"
+          html_for_respond = comment_path(:id=>link.id)
+        else
+          js_for_respond = "show_message('Link is not added',false)"
+          html_for_respond = previous_url
+        end
+      else
+        js_for_respond = "show_message('Link is not valid',true)"
+        html_for_respond = previous_url
+      end
+    end
+    respond_to do |format|
+      format.html {
+        push_notice_message('Link is not added')
+        redirect_to(html_for_respond)}
+      format.js {
+        render :update do |page|
+          page << "#{js_for_respond};"
+        end
+      }
     end
   end
 
-    # show all
+   # show all page, show all links using pagination with 20 links per page
   def list
     @links = Link.select("links.*").join_voted_field(current_user).join_users.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-    # link page
+  # link page
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.where({:id => params[:id]}).order("created_at DESC").first
 
@@ -58,7 +85,9 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-    # perform vote
+  # ajax method for performing voting. User can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
+  # every user can vote only once per one link. Takes to url params 'link_id' and 'kind'. Cleans cache fragments for
+  # this link, to force rails update votes count on link's partial
   def vote
     link = Link.find(params[:link_id])
 
@@ -95,7 +124,8 @@ class LinkController < ApplicationController
     end
   end
 
-    # comment
+  # ajax post method for creating comments. Use form fields values on link page ('show'). Cleans cache fragments for
+  # this link, to force rails update comments count on link's partial
   def comment
     # test link
     link = Link.find(params[:comment][:link_id])
@@ -128,8 +158,8 @@ class LinkController < ApplicationController
     end
   end
 
-    #
-    # show ajax form for twitt this
+
+  # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
   def twitt_this
     render :update do |page|
       begin
@@ -155,6 +185,10 @@ class LinkController < ApplicationController
         page.replace_html :system_message, system_messages
       end
     end
+  end
+  private
+  def previous_url
+     request.nil? ? '/' : request.env['HTTP_REFERER']
   end
 
 end
