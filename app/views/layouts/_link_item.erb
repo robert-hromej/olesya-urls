@@ -6,8 +6,8 @@
 
 
 <div class="RName">
+  <%= link_to truncate(link.title.to_s, :length => 50), comment_path(:id=>link.id) %>
   <a href="<%= link.url %>" target="_blank">
-    <%= link.title %>
     </br>
     <%= truncate(link.url.to_s, :length => 50) %>
   </a>
