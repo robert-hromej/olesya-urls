@@ -1,7 +1,10 @@
+# main functional controller. contain functionality for creating new links, displaying, voting and tweeting them.
+# all method requires authorization, except list and show
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-    # after create link
+  # creates new link. Allows create only unique links, if user try to create link which is already created
+  # he will be redirected onto page of that link, with promt to comment or vote for that
   def create
     link_url = params[:new_link_url]
     if (!link_url.include?("http://") && !link_url.include?("https://"))
@@ -31,12 +34,13 @@ class LinkController < ApplicationController
     end
   end
 
-    # show all
+   # show all page, show all links using pagination with 20 links per page
   def list
     @links = Link.select("links.*").join_voted_field(current_user).join_users.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-    # link page
+  # link page, display information about links - comments, votes, title, url. create object for new comment,
+  # which can be entered by user into form
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.where({:id => params[:id]}).order("created_at DESC").first
 
@@ -58,7 +62,9 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-    # perform vote
+  # ajax method for performing voting. User can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
+  # every user can vote only once per one link. Takes to url params 'link_id' and 'kind'. Cleans cache fragments for
+  # this link, to force rails update votes count on link's partial
   def vote
     link = Link.find(params[:link_id])
 
@@ -95,7 +101,8 @@ class LinkController < ApplicationController
     end
   end
 
-    # comment
+  # ajax post method for creating comments. Use form fields values on link page ('show'). Cleans cache fragments for
+  # this link, to force rails update comments count on link's partial
   def comment
     # test link
     link = Link.find(params[:comment][:link_id])
@@ -128,8 +135,8 @@ class LinkController < ApplicationController
     end
   end
 
-    #
-    # show ajax form for twitt this
+
+  # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
   def twitt_this
     render :update do |page|
       begin
