@@ -9,20 +9,18 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-<div id="top_bar">
 
-</div>
+<div id="top_bar"></div>
 
 <div id="container">
 
   <%= render :partial => "layouts/header" %>
 
-  <div id="system_message">
-    <%= system_messages %>
-  </div>
+  <div id="system_message"> <%= system_messages %> </div>
 
   <%= yield %>
 
 </div>
+
 </body>
 </html>

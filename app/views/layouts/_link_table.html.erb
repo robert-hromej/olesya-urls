@@ -4,12 +4,8 @@
 
 <% links.each_with_index do |link, index| %>
     <% cache link_cache_key(link) do %>
-        <% if index==links.size-1 %>
-            <div class="PageRow last">
-        <% else %>
-            <div class="PageRow">
-        <% end %>
-        <%= render :partial => "layouts/link_item", :locals => {:link => link} %>
+        <div class="PageRow<%= " last" if index == links.size-1 %>">
+          <%= render :partial => "layouts/link_item", :locals => {:link => link} %>
         </div>
     <% end %>
 <% end %>
