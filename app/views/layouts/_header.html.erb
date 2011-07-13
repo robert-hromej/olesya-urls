@@ -33,12 +33,14 @@
   <% end %>
 
   <div id="new_link_form" >
+    <div id="close_but" onclick="show_element('new_link_form')">
+    </div>
     <noscript ><div style="text-align:center;width:100%;">Add link</div></noscript>
     <%= form_tag '/link/create', :id => "new_link", :remote=>true, :onSubmit => "return verify_new_link();" do %>
         <span id="new_link_title_label">Title:</span></br>
-        <%= text_field_tag :new_link_title %> </br>
+        <%= text_field_tag :new_link_title, nil, :class => "inp" %> </br>
         <span id="new_link_url_label">URL:</span></br>
-        <%= text_field_tag :new_link_url %> </br>
+        <%= text_field_tag :new_link_url, nil, :class => "inp" %> </br>
         <%= submit_tag "Create", :class=>"baton" %>
         <%= button_to_function "Cancel","hide_element('new_link_form')", :class=>"baton" %>
     <% end %>

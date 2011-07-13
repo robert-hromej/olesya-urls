@@ -3,6 +3,8 @@
 function show_element(element) {
     jQuery(document).ready(function() {
         jQuery("#" + element).slideToggle("slow");
+        jQuery("#new_link_title").val('');
+        jQuery("#new_link_url").val('');
     });
 }
 function hide_element(element) {
