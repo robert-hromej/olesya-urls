@@ -1,5 +1,5 @@
 deploy_to = "/home/xcosmix2010/ancja-urls"
-rails_env = "production"
+rails_env = 'production'
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
 require "rvm/capistrano"                  # Load RVM's capistrano plugin.
@@ -21,11 +21,12 @@ after 'deploy:restart', 'unicorn:restart'
 after 'deploy:setup' do
   run "mkdir -p #{deploy_to}/pids && mkdir -p #{deploy_to}/config && mkdir -p #{deploy_to}/var"
   run "cp #{deploy_to}/config/templates/*.yml #{deploy_to}/config/"
+  run "cp #{deploy_to}/config/templates/unicorn.rb #{deploy_to}/config/"
 end
 
 namespace :unicorn do
   task :start do
-    run "cd #{deploy_to} && unicorn_rails -c #{deploy_to}/config/unicorn.rb -e #{rails_env} -D"
+    run "cd #{deploy_to} && unicorn -c #{deploy_to}/config/unicorn.rb -E #{rails_env} -D"
   end
 
   task :stop do
