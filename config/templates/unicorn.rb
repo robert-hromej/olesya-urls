@@ -18,20 +18,20 @@ working_directory "/home/ancja-urls/ancja-urls" # available in 0.94.0+
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "/home/ancja-urls/ancja-urls/tmp/sockets/unicorn.sock", :backlog => 64
+listen "/home/xcosmix2010/ancja-urls/tmp/sockets/unicorn.sock", :backlog => 64
 listen 8100, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 600
 
 # feel free to point this anywhere accessible on the filesystem
-pid "/home/ancja-urls/ancja-urls/tmp/pids/unicorn.pid"
+pid "/home/xcosmix2010/ancja-urls/tmp/pids/unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-stderr_path "/home/ancja-urls/ancja-urls/log/unicorn.stderr.log"
-stdout_path "/home/ancja-urls/ancja-urls/log/unicorn.stdout.log"
+stderr_path "/home/xcosmix2010/ancja-urls/log/unicorn.stderr.log"
+stdout_path "/home/xcosmix2010/ancja-urls/log/unicorn.stdout.log"
 
 # combine REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
