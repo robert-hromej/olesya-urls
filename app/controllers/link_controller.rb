@@ -6,6 +6,7 @@ class LinkController < ApplicationController
   # creates new link. Allows create only unique links, if user try to create link which is already created
   # he will be redirected onto page of that link, with promt to comment or vote for that
   def create
+
     link_url = params[:new_link_url]
     unless (/^https?:\/{2}/i === link_url)
       link_url = "http://" + link_url
@@ -18,19 +19,35 @@ class LinkController < ApplicationController
       js_for_respond = "window.location='/link/show/#{link.id}'"
       html_for_respond = comment_path(:id=>link.id)
     else
-
-      begin
-        url = URI.parse(link_url)
-        res = Net::HTTP.start(url.host, url.port) { |http| http.get('/')}
-        code = res.code
-      rescue StandardError => e
+      require "uri"
+      unless (link_url.include?('https'))
+        begin
+          require "net/http"
+          url = URI.parse(link_url)
+          res = Net::HTTP.start(url.host, url.port) { |http| http.get('/') }
+          code = res.code
+        rescue => e
+          logger.error("HTTP: #{e} \n #{e.backtrace.join("\n")}")
+        end
+      else
+        begin
+          require "net/https"
+          url = URI.parse(link_url)
+          http = Net::HTTP.new(url.host, url.port)
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          request = Net::HTTP::Get.new(url.request_uri)
+          response = http.request(request)
+          code = response.code
+        rescue => e
+          logger.error("HTTPS: #{e} \n #{e.backtrace.join("\n")}")
+        end
       end
 
       if /[23](\d){2}/i === code
         link = Link.new(:title => params[:new_link_title],
-        :url => link_url,
-        :user => current_user)
-
+                        :url => link_url,
+                        :user => current_user)
 
 
         if link.save()
@@ -49,7 +66,7 @@ class LinkController < ApplicationController
     respond_to do |format|
       format.html {
         push_notice_message('Link is not added')
-        redirect_to(html_for_respond)}
+        redirect_to(html_for_respond) }
       format.js {
         render :update do |page|
           page << "#{js_for_respond};"
@@ -58,7 +75,7 @@ class LinkController < ApplicationController
     end
   end
 
-   # show all page, show all links using pagination with 20 links per page
+  # show all page, show all links using pagination with 20 links per page
   def list
     @links = Link.select("links.*").join_voted_field(current_user).join_users.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
@@ -143,7 +160,7 @@ class LinkController < ApplicationController
       }
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-      #redirect_to :back
+    #redirect_to :back
 
   rescue StandardError => e
     push_error_message e
@@ -186,9 +203,10 @@ class LinkController < ApplicationController
       end
     end
   end
+
   private
   def previous_url
-     request.nil? ? '/' : request.env['HTTP_REFERER']
+    request.nil? ? '/' : request.env['HTTP_REFERER']
   end
 
 end

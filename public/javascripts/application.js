@@ -17,7 +17,7 @@ function hide_element(element) {
 jQuery(function($) {
     matroska('all_comments');
     observe_element('paginator');
-    jQuery('#new_link_form').css('display','none');
+    jQuery('#new_link_form').css('display', 'none');
 });
 
 function vote(kind, link_id, el) {
@@ -47,21 +47,12 @@ function observe_element(element) {
 
 
             if (el.match('.pagination a')) {
-//                var small_spinner = jQuery('<img>').attr({
-//                    "id":"small-spinner",
-//                    "src":'/images/ajax-loader2.gif',
-//                    "alt":''
-//                });
-
-//                if (jQuery("#small-spinner").length != 0) jQuery("#small-spinner").remove();
-//                jQuery(el).parent('.pagination').append(small_spinner);
                 jQuery('#ajax_comments').html('');
                 jQuery.ajax({
                     dataType:'script',
                     url:el.href,
                     type:'post'
                 });
-
                 e.stop();
             }
 
@@ -125,9 +116,9 @@ function verify_new_link() {
 
     return (errors < 0);
 }
-function show_message(message,paint_url){
-    $("new_link_url_label").style.color = (!paint_url) ? "#000000" :  "#ff0000";
+function show_message(message, paint_url) {
+    $("new_link_url_label").style.color = (!paint_url) ? "#000000" : "#ff0000";
     jQuery('#system_message').html('');
-    jQuery('<span style="color: green;">'+message+'</span>').appendTo('#system_message');
+    jQuery('<span style="color: green;">' + message + '</span>').appendTo('#system_message');
 }
 

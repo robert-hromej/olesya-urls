@@ -1,5 +1,6 @@
 .idea
 .gems
+config/unicorn.rb
 config/*.yml
 log/*.log
 tmp/**/*.pid

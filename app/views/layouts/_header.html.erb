@@ -33,7 +33,7 @@
   <% end %>
 
   <div id="new_link_form" >
-    <div id="close_but" onclick="show_element('new_link_form')">
+    <div id="close_but" onclick="hide_element('new_link_form')">
     </div>
     <noscript ><div style="text-align:center;width:100%;">Add link</div></noscript>
     <%= form_tag '/link/create', :id => "new_link", :remote=>true, :onSubmit => "return verify_new_link();" do %>
