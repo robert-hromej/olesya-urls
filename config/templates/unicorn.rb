@@ -8,30 +8,32 @@
 # See http://unicorn.bogomips.org/Unicorn/Configurator.html for complete
 # documentation.
 
+home_path = "/home/ancja-urls/ancja-urls"
+
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
 worker_processes 3
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-working_directory "/home/organicaseo/olesya-urls" # available in 0.94.0+
+working_directory home_path # available in 0.94.0+
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "/home/organicaseo/olesya-urls/tmp/sockets/unicorn.sock", :backlog => 64
+listen "#{home_path}/tmp/sockets/unicorn.sock", :backlog => 64
 listen 7777, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 60
 
 # feel free to point this anywhere accessible on the filesystem
-pid "/home/organicaseo/olesya-urls/tmp/pids/unicorn.pid"
+pid "#{home_path}/tmp/pids/unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-stderr_path "/home/organicaseo/olesya-urls/log/unicorn.stderr.log"
-stdout_path "/home/organicaseo/olesya-urls/log/unicorn.stdout.log"
+stderr_path "#{home_path}/log/unicorn.stderr.log"
+stdout_path "#{home_path}/log/unicorn.stdout.log"
 
 # combine REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow

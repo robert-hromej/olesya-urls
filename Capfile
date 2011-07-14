@@ -11,4 +11,4 @@ set :deploy_to, '/home/ancja-urls/ancja-urls'
 set :repository, 'git@github.com:robert-hromej/olesya-urls.git'
 
 after 'deploy:update',  'bundle:install'
-after 'deploy:restart', 'unicorn:stop'
+#after 'deploy:restart', 'unicorn:stop'
