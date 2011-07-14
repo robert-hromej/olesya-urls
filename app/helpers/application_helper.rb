@@ -1,29 +1,10 @@
 module ApplicationHelper
+
   def system_messages
     return "" if session[:system_message].blank?
-    str = ""
-    str << session[:system_message][:notice].map { |msg| notice_msg(msg) }.join
-    str << session[:system_message][:error].map { |msg| error_msg(msg) }.join
+    str = render(:partial => "layouts/sys_messages")
     session[:system_message] = nil
     return str.html_safe
-  end
-
-  def day_of_week(date)
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    result = days[date.wday]
-  end
-
-  def month(date)
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    result = months[date.month-1]
-  end
-
-  def notice_msg msg
-    return "<span style=\"color:green;\">#{msg}</span></br>"
-  end
-
-  def error_msg msg
-    return "<span style=\"color:red;\">#{msg}</span></br>"
   end
 
   def link_cache_key(link)

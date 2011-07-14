@@ -14,7 +14,8 @@ class Link < ActiveRecord::Base
   end
 
   def self.join_voted_field(current_user)
-    select("(v.id IS NOT NULL) voted").joins("LEFT JOIN votes v ON (v.link_id = links.id and v.user_id = #{(current_user ? current_user.id : 0)})")
+    select("(v.id IS NOT NULL) voted").
+        joins("LEFT JOIN votes v ON (v.link_id = links.id and v.user_id = #{(current_user ? current_user.id : 0)})")
   end
 
   def voted?

@@ -26,10 +26,10 @@
 </div>
 
 <div class="RDate">
-  <%= link.updated_at.to_date.day %> <%= month(link.updated_at.to_date) %> <%= link.updated_at.to_date.year %>
+  <%= link.created_at.strftime("%d %B %Y") %>
   <br>
 
   <div id="LinkCommentCountId<%= link.id %>">
-    <%= link_to "Comments #{link.comments_count}", comment_path(:id=>link.id) %>
+    <%= link_to t(:comments) + " " + link.comments_count.to_s, comment_path(:id=>link.id) %>
   </div>
 </div>

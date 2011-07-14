@@ -3,10 +3,10 @@
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-  # creates new link. Allows create only unique links, if user try to create link which is already created
-  # he will be redirected onto page of that link, with promt to comment or vote for that
+    # creates new link. Allows create only unique links, if user try to create link which is already created
+    # he will be redirected onto page of that link, with promt to comment or vote for that
   def create
-
+    #todo comment
     link_url = params[:new_link_url]
     unless (/^https?:\/{2}/i === link_url)
       link_url = "http://" + link_url
@@ -14,8 +14,11 @@ class LinkController < ApplicationController
 
     link = Link.where(:url => link_url).first
 
+      # todo refactor following two blocks of code
+      #todo comment
     if link
-      push_notice_message "Link with such URL is already added. You can comment it or give you vote"
+      push_notice_message t(:link_already_added)
+        #todo move js to templates
       js_for_respond = "window.location='/link/show/#{link.id}'"
       html_for_respond = comment_path(:id=>link.id)
     else
@@ -43,29 +46,32 @@ class LinkController < ApplicationController
           logger.error("HTTPS: #{e} \n #{e.backtrace.join("\n")}")
         end
       end
-
+        # todo comment
+        # todo maybe exists more elegant way to check status code?
       if /[23](\d){2}/i === code
         link = Link.new(:title => params[:new_link_title],
                         :url => link_url,
                         :user => current_user)
 
-
         if link.save()
-          push_notice_message "Link successfully added"
+          push_notice_message t(:link_added)
+            #todo move js to templates
           js_for_respond = "window.location='/link/show/#{link.id}'"
           html_for_respond = comment_path(:id=>link.id)
         else
+          #todo move js to templates
           js_for_respond = "show_message('Link is not added',false)"
           html_for_respond = previous_url
         end
       else
+        #todo move js to templates
         js_for_respond = "show_message('Link is not valid',true)"
         html_for_respond = previous_url
       end
     end
     respond_to do |format|
       format.html {
-        push_notice_message('Link is not added')
+        push_notice_message t(:link_not_added)
         redirect_to(html_for_respond) }
       format.js {
         render :update do |page|
@@ -75,19 +81,23 @@ class LinkController < ApplicationController
     end
   end
 
-  # show all page, show all links using pagination with 20 links per page
+    # show all page
+    # show all links using pagination with 20 links per page
   def list
-    @links = Link.select("links.*").join_voted_field(current_user).join_users.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
+    @links = Link.select("links.*").join_voted_field(current_user).join_users.
+        order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-  # link page
+    # link page
   def show
-    @link = Link.select("links.*").join_voted_field(current_user).join_users.where({:id => params[:id]}).order("created_at DESC").first
+    @link = Link.select("links.*").join_voted_field(current_user).join_users.
+        where({:id => params[:id]}).order("created_at DESC").first
 
-    raise "There is no such link, but you can add it." if @link.blank?
+    raise t(:not_such_link) if @link.blank?
 
-    @comments = Comment.find_all_by_link_id(@link.id, :include => :user, :order=>'created_at desc').paginate(:page=>params[:page], :per_page=>5)
-    @comment = Comment.new(:link_id => @link.id, :user_id => current_user.id) if current_user != nil
+    @comments = Comment.where({:link_id => @link.id}).includes(:user).
+        order("created_at desc").paginate(:page => params[:page], :per_page => 5)
+    @comment = Comment.new(:link_id => @link.id) if current_user != nil
     respond_to do |format|
       format.html
       format.js {
@@ -102,9 +112,9 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-  # ajax method for performing voting. User can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
-  # every user can vote only once per one link. Takes to url params 'link_id' and 'kind'. Cleans cache fragments for
-  # this link, to force rails update votes count on link's partial
+    # ajax method for performing voting. User can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
+    # every user can vote only once per one link. Takes to url params 'link_id' and 'kind'. Cleans cache fragments for
+    # this link, to force rails update votes count on link's partial
   def vote
     link = Link.find(params[:link_id])
 
@@ -113,7 +123,7 @@ class LinkController < ApplicationController
     vote.user = current_user
     vote.kind = params[:kind].to_i
 
-    raise "Already voted" if !vote.save
+    raise t(:already_voted) if !vote.save
 
     link.reload
 
@@ -141,11 +151,10 @@ class LinkController < ApplicationController
     end
   end
 
-  # ajax post method for creating comments. Use form fields values on link page ('show'). Cleans cache fragments for
-  # this link, to force rails update comments count on link's partial
+    # ajax post method for creating comments. Use form fields values on link page ('show'). Cleans cache fragments for
+    # this link, to force rails update comments count on link's partial
   def comment
-    # test link
-    link = Link.find(params[:comment][:link_id])
+    raise t(:link_not_found) if Link.where(:id => params[:comment][:link_id]).first == nil
 
     params[:comment][:user_id] = current_user.id
     comment = Comment.create(params[:comment])
@@ -154,13 +163,14 @@ class LinkController < ApplicationController
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
+          # todo separate presentation logic
           page << "add_comment('#{comment.id}','#{comment.body.gsub("\n", " ")}','#{comment.user.profile_image}','#{comment.created_at.strftime("%d %B %Y")}','#{comment.user.screen_name}');"
           page.replace_html "LinkCommentCountId#{comment.link_id}", link_to("Comments #{comment.link.comments_count}", comment_path(:id=>comment.link_id))
         end
       }
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-    #redirect_to :back
+      #redirect_to :back
 
   rescue StandardError => e
     push_error_message e
@@ -176,19 +186,19 @@ class LinkController < ApplicationController
   end
 
 
-  # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
+    # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
   def twitt_this
     render :update do |page|
       begin
-        raise "link id not specific" if !params[:id]
+        raise t(:link_id_not_specific) if !params[:id]
         link = Link.find(params[:id])
-        raise "link not found" if link.blank?
+        raise t(:link_not_found) if link.blank?
 
         begin
-          url = Net::HTTP.get(URI.parse("http://api.bit.ly/v3/shorten?login=#{APP_CONFIG[:bitly][:login]}&apiKey=#{APP_CONFIG[:bitly][:api_key]}&longUrl=#{CGI::escape(link.url)}&format=txt"))
+          url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
         rescue StandardError => e
           logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
-          raise "bitly error"
+          raise t(:bitly_error)
         end
 
         body = "#{link.title} #{url}"
@@ -205,8 +215,13 @@ class LinkController < ApplicationController
   end
 
   private
+
   def previous_url
     request.nil? ? '/' : request.env['HTTP_REFERER']
+  end
+
+  def get_bit_ly_api_url url
+    return "http://api.bit.ly/v3/shorten?login=#{APP_CONFIG[:bitly][:login]}&apiKey=#{APP_CONFIG[:bitly][:api_key]}&longUrl=#{CGI::escape(url)}&format=txt"
   end
 
 end

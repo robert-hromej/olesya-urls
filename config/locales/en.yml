@@ -1,5 +1,41 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  please_login: "Please login first"
+  header_most_popular: "Most popular links"
+  header_most_recent: "Most recent links"
+  link_already_added: "Link with such URL is already added. You can comment it or give you vote"
+  link_added: "Link successfully added"
+  link_not_added: "Link is not added"
+  not_such_link: "There is no such link, but you can add it."
+  user_name: "Username"
+  comment: "Comment"
+  comments: "Comments"
+  date: "Date"
+  not_comments: "There is no comments for this link"
+  add_comment: "add comment"
+  twitt_this: "twitt this"
+  already_voted: "Already voted"
+  link_id_not_specific: "link id not specific"
+  link_not_found: "link not found"
+  bitly_error: "bitly error"
+  oauth_error: "Sorry, but OAuth error occurred"
+  twitter_denided: "You deny access to Twitter"
+  twitter_error: "Sorry, but Twitter error occurred"
+  length_message: "Message length must be less or equal then 140"
+  message_posted: "Message successfuly posted"
+  logout: "LOGOUT"
+  add_link: "ADD LINK"
+  home: "HOME"
+  welocme: "Welcome"
+  sighup: "Sighup with Twitter"
+  title: "Title"
+  url: "URL"
+  create: "Create"
+  cancel: "Cancel"
+  body: "Body"
+  twitt: "Twitt"
+  all_links: "All links"
+
+
+

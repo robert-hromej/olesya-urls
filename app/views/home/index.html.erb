@@ -1,9 +1,9 @@
 <div class="cont">
-  <%= render :partial => "layouts/link_table", :locals => {:links=>@popular_links, :tab_header=>"Most popular links"} %>
+  <%= render :partial => "layouts/link_table", :locals => {:links=>@popular_links, :tab_header => t(:header_most_popular)} %>
 </div>
 
 <div class="cont">
-  <%= render :partial => "layouts/link_table", :locals => {:links=>@new_links, :tab_header=>"Most recent links"} %>
+  <%= render :partial => "layouts/link_table", :locals => {:links=>@new_links, :tab_header => t(:header_most_recent)} %>
 </div>
 
 
