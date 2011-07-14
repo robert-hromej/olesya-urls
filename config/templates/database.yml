@@ -29,11 +29,10 @@ test:
   socket: /var/run/mysqld/mysqld.sock
 
 production:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: false
   database: ancja_urls_production
   pool: 5
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  username: ancja-urls
+  password: olesya

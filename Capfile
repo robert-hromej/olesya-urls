@@ -18,6 +18,7 @@ after 'deploy:update',  'bundle:install'
 
 after 'deploy:setup' do
   run "mkdir -p #{deploy_to}/pids && mkdir -p #{deploy_to}/config && mkdir -p #{deploy_to}/var"
+  run "cp config/templates/*.yml config/"
 end
 
 namespace :unicorn do
