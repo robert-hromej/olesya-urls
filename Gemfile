@@ -23,6 +23,7 @@ group :development, :test do
   gem "rspec-rails", "~> 2.4"
   gem 'factory_girl_rails', '1.0'
   gem 'webrat' #needed to use selectors in tests
+  gem 'capistrano-deploy', '~> 0.1.1', :require => nil
 end
 
 # Deploy with Capistrano
