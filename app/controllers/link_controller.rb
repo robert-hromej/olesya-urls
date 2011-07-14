@@ -14,68 +14,34 @@ class LinkController < ApplicationController
 
     link = Link.where(:url => link_url).first
 
-      # todo refactor following two blocks of code
-      #todo comment
     if link
       push_notice_message t(:link_already_added)
-        #todo move js to templates
-      js_for_respond = "window.location='/link/show/#{link.id}'"
-      html_for_respond = comment_path(:id=>link.id)
     else
-      require "uri"
-      unless (link_url.include?('https'))
-        begin
-          require "net/http"
-          url = URI.parse(link_url)
-          res = Net::HTTP.start(url.host, url.port) { |http| http.get('/') }
-          code = res.code
-        rescue => e
-          logger.error("HTTP: #{e} \n #{e.backtrace.join("\n")}")
-        end
+      link = Link.new(:title => params[:new_link_title],
+                      :url => link_url,
+                      :user => current_user)
+      if Link.valid_url?(link_url) and link.save()
+        push_notice_message t(:link_added)
       else
-        begin
-          require "net/https"
-          url = URI.parse(link_url)
-          http = Net::HTTP.new(url.host, url.port)
-          http.use_ssl = true
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          request = Net::HTTP::Get.new(url.request_uri)
-          response = http.request(request)
-          code = response.code
-        rescue => e
-          logger.error("HTTPS: #{e} \n #{e.backtrace.join("\n")}")
-        end
-      end
-        # todo comment
-        # todo maybe exists more elegant way to check status code?
-      if /[23](\d){2}/i === code
-        link = Link.new(:title => params[:new_link_title],
-                        :url => link_url,
-                        :user => current_user)
-
-        if link.save()
-          push_notice_message t(:link_added)
-            #todo move js to templates
-          js_for_respond = "window.location='/link/show/#{link.id}'"
-          html_for_respond = comment_path(:id=>link.id)
-        else
-          #todo move js to templates
-          js_for_respond = "show_message('Link is not added',false)"
-          html_for_respond = previous_url
-        end
-      else
-        #todo move js to templates
-        js_for_respond = "show_message('Link is not valid',true)"
-        html_for_respond = previous_url
+        push_notice_message t(:link_is_not_valid)
       end
     end
+
     respond_to do |format|
       format.html {
-        push_notice_message t(:link_not_added)
-        redirect_to(html_for_respond) }
+        if link.id == nil
+          redirect_to root_path
+        else
+          redirect_to "/link/show/#{link.id}"
+        end
+      }
       format.js {
         render :update do |page|
-          page << "#{js_for_respond};"
+          if link.id == nil
+            page.replace_html "system_message", system_messages
+          else
+            page.call "redirect_to", "/link/show/#{link.id}"
+          end
         end
       }
     end
@@ -158,23 +124,25 @@ class LinkController < ApplicationController
 
     params[:comment][:user_id] = current_user.id
     comment = Comment.create(params[:comment])
+    controller = self
 
     respond_to do |format|
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
-          # todo separate presentation logic
-          page << "add_comment('#{comment.id}','#{comment.body.gsub("\n", " ")}','#{comment.user.profile_image}','#{comment.created_at.strftime("%d %B %Y")}','#{comment.user.screen_name}');"
-          page.replace_html "LinkCommentCountId#{comment.link_id}", link_to("Comments #{comment.link.comments_count}", comment_path(:id=>comment.link_id))
+          if comment.valid?
+            page.call "add_comment", comment.id, render(:partial => "comment", :locals => {:comment => comment})
+            page.replace_html "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
+          else
+            controller.push_error_message t(:comment_not_valid)
+            page.replace_html "system_message", system_messages
+          end
         end
       }
     end
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-      #redirect_to :back
-
   rescue StandardError => e
     push_error_message e
-
     respond_to do |format|
       format.html { redirect_to :back }
       format.js {

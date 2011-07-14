@@ -6,7 +6,6 @@
   </div>
 </div>
 
-
 <div class="cont">
   <table id="all_comments" cellpadding="0" cellspacing="0">
     <tr class="head" style="display:<%= @comments.blank? ? "none" : "table-row" %>">
@@ -25,19 +24,6 @@
 
   </table>
 </div>
-<div class="cont">
-  <% unless @comment.nil? %>
-      <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
-          <%= t.hidden_field :link_id %>
-          <%= t.text_area :body, :rows => 9, :cols => 49 %>
-          <%= t.submit(:value => t(:add_comment), :class => "baton") %>
-      <% end %>
-  <% end %>
-
-  <% if controller.authorized? %>
-      <%= link_to t(:twitt_this), {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link", :class=>"baton" %>
-      <div id="twitt_this">
-        &nbsp;
-      </div>
-  <% end %>
-</div>
+<% if controller.authorized? %>
+    <%= render :partial => "new_comment", :locals => {:comment => @comment, :link => @link} %>
+<% end %>

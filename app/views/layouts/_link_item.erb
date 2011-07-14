@@ -29,7 +29,13 @@
   <%= link.created_at.strftime("%d %B %Y") %>
   <br>
 
-  <div id="LinkCommentCountId<%= link.id %>">
-    <%= link_to t(:comments) + " " + link.comments_count.to_s, comment_path(:id=>link.id) %>
+  <div>
+    <a href="/link/show/<%= link.id %>">
+      <%= t(:comments) %>
+      <span id="LinkCommentCountId<%= link.id %>">
+        <%= link.comments_count %>
+      </span>
+    </a>
   </div>
+
 </div>
