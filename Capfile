@@ -19,7 +19,7 @@ after 'deploy:update',  'bundle:install'
 after 'deploy:restart', 'unicorn:restart'
 
 after 'deploy:setup' do
-  run "mkdir -p #{deploy_to}/pids && mkdir -p #{deploy_to}/config && mkdir -p #{deploy_to}/var"
+  run "mkdir -p #{deploy_to}/tmp/pids && mkdir -p #{deploy_to}/tmp/sockets && mkdir -p #{deploy_to}/config && mkdir -p #{deploy_to}/log"
   run "cp #{deploy_to}/config/templates/*.yml #{deploy_to}/config/"
   run "cp #{deploy_to}/config/templates/unicorn.rb #{deploy_to}/config/"
 end
