@@ -2,7 +2,7 @@ require "spec_helper"
 describe HomeController do
 
   before(:each) do
-    @link = Factory(:link, :url=>"link_url", :title=>"link_title")
+    @link = Factory(:link, :url => "link_url", :title => "link_title")
   end
 
   render_views
@@ -14,12 +14,13 @@ describe HomeController do
 
   it "should have link on" do
     get :index
-    response.body.should  have_html_tag(:a,:content=>'link_title')
+    response.body.should have_html_tag(:a, :content => @link.title)
   end
 
   it "should not allow votes to not registered user" do
     get :index
-    response.body.should_not have_html_tag(:div,:class=>'Plus')
+    response.body.should_not have_html_tag(:input, :class => 'Plus')
+    response.body.should_not have_html_tag(:input, :class => 'Minus')
   end
 
   describe "registered user" do
@@ -28,9 +29,10 @@ describe HomeController do
       login nil
     end
 
-    it "should allow votes to registered user",:request => true do
+    it "should allow votes to registered user", :request => true do
       get :index
-      response.body.should have_html_tag(:div,:class=>'Plus')
+      response.body.should have_html_tag(:input, :class=>'Plus')
+      response.body.should have_html_tag(:input, :class=>'Minus')
     end
 
     it "should show registered user avatar" do
@@ -39,4 +41,5 @@ describe HomeController do
     end
 
   end
+
 end

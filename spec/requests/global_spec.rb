@@ -1,21 +1,24 @@
 require "spec_helper"
 
-
 describe 'Global', :js => true do
+
   before(:all) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.start
     integration_login
   end
+
   describe "registered" do
+
     before(:each) do
       visit root_path
       click_link 'Sighup with Twitter'
     end
+
     it 'should have link to show all page' do
       visit root_path
-      page.should have_selector('a', :content=>"ALL LINKS")
+      page.should have_selector('a', :content => I18n.t(:all_links))
     end
 
     it "should add link" do
@@ -23,25 +26,25 @@ describe 'Global', :js => true do
       page.should have_selector('a#add_link')
       click_link 'add_link'
       fill_in 'new_link_title', :with=>'new_link_title'
-      fill_in 'new_link_url', :with=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
+      fill_in 'new_link_url', :with => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
       click_button 'Create'
-      page.should have_selector('span', :content=>'Link successfully added')
+      page.should have_selector('span', :content => I18n.t(:link_added))
     end
 
     it "should not add the same link twice" do
       visit root_path
       page.should have_selector('a#add_link')
       click_link 'add_link'
-      fill_in 'new_link_title', :with=>'new_link_title'
-      fill_in 'new_link_url', :with=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
+      fill_in 'new_link_title', :with => 'new_link_title'
+      fill_in 'new_link_url', :with => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
       click_button 'Create'
-      page.should have_selector('span', :content=>'Link successfully added')
+      page.should have_selector('span', :content => I18n.t(:link_already_added))
     end
 
-    it "should be available fore voting" do
+    it "should be available fore voting up" do
       visit root_path
-      page.find('div.Plus').click
-      page.should have_selector('div[id*=VotesCountId]', :content=>'1')
+      page.find('input.Plus').click
+      page.should have_selector('span[class*=VotesCountId]', :content => '1')
     end
 
     it "should have comments page and user can add one" do
@@ -50,8 +53,9 @@ describe 'Global', :js => true do
       page.should have_selector("#no_comments_message")
       fill_in "comment_body", :with => 'this_is a new comment'
       click_button "comment_submit"
-      page.should have_selector("tr.comment_col")
+      page.should have_selector("div.comment_col")
     end
+
     it "should have paginator when comments count raises 5" do
       visit root_path
       click_link 'new_link_title'
@@ -61,5 +65,6 @@ describe 'Global', :js => true do
       end
       page.should have_selector("a[href*=page]")
     end
+
   end
 end

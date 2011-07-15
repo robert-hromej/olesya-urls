@@ -1,5 +1,6 @@
 require 'rubygems'
-require 'capybara/rails'
+#require 'capybara/rspec'
+#require 'capybara/rails'
 require 'spork'
 
 Spork.prefork do
@@ -7,10 +8,14 @@ Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
+
+    # Add this to load Capybara integration:
+  require 'capybara/rspec'
+  require 'capybara/rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -26,14 +31,14 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+      # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-    # If you're not using ActiveRecord, or you'd prefer not to run each of your
-    # examples within a transaction, remove the following line or assign false
-    # instead of true.
+      # If you're not using ActiveRecord, or you'd prefer not to run each of your
+      # examples within a transaction, remove the following line or assign false
+      # instead of true.
     config.use_transactional_fixtures = true
-#    config.include(Capybara, :type => :integration)
+    #    config.include(Capybara, :type => :integration)
   end
   DEFAULT_HOST = 'http://localhost:3000/'
   TWITTER_CREDENTIALS = {:login => "testing_sw", :pass => 'qwerty123'}
@@ -44,11 +49,17 @@ Spork.prefork do
 
   def integration_login(options=nil)
     Capybara.current_driver = :selenium
+      #Capybara.register_driver :selenium do |app|
+      #  Capybara::Driver::Selenium.new(app,
+      #                                 :browser => :chrome
+      #                                 :desired_capabilities => :chrome)
+      #end
+      #Capybara.current_driver.for :firefox, :profile => Profile.new
     visit root_path
     click_link 'Sighup with Twitter'
-    fill_in :username_or_email, :with=>options.nil? ? TWITTER_CREDENTIALS[:login] :options[:login]
-    fill_in "Password", :with=>options.nil? ? TWITTER_CREDENTIALS[:pass] :options[:pass]
-    click_button 'Sign In'
+    fill_in :username_or_email, :with => options.nil? ? TWITTER_CREDENTIALS[:login] : options[:login]
+    fill_in "password", :with => options.nil? ? TWITTER_CREDENTIALS[:pass] : options[:pass]
+    click_button 'allow'
     visit root_path
     click_link 'LOGOUT'
   end
