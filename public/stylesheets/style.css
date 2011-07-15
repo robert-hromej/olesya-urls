@@ -83,13 +83,12 @@ body {
 }
 
 .VoteArrows {
-    float: left; /*float: none;*/
-    /*clear: both;*/
+    float: left;
 }
 
 .Plus {
     background: url("../images/button_thumbsup_left_100.png") repeat scroll 0 0 transparent;
-    cursor: pointer; /*float: left;*/
+    cursor: pointer;
     height: 25px;
     width: 40px;
     border-width: 0;
@@ -103,7 +102,7 @@ body {
     background: url("../images/button_thumbsdown_left_100.png") no-repeat scroll left 0 transparent;
     cursor: pointer;
     float: left;
-    height: 25px; /*margin-left: 5px;*/
+    height: 25px;
     width: 40px;
     border-width: 0;
 }
@@ -200,6 +199,11 @@ body {
 .log_in_out {
     float: right;
     padding: 10px;
+}
+
+.twit_but {
+    float: right;
+    margin: 5px;
 }
 
 .log_in_out:hover {
@@ -330,5 +334,91 @@ body {
 }
 
 #new_comment {
+    margin-top: 10px;
+}
 
+.avatar {
+    height: 50px;
+    padding: 5px 5px 1px;
+    width: 50px;
+}
+
+.comment_body {
+    width: 400px;
+    padding: 5px;
+}
+
+.comment_date {
+    padding: 5px;
+}
+
+#comment_body {
+    height: 85px;
+    margin-top: 2px;
+    width: 700px;
+}
+
+.even_tr {
+    background-color: #B5CAD0;
+}
+
+.head {
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+#all_comments {
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    width: 700px;
+}
+
+#twitt_this_link {
+    padding: 4px 0;
+    text-decoration: none;
+}
+
+.comment_author {
+    float: left;
+}
+
+.single_comment {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AAA;
+    float: right;
+    margin-bottom: 30px;
+    min-height: 80px;
+    padding: 15px 20px 0;
+    position: relative;
+    width: 520px;
+}
+
+.comment_col {
+    clear: both;
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.comment_arrow {
+    left: -17px;
+    position: absolute;
+    top: 25px;
+}
+
+.title_link {
+    color: #F05681;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.username a:hover {
+    text-decoration: underline;
+}
+
+.username a {
+    width: 110px;
+    padding: 5px;
+    color: #F05681;
+    text-decoration: none;
 }

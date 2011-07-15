@@ -9,12 +9,6 @@
 
 <div class="cont">
   <table id="all_comments" cellpadding="0" cellspacing="0">
-    <!--<tr class="head" style="display:<%#= @comments.blank? ? "none" : "table-row" %>">-->
-      <!--<td class="avatar"></td>-->
-      <!--<td class="username">Username</td>-->
-      <!--<td class="comment_body">Comment</td>-->
-      <!--<td class="comment_date">Date</td>-->
-    <!--</tr>-->
     <tr id="no_comments_message" style="display:<%= !@comments.blank? ? "none" : "table-row" %>">
       <td colspan="4"> <%= t(:not_comments) %> </td>
     </tr>
@@ -30,13 +24,14 @@
       <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
           <%= t.hidden_field :link_id %>
           <%= t.hidden_field :user_id %>
+          Your comment:
           <%= t.text_area :body, :rows=>9, :cols=>49 %>
           <%= t.submit(:value=>"add comment", :class=>"baton") %>
       <% end %>
   <% end %>
 
   <% if controller.authorized? %>
-      <%= link_to "tweet this", {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link"%>
+      <%= link_to image_tag("/images/tt-big1.png"), {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link", :alt=>"tweet this"%>
       <div id="twitt_this">
         &nbsp;
       </div>
