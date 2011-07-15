@@ -6,23 +6,25 @@
 
 
 <div class="RName">
-  <%= link_to truncate(link.title.to_s, :length => 50), comment_path(:id=>link.id) %>
-  <a href="<%= link.url %>" target="_blank">
-    </br>
-    <%= truncate(link.url.to_s, :length => 50) %>
-  </a>
+  <%= link_to truncate(link.title.to_s, :length => 50), comment_path(:id=>link.id), :class=>"title_link" %>
+  <div class="url_link">
+    <a href="<%= link.url %>" target="_blank">
+      <%= truncate(link.url.to_s, :length => 50) %>
+    </a>
+  </div>
 </div>
 
 <div class="RCount">
+  <div class="Number" id="VotesCountId<%= link.id %>">
+    Votes: <%= link.votes_count %>
+  </div>
   <div class="VoteArrows" id="VoteArrowsId<%= link.id %>">
     <% if controller.current_user != nil and !link.voted? %>
-        <div class="Plus" onclick="vote(1,<%= link.id %>, this)"><span class="right_but"></span></div>
-        <div class="Minus" onclick="vote(-1,<%= link.id %>, this)"><span class="right_but"></span></div>
+        <div class="Plus" onclick="vote(1,<%= link.id %>, this)"></div>
+        <div class="Minus" onclick="vote(-1,<%= link.id %>, this)"></div>
     <% end %>
   </div>
-  <div class="Number" id="VotesCountId<%= link.id %>">
-    <%= link.votes_count %>
-  </div>
+
 </div>
 
 <div class="RDate">

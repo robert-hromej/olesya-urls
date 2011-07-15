@@ -8,7 +8,10 @@
           <a href="#" onclick="show_element('new_link_form')"> <%= t(:add_link) %> </a>
         </div>
         <div class="log_in_out">
-          <%= link_to t(:home), root_url %>
+          <a href="/link/list">ALL LINKS</a>
+        </div>
+        <div class="log_in_out">
+          <%= link_to "HOME", root_url %>
         </div>
       </div>
       <div id="ruller"></div>
@@ -18,7 +21,7 @@
           <img src="<%= controller.current_user.profile_image %>" alt=""/>
         </div>
         <div id="greeting">
-          <h3> <%= t(:welocme) + controller.current_user.screen_name %></h3>
+          <h3>Welcome <%= link_to controller.current_user.screen_name, controller.current_user.profile_url, :class=>"welcome_link" %></h3>
         </div>
       </div>
   <% else %>

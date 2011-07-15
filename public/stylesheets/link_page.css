@@ -1,12 +1,7 @@
 .avatar {
     height: 50px;
     padding: 5px 5px 1px;
-    width: 50px;
-}
-
-.username {
-    width: 110px;
-    padding: 5px;
+    width: 50px; /*float: left;*/
 }
 
 .comment_body {
@@ -15,7 +10,7 @@
 }
 
 .comment_date {
-    padding: 5px;
+    padding: 5px; /*float: right;*/
 }
 
 #comment_body {
@@ -25,16 +20,16 @@
 }
 
 .even_tr {
-    /*background-color: #ebf3fd;*/
+/*background-color: #ebf3fd;*/
     background-color: #B5CAD0;
 }
 
 .odd_tr {
-    /*background-color: #acd1fe;*/
+/*background-color: #acd1fe;*/
 }
 
 .head {
-    /*background-color: #6899d5;*/
+/*background-color: #6899d5;*/
     background-color: #f1f1f1;
     text-align: center;
 }
@@ -48,5 +43,50 @@
 
 #twitt_this_link {
     padding: 4px 24px;
+    text-decoration: none;
+}
+
+.comment_author {
+    float: left;
+
+}
+
+.single_comment {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AAA;
+    float: right;
+    margin-bottom: 30px;
+    min-height: 80px;
+    padding: 15px 20px 0;
+    position: relative;
+    width: 520px;
+}
+
+.comment_col {
+    clear: both;
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.comment_arrow {
+    left: -17px;
+    position: absolute;
+    top: 25px;
+}
+
+.title_link {
+    color: #F05681;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.username a:hover {
+    text-decoration: underline;
+}
+
+.username a {
+    width: 110px;
+    padding: 5px;
+    color: #F05681;
     text-decoration: none;
 }
