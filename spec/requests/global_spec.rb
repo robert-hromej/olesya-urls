@@ -3,10 +3,10 @@ require "spec_helper"
 
 describe 'Global', :js => true do
   before(:all) do
-    integration_login
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.start
+    integration_login
   end
   describe "registered" do
     before(:each) do
@@ -25,8 +25,23 @@ describe 'Global', :js => true do
       fill_in 'new_link_title', :with=>'new_link_title'
       fill_in 'new_link_url', :with=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
       click_button 'Create'
-      page.should have_selector('span',:content=>'Link successfully added')
+      page.should have_selector('span', :content=>'Link successfully added')
+    end
 
+    it "should not add the same link twice" do
+      visit root_path
+      page.should have_selector('a#add_link')
+      click_link 'add_link'
+      fill_in 'new_link_title', :with=>'new_link_title'
+      fill_in 'new_link_url', :with=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
+      click_button 'Create'
+      page.should have_selector('span', :content=>'Link successfully added')
+    end
+
+    it "should be available fore voting" do
+      visit root_path
+      page.find('div.Plus').click
+      page.should have_selector('div[id*=VotesCountId]', :content=>'1')
     end
 
     it "should have comments page and user can add one" do

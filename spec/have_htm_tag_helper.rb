@@ -14,21 +14,21 @@ String.class_eval do
     options.delete(:content)
     options.delete(:print)
     matches = self.scan(tag_search)
-    total_res = false
+    total_result = false
     matches.each do |match|
-      resoult = true
+      result = true
       options.each_pair do |key, value|
         pat = Regexp.new(' '+key.to_s+'=("|\')'+value+'("|\')')
-        resoult &= (pat === match)
-        break unless resoult
+        result &= (pat === match)
+        break unless result
       end
-      resoult &= (Regexp.new(content) === match) if resoult
-      if resoult
-        total_res = true
+      result &= (Regexp.new(content) === match) if result
+      if result
+        total_result = true
         break
       end
     end
     puts matches.join("\n") if print
-    total_res
+    total_result
   end
 end

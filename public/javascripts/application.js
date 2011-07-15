@@ -65,7 +65,7 @@ function matroska(id) {
 
 function add_comment(id, comment_partial) {
     if (jQuery('a.previous_page').length != 0 ||
-        (jQuery('.comment_body').length >= 6 && jQuery('a.next_page').length == 0)) {
+        (jQuery('.comment_body').length >= 5 && jQuery('a.next_page').length == 0)) {
 
         jQuery('#ajax_comments').html('');
         var url = jQuery('a[rel=start]').attr('href');
@@ -76,11 +76,11 @@ function add_comment(id, comment_partial) {
         });
     } else {
         var htm = comment_partial;
-        jQuery(htm).prependTo('#ajax_comments');
+        jQuery(htm).css('display','none').prependTo('#ajax_comments').fadeIn('slow');
         jQuery('#no_comments_message').fadeOut('slow');
-        if (jQuery('.comment_body').length >= 7) {
+        if (jQuery('.comment_body').length >= 6) {
             jQuery('.invisible').remove();
-            jQuery('tr.comment_col:last').addClass('invisible').fadeOut();
+            jQuery('div.comment_col:last').addClass('invisible').fadeOut();
         }
         jQuery("#" + id).add('.head').fadeIn('slow');
         matroska('all_comments');
