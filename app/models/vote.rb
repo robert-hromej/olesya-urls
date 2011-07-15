@@ -6,6 +6,10 @@ class Vote < ActiveRecord::Base
 
   validates :user_id, :presence => true
   validates :link_id, :presence => true
+
+  # every user can vote only once per one link.
   validates_uniqueness_of :link_id, :scope => :user_id
+
+  # user can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
   validates :kind, :inclusion => [-1, 1], :presence => true
 end

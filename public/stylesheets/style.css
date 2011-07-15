@@ -5,14 +5,14 @@
 }
 
 body {
-    background: url("/images/pattern.png") repeat scroll left top transparent;
+    background: url("/images/pattern_1.png") repeat scroll left top transparent;
     color: #4A586C;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 }
 
 #container {
-     margin: -49px auto 0;
+    margin: -49px auto 0;
     padding-bottom: 20px;
     width: 756px;
 }
@@ -24,6 +24,13 @@ body {
 
 .cont {
     background: none repeat scroll 0 0 #D5E4E8;
+    border: 3px solid #B5CAD0;
+    margin: 10px auto 20px;
+    padding: 0 25px;
+    width: 700px;
+}
+.comm_cont {
+    background: none repeat scroll 0 0 #F4F3E8;
     border: 3px solid #B5CAD0;
     margin: 10px auto 20px;
     padding: 0 25px;
@@ -56,6 +63,10 @@ body {
 
 .PageRow a {
     color: #4A586C;
+    text-decoration:none;
+}
+.PageRow a:hover {
+    text-decoration:underline;
 }
 
 #TableHeader {
@@ -75,11 +86,10 @@ body {
 }
 
 .Plus {
-    background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
-    float: left;
+    background: url("../images/button_thumbsup_left_100.png") repeat scroll 0 0 transparent;
+    cursor: pointer; /*float: left;*/
     height: 25px;
     width: 40px;
-    cursor: pointer;
 }
 
 .Plus:hover {
@@ -87,12 +97,11 @@ body {
 }
 
 .Minus {
-    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
-    float: left;
-    height: 25px;
-    margin-left: 5px;
-    width: 40px;
+    background: url("../images/button_thumbsdown_left_100.png") no-repeat scroll left 0 transparent;
     cursor: pointer;
+    float: left;
+    height: 25px; /*margin-left: 5px;*/
+    width: 40px;
 }
 
 .Minus:hover {
@@ -136,23 +145,25 @@ body {
 }
 
 .RCount {
-    width: 120px;
     float: left;
+    padding-left: 20px;
+    width: 130px;
 }
 
 .Number {
     color: #1D637D;
-    float: right;
+    float: left;
     font-size: 16px;
     margin-right: 10px;
-    padding-top: 2px;
-    width: 20px;
+    padding-top: 17px;
+    width: 80px;
 }
 
 .RDate {
     float: left;
     font-size: 11px;
-    padding-left: 40px;
+    margin-top: 10px;
+    padding-left: 20px;
     width: 100px;
 }
 
@@ -222,10 +233,24 @@ body {
 }
 
 .pagination {
-    margin: 0 auto;
-    width: 200px;
+   float:right;
+    padding-right:10px;
 }
-.baton{
+.pagination a{
+    background: none repeat scroll 0 0 #B5CAD0;
+    border: 1px solid #435266;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 2px 5px;
+    text-decoration:none;
+}
+.pagination a:hover{
+    color: #F05681;
+}
+
+.baton {
     background: none repeat scroll 0 0 #B5CAD0;
     border: 1px solid #435266;
     color: #FFFFFF;
@@ -234,21 +259,62 @@ body {
     margin: 10px 0;
     padding: 4px 8px;
 }
-.baton:hover{
-    cursor:pointer;
+
+.baton:hover {
+    cursor: pointer;
 }
-.last{
-    border-bottom:none;
+
+.last {
+    border-bottom: none;
 }
-.inp{
-    width:205px;
+
+.inp {
+    width: 205px;
 }
-#close_but{
-    background-image:url("/images/pcCloseButton.png");
+
+#close_but {
+    background-image: url("/images/pcCloseButton.png");
     height: 14px;
     margin: -8px 0 0 204px;
     width: 14px;
 }
-.tw_body{
+
+.tw_body {
+    width: 100%;
+}
+
+.PageRow .title_link {
+    color: #F05681;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.title_link:hover {
+    text-decoration: underline;
+}
+.PageRow .url_link {
+    margin-top:5px;
+}
+.PageRow .url_link a {
+    text-decoration: none;
+}
+.PageRow .url_link a:hover {
+    text-decoration: underline;
+}
+.welcome_link  {
+    color: #4A586C;
+    text-decoration:none
+}
+.welcome_link:hover {
+    text-decoration:underline
+}
+.paginator{
     width:100%;
+    height:20px;
+}
+.add_comm{
+
+}
+#new_comment{
+
 }

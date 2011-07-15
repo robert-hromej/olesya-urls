@@ -1,8 +1,22 @@
 <% @comments.each do |comment| %>
     <% cache comment_cache_key(comment) do %>
-        <%= render :partial => "comment", :locals => {:comment => comment} %>
+        <div class="comment_col <%#= cycle('odd_tr', 'even_tr') %>">
+          <div class="comment_author">
+            <div class="avatar">
+              <a href="<%= comment.user.profile_url %>">
+                <%= image_tag(comment.user.profile_image) %>
+              </a>
+            </div>
+            <div class="username"><%= link_to comment.user.screen_name, comment.user.profile_url %></div>
+            <div class="comment_date"><%= comment.created_at.strftime("%d %B %Y") %></div>
+          </div>
+          <div class="single_comment">
+            <img class="comment_arrow" width="17" height="31" alt="Comment Arrow" src="/images/comment_arrow.png">
+            <div class="comment_body"><%= comment.body %></div>
+          </div>
+        </div>
     <% end %>
 <% end %>
-<tr id="paginator">
-  <td colspan="4" style="text-align:center;"><%= will_paginate @comments %></td>
-</tr>
+<div id="paginator">
+  <%= will_paginate @comments %>
+</div>
