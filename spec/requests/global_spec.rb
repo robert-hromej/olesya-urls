@@ -22,29 +22,27 @@ describe "IntegrationTesting", :js => true do
     end
 
     it "should add link" do
-      visit root_path
-      page.should have_selector('a#add_link')
-      click_link 'add_link'
-      fill_in 'new_link_title', :with=>'new_link_title'
-      fill_in 'new_link_url', :with => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
-      click_button 'Create'
-      page.should have_selector('span', :content => I18n.t(:link_added))
+      create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
+      page.html.should have_html_tag('span', :content=>'Link successfully added')
     end
 
     it "should not add the same link twice" do
-      visit root_path
-      page.should have_selector('a#add_link')
-      click_link 'add_link'
-      fill_in 'new_link_title', :with => 'new_link_title'
-      fill_in 'new_link_url', :with => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully'
-      click_button 'Create'
-      page.should have_selector('span', :content => I18n.t(:link_already_added))
+      create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
+      create_link(:test=>false, :title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
+      page.html.should have_html_tag('span', :content=>' Link with such URL is already added. You can comment it or give you vote ')
+    end
+    it "should not add invalid or unavailable link" do
+      create_link(:title=>'unavailable_link_title', :url=>'unavailable_link.com')
+      page.html.should_not have_html_tag(:a, :class=>'title_link', :content=>'unavailable_link_title', :print=>false)
     end
 
-    it "should be available fore voting up" do
-      visit root_path
+    it "should be available fore voting" do
+      create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       page.find('input.Plus').click
-      page.should have_selector('span[class*=VotesCountId]', :content => '1')
+      page.html.should have_html_tag(:span, :class=>'VotesCountId\d+', :content=>'1')
+      create_link(:title=>'google', :url=>'google.com')
+      page.find('input.Minus').click
+      page.html.should have_html_tag(:span, :class=>'VotesCountId\d+', :content=>'-1')
     end
 
     it "should have comments page and user can add one" do
@@ -57,7 +55,7 @@ describe "IntegrationTesting", :js => true do
     end
 
     it "should have paginator when comments count raises 5" do
-      visit root_path
+      create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       click_link 'new_link_title'
       6.times do |n|
         fill_in "comment_body", :with => "this_is a new comment N#{n+1}"
@@ -65,6 +63,17 @@ describe "IntegrationTesting", :js => true do
       end
       page.should have_selector("a[href*=page]")
     end
-
+    it "should be able to twit link" do
+      create_link(:title=>'google', :url=>'google.com')
+      click_link 'google'
+      click_link 'tweet_this_link'
+#      page.html.should have_html_tag(:textarea, :id=>'body',:content=>'google http//:.*',:print=>true)
+      data = rand(10000).to_s+'test'
+      fill_in 'body', :with => data
+      click_button 'Tweet'
+#      page.html.should have_html_tag(:span, :content=>' Message successfuly posted ',:print => true)
+      visit "http://twitter.com/#{TWITTER_CREDENTIALS[:login]}"
+      page.html.should have_html_tag(:span, :class=>'entry-content',:content=>"#{data}",:print=>false)
+    end
   end
 end

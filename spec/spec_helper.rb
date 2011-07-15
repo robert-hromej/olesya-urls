@@ -1,5 +1,4 @@
 require 'rubygems'
-#require 'capybara/rspec'
 #require 'capybara/rails'
 require 'spork'
 
@@ -8,7 +7,7 @@ Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  # This file is copied to spec/ when you run 'rails generate rspec:install'
+# This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
@@ -31,14 +30,14 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-      # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-      # If you're not using ActiveRecord, or you'd prefer not to run each of your
-      # examples within a transaction, remove the following line or assign false
-      # instead of true.
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # examples within a transaction, remove the following line or assign false
+    # instead of true.
     config.use_transactional_fixtures = true
-    #    config.include(Capybara, :type => :integration)
+#    config.include(Capybara, :type => :integration)
   end
   DEFAULT_HOST = 'http://localhost:3000/'
   TWITTER_CREDENTIALS = {:login => "testing_sw", :pass => 'qwerty123'}
@@ -49,12 +48,6 @@ Spork.prefork do
 
   def integration_login(options=nil)
     Capybara.current_driver = :selenium
-      #Capybara.register_driver :selenium do |app|
-      #  Capybara::Driver::Selenium.new(app,
-      #                                 :browser => :chrome
-      #                                 :desired_capabilities => :chrome)
-      #end
-      #Capybara.current_driver.for :firefox, :profile => Profile.new
     visit root_path
     click_link 'twitter_login_but'
     fill_in :username_or_email, :with => options.nil? ? TWITTER_CREDENTIALS[:login] : options[:login]
@@ -63,6 +56,19 @@ Spork.prefork do
     visit root_path
     click_link 'LOGOUT'
   end
+
+  def create_link(options={})
+    test = !(options[:test].nil? ? true : options[:test])
+    visit root_path
+    if ((!page.html.has_html_tag?(:a, :class=>'title_link', :content=>options[:title], :print=>false)) || test)
+      page.should have_selector('a#add_link')
+      click_link 'add_link'
+      fill_in 'new_link_title', :with=>options[:title]
+      fill_in 'new_link_url', :with=>options[:url]
+      click_button 'Create'
+    end
+  end
+
 end
 
 Spork.each_run do
