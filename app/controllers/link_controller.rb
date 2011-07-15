@@ -170,7 +170,8 @@ class LinkController < ApplicationController
 
       # short link with bit.ly
     begin
-      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
+      this_link_url = request.domain() + request.port_string + link_path
+      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url( this_link_url )))
     rescue StandardError => e
       logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
       raise t(:bitly_error)
