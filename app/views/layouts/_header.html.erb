@@ -8,10 +8,10 @@
           <a href="#" id="add_link" onclick="show_element('new_link_form')"> <%= t(:add_link) %> </a>
         </div>
         <div class="log_in_out">
-          <a href="/link/list">ALL LINKS</a>
+          <a href="/link/list"><%= t(:all_links) %></a>
         </div>
         <div class="log_in_out">
-          <%= link_to "HOME", root_url %>
+          <%= link_to t(:home), root_url %>
         </div>
       </div>
       <div id="ruller"></div>
@@ -26,8 +26,8 @@
       </div>
   <% else %>
       <div class="menu">
-        <div class="log_in_out">
-          <%= link_to t(:sighup), :controller => :twitter, :action => :login %>
+        <div class="twit_but">
+          <%= link_to image_tag("/images/twitter_button.gif"), :controller => :twitter, :action => :login %>
         </div>
         <div class="log_in_out">
           <%= link_to t(:home), root_url %>
