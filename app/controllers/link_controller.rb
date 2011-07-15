@@ -156,29 +156,28 @@ class LinkController < ApplicationController
 
     # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
   def twitt_this
+    raise t(:link_id_not_specific) if !params[:id]
+    link = Link.find(params[:id])
+    raise t(:link_not_found) if link.blank?
+
+    begin
+      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
+    rescue StandardError => e
+      logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
+      raise t(:bitly_error)
+    end
+
+    body = "#{link.title} #{url}"
+
     render :update do |page|
-      begin
-        raise t(:link_id_not_specific) if !params[:id]
-        link = Link.find(params[:id])
-        raise t(:link_not_found) if link.blank?
-
-        begin
-          url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
-        rescue StandardError => e
-          logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
-          raise t(:bitly_error)
-        end
-
-        body = "#{link.title} #{url}"
-
-        page.hide :twitt_this_link
-        page.replace_html :twitt_this, :partial => "twitt_this", :locals => {:body => body}
-        page.show :twitt_this
-
-      rescue StandardError => e
-        push_error_message e.to_s
-        page.replace_html :system_message, system_messages
-      end
+      page.hide :twitt_this_link
+      page.replace_html :twitt_this, :partial => "twitt_this", :locals => {:body => body}
+      page.show :twitt_this
+    end
+  rescue StandardError => e
+    push_error_message e.to_s
+    render :update do |page|
+      page.replace_html :system_message, system_messages
     end
   end
 
