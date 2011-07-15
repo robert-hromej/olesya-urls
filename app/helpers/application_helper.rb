@@ -29,5 +29,17 @@ module ApplicationHelper
     return html
   end
 
+  def tweet_button link
+    this_link_url = "http://" + request.host
+    this_link_url << ":#{request.port}" if request.port != 80
+    this_link_url << link_path(link.id)
+    this_link_url
+
+    content_tag(:a, "Tweet", :class => "twitter-share-button",
+                  :href => "http://twitter.com/share",
+                  "data-url" => this_link_url,
+                  "data-text" => link.title)
+  end
+
 
 end

@@ -30,13 +30,7 @@
           <%= t.submit(:value=> t(:add_comment), :class=>"button") %>
       <% end %>
 
-      <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
-        <div>
-        <a href="http://twitter.com/share" class="twitter-share-button"
-          data-url="<%= link_full_url(@link) %>"
-          data-text="<%= @link.title %>"
-          >Tweet</a>
-        </div>
+      <%= tweet_button(@link) %>
     </div>
 <% end %>
 
