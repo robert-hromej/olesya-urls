@@ -20,18 +20,16 @@ function hide_element(element) {
     });
 }
 
-function vote(kind, link_id, el) {
-    jQuery.ajax({
-        dataType: 'script',
-        url: "/link/vote",
-        data: {
-            kind: kind,
-            link_id: link_id
-        },
-        type: 'post',
-        success: function() {
-            el.parentElement.innerHTML = "";
-        }
+function vote(link_id, votes) {
+    var vc = ".VotesCountId" + link_id;
+    var va = ".VoteArrowsId" + link_id;
+
+    jQuery.each(jQuery(vc), function(index, value) {
+        value.innerHTML = votes;
+    });
+
+    jQuery.each(jQuery(va), function(index, value) {
+        value.innerHTML = "";
     });
 }
 
@@ -49,7 +47,7 @@ function observe_element(element) {
                 jQuery.ajax({
                     dataType:'script',
                     url:el.href,
-                    type:'post'
+                    type:'get'
                 });
                 e.stop();
             }
@@ -74,7 +72,7 @@ function add_comment(id, comment_partial) {
         jQuery.ajax({
             dataType:'script',
             url:url,
-            type:'post'
+            type:'get'
         });
     } else {
         var htm = comment_partial;
@@ -112,4 +110,12 @@ function verify_new_link() {
 
 function redirect_to(url) {
     window.location = url;
+}
+
+function system_message(msg){
+    jQuery.each(jQuery('#system_message'), function(index, value) {
+        value.innerHTML = msg;
+    });
+
+//    jQuery('#system_message').val(msg);
 }

@@ -15,4 +15,19 @@ module ApplicationHelper
     return "comment_id_#{comment.id}_author_id_#{comment.user_id}"
   end
 
+  def vote kind, link
+    k = (kind == :up ? 1 : -1)
+    c = (kind == :up ? "Plus" : "Minus")
+
+    fields = ""
+    fields << hidden_field_tag("link_id", link.id)
+    fields << hidden_field_tag("kind", k)
+    fields << submit_tag("", {:class => c})
+
+    html = form_for(Vote.new, :url => "/link/vote", :method=>"post", :remote => true) { fields.html_safe }
+
+    return html
+  end
+
+
 end

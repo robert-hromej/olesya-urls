@@ -4,8 +4,8 @@ class HomeController < ApplicationController
 
   # load links from DB
   def index
-    @popular_links = Link.select("links.*").join_voted_field(current_user).join_users.order("votes_count DESC").limit(20)
-    @new_links = Link.select("links.*").join_voted_field(current_user).join_users.order("updated_at DESC").limit(20)
+    @popular_links = Link.select("links.*").includes(:user).join_voted_field(current_user).join_users.order("votes_count DESC").limit(20)
+    @new_links = Link.select("links.*").includes(:user).join_voted_field(current_user).join_users.order("updated_at DESC").limit(20)
   end
 
 end

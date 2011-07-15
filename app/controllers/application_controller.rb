@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
         format.js {
           push_notice_message t(:please_login)
           render :update do |page|
-            page.replace_html "system_message", system_messages
+            page.call "system_message", system_messages
           end
         }
       end

@@ -2,10 +2,12 @@ source 'http://rubygems.org'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.9'
 
-gem "rack", "1.2.1"
-gem 'rake', '0.8.7'
+#gem 'jquery_rails3'
+
+#gem "rack", "1.2.3"
+#gem 'rake', '0.8.7'
 
 gem 'mysql'
 #gem 'mysql2', '0.2.11'
@@ -14,8 +16,8 @@ gem 'oauth'
 gem 'twitter'
 
 # Use unicorn as the web server
-gem 'kgio', '2.2.0'
-gem 'unicorn', '3.4.0'
+#gem 'kgio'#, '2.2.0'
+gem 'unicorn' #, '3.4.0'
 
 gem "will_paginate", "~> 3.0.pre2"
 
@@ -28,7 +30,6 @@ group :development, :test do
   gem 'spork', '0.9.0.rc5'
   gem 'database_cleaner'
   gem 'capistrano-deploy', '~> 0.1.1', :require => nil
-
 end
 
 # Deploy with Capistrano

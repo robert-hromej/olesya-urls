@@ -87,23 +87,23 @@ class TwitterController < ApplicationController
         user.client.update(message)
 
         controller.push_notice_message t(:message_posted)
-        page.replace_html :system_message, system_messages
+        page.call "system_message", system_messages
 
-        page.show :twitt_this_link
-        page.hide :twitt_this
+        page.show "twitt_this_link"
+        page.hide "twitt_this"
 
       rescue Twitter::Forbidden => e
         # status is duplicated
         controller.push_error_message "Bitly error: " + e.to_s
-        page.replace_html :system_message, system_messages
+        page.call "system_message", system_messages
       rescue Twitter::Error => e
         logger.error("Twitter error: #{e} \n #{e.backtrace.join("\n")}")
           #page.replace_html :notice, t(:twitter_error)
         controller.push_error_message t(:twitter_error)
-        page.replace_html :system_message, system_messages
+        page.call "system_message", system_messages
       rescue StandardError => e
         controller.push_error_message e.to_s
-        page.replace_html :system_message, system_messages
+        page.call "system_message", system_messages
       end
     end
   end

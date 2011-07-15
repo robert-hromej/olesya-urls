@@ -1,10 +1,16 @@
-<tr class="comment_col <%= cycle('odd_tr', 'even_tr') %>">
-  <td class="avatar">
-    <a href="<%= comment.user.profile_url %>">
-      <%= image_tag(comment.user.profile_image) %>
-    </a>
-  </td>
-  <td class="username"><%= comment.user.screen_name %></td>
-  <td class="comment_body"><%= comment.body %></td>
-  <td class="comment_date"><%= comment.created_at.strftime("%d %B %Y") %></td>
-</tr>
+<div class="comment_col <%#= cycle('odd_tr', 'even_tr') %>">
+  <div class="comment_author">
+    <div class="avatar">
+      <a href="<%= comment.user.profile_url %>">
+        <%= image_tag(comment.user.profile_image) %>
+      </a>
+    </div>
+    <div class="username"><%= link_to comment.user.screen_name, comment.user.profile_url %></div>
+    <div class="comment_date"><%= comment.created_at.strftime("%d %B %Y") %></div>
+  </div>
+  <div class="single_comment">
+    <img class="comment_arrow" width="17" height="31" alt="Comment Arrow" src="/images/comment_arrow.png">
+
+    <div class="comment_body"><%= comment.body %></div>
+  </div>
+</div>

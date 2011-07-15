@@ -11,7 +11,7 @@ class LinkController < ApplicationController
       link_url = "http://" + link_url
     end
 
-    # Allows create only unique links
+      # Allows create only unique links
     link = Link.where(:url => link_url).first
 
     if link
@@ -41,7 +41,7 @@ class LinkController < ApplicationController
       format.js {
         render :update do |page|
           if link.id == nil
-            page.replace_html "system_message", system_messages
+            page.call "system_message", system_messages
           else
             # redirect to link page
             page.call "redirect_to", "/link/show/#{link.id}"
@@ -51,14 +51,14 @@ class LinkController < ApplicationController
     end
   end
 
-  # show all page
+    # show all page
   def list
     # show all links using pagination with 20 links per page
     @links = Link.select("links.*").join_voted_field(current_user).join_users.
         order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-  # link page
+    # link page
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.
         where({:id => params[:id]}).order("created_at DESC").first
@@ -73,7 +73,8 @@ class LinkController < ApplicationController
       format.js {
         render :update do |page|
           page.replace_html "comments", :partial => "comments"
-          page << "matroska('all_comments');observe_element('paginator');"
+          page.call "matroska", 'all_comments'
+          page.call "observe_element", 'paginator'
         end
       }
     end
@@ -92,22 +93,21 @@ class LinkController < ApplicationController
     vote.user = current_user
     vote.kind = params[:kind].to_i
 
-    # every user can vote only once per one link.
+      # every user can vote only once per one link.
     raise t(:already_voted) if !vote.save
 
-    # reload link from table to see new votes count
+      # reload link from table to see new votes count
     link.reload
 
     respond_to do |format|
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
-          page.replace_html "VoteArrowsId#{link.id}", ""
-          page.replace_html "VotesCountId#{link.id}", link.votes_count
+          page.call "vote", link.id, link.votes_count
         end
       }
     end
-    # Cleans cache fragments for this link, to force rails update votes count on link's partial
+      # Cleans cache fragments for this link, to force rails update votes count on link's partial
     expire_fragment(%r{link_id_#{link.id}_author_id_\d*_voted_\d*})
 
   rescue StandardError => e
@@ -117,7 +117,7 @@ class LinkController < ApplicationController
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
-          page.replace_html "system_message", system_messages
+          page.call "system_message", system_messages
         end
       }
     end
@@ -141,13 +141,13 @@ class LinkController < ApplicationController
             page.replace_html "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
           else
             controller.push_error_message t(:comment_not_valid)
-            page.replace_html "system_message", system_messages
+            page.call "system_message", system_messages
           end
         end
       }
     end
 
-    #Cleans cache fragments for this link, to force rails update comments count on link's partial
+      #Cleans cache fragments for this link, to force rails update comments count on link's partial
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
   rescue StandardError => e
     push_error_message e
@@ -155,7 +155,7 @@ class LinkController < ApplicationController
       format.html { redirect_to :back }
       format.js {
         render :update do |page|
-          page.replace_html "system_message", system_messages
+          page.call "system_message", system_messages
         end
       }
     end
@@ -168,7 +168,7 @@ class LinkController < ApplicationController
     link = Link.find(params[:id])
     raise t(:link_not_found) if link.blank?
 
-    # short link with bit.ly
+      # short link with bit.ly
     begin
       url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
     rescue StandardError => e
@@ -176,18 +176,18 @@ class LinkController < ApplicationController
       raise t(:bitly_error)
     end
 
-    # It generates default message - link title and bit.ly short url for link's one.
+      # It generates default message - link title and bit.ly short url for link's one.
     body = "#{link.title} #{url}"
 
     render :update do |page|
-      page.hide :twitt_this_link
-      page.replace_html :twitt_this, :partial => "twitt_this", :locals => {:body => body}
-      page.show :twitt_this
+      page.hide "twitt_this_link"
+      page.replace_html "twitt_this", :partial => "twitt_this", :locals => {:body => body}
+      page.show "twitt_this"
     end
   rescue StandardError => e
     push_error_message e.to_s
     render :update do |page|
-      page.replace_html :system_message, system_messages
+      page.call "system_message", system_messages
     end
   end
 

@@ -15,14 +15,16 @@
 </div>
 
 <div class="RCount">
-  <div class="Number" id="VotesCountId<%= link.id %>">
-    Votes: <%= link.votes_count %>
+  <div class="Number">
+    Votes: <span class="VotesCountId<%= link.id %>"> <%= link.votes_count %> </span>
   </div>
-  <div class="VoteArrows" id="VoteArrowsId<%= link.id %>">
-    <% if controller.current_user != nil and !link.voted? %>
-        <div class="Plus" onclick="vote(1,<%= link.id %>, this)"></div>
-        <div class="Minus" onclick="vote(-1,<%= link.id %>, this)"></div>
-    <% end %>
+  <div class="VoteArrows">
+    <div class="VoteArrowsId<%= link.id %>">
+      <% if controller.current_user != nil and !link.voted? %>
+          <%= vote :up, link %>
+          <%= vote :down, link %>
+      <% end %>
+    </div>
   </div>
 
 </div>

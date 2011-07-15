@@ -4,5 +4,6 @@
 config/unicorn.rb
 config/*.yml
 log/*.log
+tmp/cache/**
 tmp/**/*.pid
 tmp/**/*.sock

@@ -29,6 +29,7 @@ body {
     padding: 0 25px;
     width: 700px;
 }
+
 .comm_cont {
     background: none repeat scroll 0 0 #F4F3E8;
     border: 3px solid #B5CAD0;
@@ -63,10 +64,11 @@ body {
 
 .PageRow a {
     color: #4A586C;
-    text-decoration:none;
+    text-decoration: none;
 }
+
 .PageRow a:hover {
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
 #TableHeader {
@@ -82,7 +84,7 @@ body {
 
 .VoteArrows {
     float: left; /*float: none;*/
-/*clear: both;*/
+    /*clear: both;*/
 }
 
 .Plus {
@@ -90,6 +92,7 @@ body {
     cursor: pointer; /*float: left;*/
     height: 25px;
     width: 40px;
+    border-width: 0;
 }
 
 .Plus:hover {
@@ -102,6 +105,7 @@ body {
     float: left;
     height: 25px; /*margin-left: 5px;*/
     width: 40px;
+    border-width: 0;
 }
 
 .Minus:hover {
@@ -233,10 +237,11 @@ body {
 }
 
 .pagination {
-   float:right;
-    padding-right:10px;
+    float: right;
+    padding-right: 10px;
 }
-.pagination a{
+
+.pagination a {
     background: none repeat scroll 0 0 #B5CAD0;
     border: 1px solid #435266;
     color: #FFFFFF;
@@ -244,9 +249,10 @@ body {
     font-weight: bold;
     margin: 10px 0;
     padding: 2px 5px;
-    text-decoration:none;
+    text-decoration: none;
 }
-.pagination a:hover{
+
+.pagination a:hover {
     color: #F05681;
 }
 
@@ -292,29 +298,37 @@ body {
 .title_link:hover {
     text-decoration: underline;
 }
+
 .PageRow .url_link {
-    margin-top:5px;
+    margin-top: 5px;
 }
+
 .PageRow .url_link a {
     text-decoration: none;
 }
+
 .PageRow .url_link a:hover {
     text-decoration: underline;
 }
-.welcome_link  {
+
+.welcome_link {
     color: #4A586C;
-    text-decoration:none
+    text-decoration: none
 }
+
 .welcome_link:hover {
-    text-decoration:underline
+    text-decoration: underline
 }
-.paginator{
-    width:100%;
-    height:20px;
+
+.paginator {
+    width: 100%;
+    height: 20px;
 }
-.add_comm{
+
+.add_comm {
 
 }
-#new_comment{
+
+#new_comment {
 
 }
