@@ -30,24 +30,23 @@ class Link < ActiveRecord::Base
   def self.valid_url? url
     uri = URI.parse(url)
 
-    begin
-      if url.include?('https')
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        request = Net::HTTP::Get.new(uri.request_uri)
-        response = http.request(request)
-      else
-        response = Net::HTTP.start(uri.host, uri.port) { |http| http.get('/') }
-      end
-      code = response.code
-    rescue => e
-      logger.error("HTTP/HTTPS: #{e} \n #{e.backtrace.join("\n")}")
-      return false
+    if url.include?('https')
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
+    else
+      response = Net::HTTP.start(uri.host, uri.port) { |http| http.get('/') }
     end
+    code = response.code
 
       # todo maybe exists more elegant way to check status code?
     return (/[23](\d){2}/i === code)
+
+  rescue => e
+    logger.error("HTTP/HTTPS: #{e} \n #{e.backtrace.join("\n")}")
+    return false
   end
 
 end
