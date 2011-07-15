@@ -14,26 +14,25 @@
     </tr>
     <div id="ajax_comments"></div>
     <div id="comments">
-    <%= render :partial => "comments" %>
+      <%= render :partial => "comments" %>
     </div>
 
   </table>
 </div>
-<div class="cont">
-  <% unless @comment.nil? %>
+
+<% if controller.authorized? %>
+    <div class="cont">
       <%= form_for(@comment, :url => :comments_path, :method=>"post", :remote => true) do |t| %>
           <%= t.hidden_field :link_id %>
           <%= t.hidden_field :user_id %>
-          Your comment:
+          <%= t(:your_comment) %>:
           <%= t.text_area :body, :rows=>9, :cols=>49 %>
-          <%= t.submit(:value=>"add comment", :class=>"baton") %>
+          <%= t.submit(:value=> t(:add_comment), :class=>"button") %>
       <% end %>
-  <% end %>
 
-  <% if controller.authorized? %>
-      <%= link_to image_tag("/images/tt-big1.png"), {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link", :alt=>"tweet this"%>
-      <div id="twitt_this">
-        &nbsp;
-      </div>
-  <% end %>
-</div>
+      <%= link_to image_tag("/images/tt-big1.png"), {:controller => :link, :action => :tweet_this, :id => @link.id},
+                  :remote => true, :id => "tweet_this_link", :alt => t(:tweet_this) %>
+      <div id="tweet_this"> &nbsp; </div>
+    </div>
+<% end %>
+

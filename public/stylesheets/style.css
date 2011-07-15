@@ -260,7 +260,7 @@ body {
     color: #F05681;
 }
 
-.baton {
+.button {
     background: none repeat scroll 0 0 #B5CAD0;
     border: 1px solid #435266;
     color: #FFFFFF;
@@ -270,7 +270,7 @@ body {
     padding: 4px 8px;
 }
 
-.baton:hover {
+.button:hover {
     cursor: pointer;
 }
 
