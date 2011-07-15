@@ -5,7 +5,7 @@ describe LinkController do
   describe "get show" do
 
     it "should redirect if get not existing link" do
-      get "show", :id => 1
+      get "show", :id => 5555
       response.should be_redirect
     end
 
@@ -28,7 +28,7 @@ describe LinkController do
 
       it "should not be available for comments without signing in" do
         get :show, :id => @link.id
-        response.should_not have_selector("textarea#comment_body")
+        response.body.should_not have_html_tag("textarea",:id=>"comment_body")
       end
 
       describe "registered user" do
@@ -41,12 +41,12 @@ describe LinkController do
 
         it "should be available for comments with signing in" do
           get :show, :id => @link.id
-          response.should have_selector("textarea#comment_body")
+          response.body.should have_html_tag("textarea",:id=>"comment_body")
         end
 
         it "should create comment" do
           post :comment, :comment => @comment_attr
-          response.should have_selector(:a, :href=>"#{DEFAULT_HOST}link/show/#{@link.id}")
+          response.body.should have_html_tag('a', :href=>"#{DEFAULT_HOST}link/show/#{@link.id}")
         end
 
         it "(comment) should appear in the db" do
@@ -58,7 +58,7 @@ describe LinkController do
         it "should have paginator" do
           6.times { Comment.create!(@comment_attr.merge(:user_id=>@user.id)) }
           get :show, :id=>@link.id
-          response.should have_selector(:a, :class=>"next_page")
+          response.body.should have_html_tag('a', :class=>"next_page")
         end
 
         it "should add vote to the db" do
@@ -69,7 +69,7 @@ describe LinkController do
 
         it "should create new link" do
           lambda do
-            post :create, :new_link_url => "this_is_new_link.com", :new_link_title => 'title'
+            post :create, :new_link_url => "yandex.ru", :new_link_title => 'title'
           end.should change(Link, :count).by(1)
         end
 
@@ -77,7 +77,7 @@ describe LinkController do
           2.times { post :create, :new_link_url => "this_is_new_link.com", :new_link_title => 'title' }
           response.should be_redirect
           get :show, :id => @link.id
-          response.should have_selector(:span, :content=>'Link with such URL is already added')
+          response.body.should have_html_tag(:span, :content=>'Link is not added')
         end
       end
     end
