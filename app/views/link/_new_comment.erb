@@ -6,6 +6,6 @@
           <%= t.submit(:value => t(:add_comment), :class => "baton") %>
       <% end %>
   <% end %>
-  <%= link_to t(:twitt_this), {:controller => :link, :action => :twitt_this, :id => link.id}, :remote => true, :id => "twitt_this_link", :class=>"baton" %>
-  <div id="twitt_this"> &nbsp; </div>
+  <%= link_to t(:tweet_this), {:controller => :link, :action => :tweet_this, :id => link.id}, :remote => true, :id => "tweet_this_link", :class=>"baton" %>
+  <div id="tweet_this"> &nbsp; </div>
 </div>

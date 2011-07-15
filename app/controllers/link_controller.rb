@@ -162,8 +162,8 @@ class LinkController < ApplicationController
   end
 
 
-    # ajax method for showing 'twitt this'.
-  def twitt_this
+    # ajax method for showing 'tweet this'.
+  def tweet_this
     raise t(:link_id_not_specific) if !params[:id]
     link = Link.find(params[:id])
     raise t(:link_not_found) if link.blank?
@@ -180,9 +180,9 @@ class LinkController < ApplicationController
     body = "#{link.title} #{url}"
 
     render :update do |page|
-      page.hide "twitt_this_link"
-      page.replace_html "twitt_this", :partial => "twitt_this", :locals => {:body => body}
-      page.show "twitt_this"
+      page.hide "tweet_this_link"
+      page.replace_html "tweet_this", :partial => "tweet_this", :locals => {:body => body}
+      page.show "tweet_this"
     end
   rescue StandardError => e
     push_error_message e.to_s

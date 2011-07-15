@@ -10,11 +10,11 @@ AncjaUrls::Application.routes.draw do
 #  match 'link/vote/:id', :to=>"link#vote"
 
   match "/comments" => "link#show", :as=>"comment"
-  match "link/twitt_this/:id" => "link#twitt_this"
+  match "link/tweet_this/:id" => "link#tweet_this"
 
   get "twitter/login"
   get "twitter/logout"
-  post "twitter/twitt"
+  post "twitter/tweet"
   get "twitter/after_login"
 
   get "home/index"

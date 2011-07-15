@@ -74,8 +74,8 @@ class TwitterController < ApplicationController
     redirect_to root_url
   end
 
-    # ajax method for twitting message on twitter.
-  def twitt
+    # ajax method for tweeting message on twitter.
+  def tweet
     message = params[:body]
     user = current_user
     controller = self
@@ -89,8 +89,8 @@ class TwitterController < ApplicationController
         controller.push_notice_message t(:message_posted)
         page.call "system_message", system_messages
 
-        page.show "twitt_this_link"
-        page.hide "twitt_this"
+        page.show "tweet_this_link"
+        page.hide "tweet_this"
 
       rescue Twitter::Forbidden => e
         # status is duplicated

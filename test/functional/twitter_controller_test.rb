@@ -7,7 +7,7 @@ class TwitterControllerTest < ActionController::TestCase
   end
 
   test "should get twitt" do
-    get :twitt
+    get :tweet
     assert_response :success
   end
 

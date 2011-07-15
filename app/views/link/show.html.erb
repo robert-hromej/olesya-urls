@@ -36,8 +36,8 @@
   <% end %>
 
   <% if controller.authorized? %>
-      <%= link_to "tweet this", {:controller => :link, :action => :twitt_this, :id => @link.id}, :remote => true, :id => "twitt_this_link"%>
-      <div id="twitt_this">
+      <%= link_to "tweet this", {:controller => :link, :action => :tweet_this, :id => @link.id}, :remote => true, :id => "tweet_this_link"%>
+      <div id="tweet_this">
         &nbsp;
       </div>
   <% end %>
