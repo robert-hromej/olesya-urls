@@ -26,8 +26,8 @@
       </div>
   <% else %>
       <div class="menu">
-        <div class="twit_but">
-          <%= link_to image_tag("/images/twitter_button.gif"), :controller => :twitter, :action => :login %>
+        <div class="twitter_but">
+          <%= link_to image_tag("/images/twitter_button.gif"), {:controller => :twitter, :action => :login}, :id => "twitter_login_but" %>
         </div>
         <div class="log_in_out">
           <%= link_to t(:home), root_url %>

@@ -56,7 +56,7 @@ Spork.prefork do
       #end
       #Capybara.current_driver.for :firefox, :profile => Profile.new
     visit root_path
-    click_link 'Sighup with Twitter'
+    click_link 'twitter_login_but'
     fill_in :username_or_email, :with => options.nil? ? TWITTER_CREDENTIALS[:login] : options[:login]
     fill_in "password", :with => options.nil? ? TWITTER_CREDENTIALS[:pass] : options[:pass]
     click_button 'allow'

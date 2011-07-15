@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe 'Global', :js => true do
+describe "IntegrationTesting", :js => true do
 
   before(:all) do
     DatabaseCleaner.strategy = :transaction
@@ -13,7 +13,7 @@ describe 'Global', :js => true do
 
     before(:each) do
       visit root_path
-      click_link 'Sighup with Twitter'
+      click_link 'twitter_login_but'
     end
 
     it 'should have link to show all page' do

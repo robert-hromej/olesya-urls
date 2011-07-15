@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe User do
+describe "UserModel" do
 
   before(:each) do
     @attr={:screen_name=>"Name", :oauth_token=>"token", :oauth_secret => "secret"}

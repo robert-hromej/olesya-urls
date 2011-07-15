@@ -1,5 +1,5 @@
 require "spec_helper"
-describe "link" do
+describe "LinkModel" do
 
   before(:each) do
     @attr = {:user_id=>1, :title=>"title", :url=>"http://sample.com/"}
