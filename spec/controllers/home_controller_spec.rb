@@ -14,12 +14,12 @@ describe HomeController do
 
   it "should have link on" do
     get :index
-    response.should have_selector(:a, :href=>"link_url", :content=>"link_url", :target=>"_blank")
+    response.body.should  have_html_tag(:a,:content=>'link_title')
   end
 
   it "should not allow votes to not registered user" do
     get :index
-    response.should_not have_selector(:div, :class=>"Plus")
+    response.body.should_not have_html_tag(:div,:class=>'Plus')
   end
 
   describe "registered user" do
@@ -28,14 +28,14 @@ describe HomeController do
       login nil
     end
 
-    it "should allow votes to registered user" do
+    it "should allow votes to registered user",:request => true do
       get :index
-      response.should have_selector(:div, :class=>"Plus")
+      response.body.should have_html_tag(:div,:class=>'Plus')
     end
 
     it "should show registered user avatar" do
       get :index
-      response.should have_selector(:img, :src=>"/images/no-avatar.png")
+      response.body.should have_html_tag(:img, :src=>"/images/no-avatar.png")
     end
 
   end
