@@ -3,20 +3,22 @@
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-    # creates new link. Allows create only unique links, if user try to create link which is already created
-    # he will be redirected onto page of that link, with promt to comment or vote for that
+    # creates new link.
   def create
-    #todo comment
+    # add 'http://' to url if it isn't
     link_url = params[:new_link_url]
     unless (/^https?:\/{2}/i === link_url)
       link_url = "http://" + link_url
     end
 
+    # Allows create only unique links
     link = Link.where(:url => link_url).first
 
     if link
+      #if user try to create link which is already created
       push_notice_message t(:link_already_added)
     else
+      # save new link
       link = Link.new(:title => params[:new_link_title],
                       :url => link_url,
                       :user => current_user)
@@ -32,6 +34,7 @@ class LinkController < ApplicationController
         if link.id == nil
           redirect_to root_path
         else
+          # redirect to link page
           redirect_to "/link/show/#{link.id}"
         end
       }
@@ -40,6 +43,7 @@ class LinkController < ApplicationController
           if link.id == nil
             page.replace_html "system_message", system_messages
           else
+            # redirect to link page
             page.call "redirect_to", "/link/show/#{link.id}"
           end
         end
@@ -47,14 +51,14 @@ class LinkController < ApplicationController
     end
   end
 
-    # show all page
-    # show all links using pagination with 20 links per page
+  # show all page
   def list
+    # show all links using pagination with 20 links per page
     @links = Link.select("links.*").join_voted_field(current_user).join_users.
         order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
-    # link page
+  # link page
   def show
     @link = Link.select("links.*").join_voted_field(current_user).join_users.
         where({:id => params[:id]}).order("created_at DESC").first
@@ -78,10 +82,9 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-    # ajax method for performing voting. User can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
-    # every user can vote only once per one link. Takes to url params 'link_id' and 'kind'. Cleans cache fragments for
-    # this link, to force rails update votes count on link's partial
+    # ajax method for performing voting.
   def vote
+    # Takes to url params 'link_id' and 'kind'.
     link = Link.find(params[:link_id])
 
     vote = Vote.new
@@ -89,8 +92,10 @@ class LinkController < ApplicationController
     vote.user = current_user
     vote.kind = params[:kind].to_i
 
+    # every user can vote only once per one link.
     raise t(:already_voted) if !vote.save
 
+    # reload link from table to see new votes count
     link.reload
 
     respond_to do |format|
@@ -102,6 +107,7 @@ class LinkController < ApplicationController
         end
       }
     end
+    # Cleans cache fragments for this link, to force rails update votes count on link's partial
     expire_fragment(%r{link_id_#{link.id}_author_id_\d*_voted_\d*})
 
   rescue StandardError => e
@@ -117,9 +123,9 @@ class LinkController < ApplicationController
     end
   end
 
-    # ajax post method for creating comments. Use form fields values on link page ('show'). Cleans cache fragments for
-    # this link, to force rails update comments count on link's partial
+    # ajax post method for creating comments.
   def comment
+    # Usese form fields values on link page ('show').
     raise t(:link_not_found) if Link.where(:id => params[:comment][:link_id]).first == nil
 
     params[:comment][:user_id] = current_user.id
@@ -140,6 +146,8 @@ class LinkController < ApplicationController
         end
       }
     end
+
+    #Cleans cache fragments for this link, to force rails update comments count on link's partial
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
   rescue StandardError => e
     push_error_message e
@@ -154,12 +162,13 @@ class LinkController < ApplicationController
   end
 
 
-    # ajax method for showing 'twitt this'. It generates default message - link title and bit.ly short url for link's one.
+    # ajax method for showing 'twitt this'.
   def twitt_this
     raise t(:link_id_not_specific) if !params[:id]
     link = Link.find(params[:id])
     raise t(:link_not_found) if link.blank?
 
+    # short link with bit.ly
     begin
       url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(link.url)))
     rescue StandardError => e
@@ -167,6 +176,7 @@ class LinkController < ApplicationController
       raise t(:bitly_error)
     end
 
+    # It generates default message - link title and bit.ly short url for link's one.
     body = "#{link.title} #{url}"
 
     render :update do |page|

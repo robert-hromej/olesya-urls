@@ -27,7 +27,9 @@ class User < ActiveRecord::Base
 
     # searches user using screen name or create new one with specific oauth token and secret
   def self.login(credentials, result)
+    # use exiting record for already registered users
     u = User.where(:screen_name => credentials.screen_name).first
+    # Creates record in table user for new user
     u ||= User.create(:screen_name => credentials.screen_name, :oauth_token => result.token, :oauth_secret => result.secret)
   end
 

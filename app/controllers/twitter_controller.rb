@@ -6,13 +6,15 @@ class TwitterController < ApplicationController
 
   TWITTER_API_URL = "https://api.twitter.com"
 
-    # perform first step in oauth authenticating - get request token and redirect to Twitter's authenticating page
+    # perform first step in oauth authenticating
   def login
+    # get request token
     request_token = twitter_oauth.get_request_token(:oauth_callback => oauth_callback)
 
     session['rtoken'] = request_token.token
     session['rsecret'] = request_token.secret
 
+    # redirect to Twitter's authenticating page
     redirect_to twitter_authenticate(request_token.token)
   rescue OAuth::Error => e
     logger.error("OAuth error: #{e} \n #{e.backtrace.join("\n")}")
@@ -20,18 +22,19 @@ class TwitterController < ApplicationController
     redirect_to root_url
   end
 
-    # simply clean current user value in session
+    # perform logout
   def logout
+    # simply clean current user value in session
     set_current_user(nil)
     redirect_to root_url
   end
 
-    # is redirected by Twitter after authenticating. Sets current user variable. Creates record in table user for new user
-    # and use exiting record for already registered users. Searching is performed by screen_name returned by Twitter.
-    # Updates user profile image and cleans cache fragments
+  # is redirected by Twitter after authenticating.
   def after_login
+    # user doen't allowed
     raise t(:twitter_denided) if params[:denied]
 
+    # get OAuth access token
     result = OAuth::RequestToken.new(twitter_oauth, session['rtoken'], session['rsecret']).
         get_access_token(:oauth_verifier => params[:oauth_verifier])
 
@@ -40,15 +43,20 @@ class TwitterController < ApplicationController
                :oauth_token => result.token,
                :oauth_token_secret => result.secret}
 
+    # get twitter screen name using got access token
     client = Twitter::Client.new(options)
     credentials = client.verify_credentials
 
+    # search user using screen name
     user = User.login(credentials, result)
 
+    #Updates user profile image
     user.update_avatar
+    # cleans cache fragments
     expire_fragment(%r{link_id_\d*_author_id_#{user.id}_voted_\d*})
     expire_fragment(%r{comment_id_\d*_author_id_#{user.id}})
 
+    # Sets current user variable
     set_current_user user
 
     redirect_to root_url
@@ -66,7 +74,7 @@ class TwitterController < ApplicationController
     redirect_to root_url
   end
 
-    # ajax method for twitting message on twitter. if twitter error occurred during process - shows it using ajax.
+    # ajax method for twitting message on twitter.
   def twitt
     message = params[:body]
     user = current_user
