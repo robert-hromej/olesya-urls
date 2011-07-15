@@ -3,6 +3,12 @@
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
+  DOMAIN = {
+      "development" => "http://localhost:3000",
+      "test" => "http://ancja-urls.no-ip.info",
+      "production" => "http://ancja-urls.no-ip.info"
+  }
+
     # creates new link.
   def create
     # add 'http://' to url if it isn't
@@ -170,8 +176,9 @@ class LinkController < ApplicationController
 
       # short link with bit.ly
     begin
-      this_link_url = request.domain() + request.port_string + link_path
-      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url( this_link_url )))
+      this_link_url = DOMAIN[ENV["RAILS_ENV"]]
+      this_link_url << link_path(link.id)
+      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(this_link_url)))
     rescue StandardError => e
       logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
       raise t(:bitly_error)
