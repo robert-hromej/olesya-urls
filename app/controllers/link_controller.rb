@@ -22,6 +22,7 @@ class LinkController < ApplicationController
       link = Link.new(:title => params[:new_link_title],
                       :url => link_url,
                       :user => current_user)
+
       if Link.valid_url?(link_url) and link.save()
         push_notice_message t(:link_added)
       else
@@ -158,39 +159,6 @@ class LinkController < ApplicationController
           page.call "system_message", system_messages
         end
       }
-    end
-  end
-
-
-    # ajax method for showing 'tweet this'.
-  def tweet_this
-    raise t(:link_id_not_specific) if !params[:id]
-    link = Link.find(params[:id])
-    raise t(:link_not_found) if link.blank?
-
-      # short link with bit.ly
-    begin
-      this_link_url = request.host
-      this_link_url << ":#{request.port}" if request.port != 80
-      this_link_url << link_path(link.id)
-      url = Net::HTTP.get(URI.parse(get_bit_ly_api_url(this_link_url)))
-    rescue StandardError => e
-      logger.error("Bitly error: #{e} \n #{e.backtrace.join("\n")}")
-      raise t(:bitly_error)
-    end
-
-      # It generates default message - link title and bit.ly short url for link's one.
-    body = "#{link.title} #{url}"
-
-    render :update do |page|
-      page.hide "tweet_this_link"
-      page.replace_html "tweet_this", :partial => "tweet_this", :locals => {:body => body}
-      page.show "tweet_this"
-    end
-  rescue StandardError => e
-    push_error_message e.to_s
-    render :update do |page|
-      page.call "system_message", system_messages
     end
   end
 

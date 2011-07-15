@@ -2,8 +2,6 @@
 # all methods requires authorization, except ones for for authorization
 class TwitterController < ApplicationController
 
-  before_filter :is_logged?, :except => [:login, :logout, :after_login]
-
   TWITTER_API_URL = "https://api.twitter.com"
 
     # perform first step in oauth authenticating
@@ -72,40 +70,6 @@ class TwitterController < ApplicationController
   rescue StandardError => e
     push_error_message e.to_s
     redirect_to root_url
-  end
-
-    # ajax method for tweeting message on twitter.
-  def tweet
-    message = params[:body]
-    user = current_user
-    controller = self
-
-    render :update do |page|
-      begin
-        raise t(:length_message) if message.blank? or message.size >= 140
-
-        user.client.update(message)
-
-        controller.push_notice_message t(:message_posted)
-        page.call "system_message", system_messages
-
-        page.show "tweet_this_link"
-        page.hide "tweet_this"
-
-      rescue Twitter::Forbidden => e
-        # status is duplicated
-        controller.push_error_message "Bitly error: " + e.to_s
-        page.call "system_message", system_messages
-      rescue Twitter::Error => e
-        logger.error("Twitter error: #{e} \n #{e.backtrace.join("\n")}")
-          #page.replace_html :notice, t(:twitter_error)
-        controller.push_error_message t(:twitter_error)
-        page.call "system_message", system_messages
-      rescue StandardError => e
-        controller.push_error_message e.to_s
-        page.call "system_message", system_messages
-      end
-    end
   end
 
   private

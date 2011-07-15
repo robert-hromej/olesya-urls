@@ -30,9 +30,13 @@
           <%= t.submit(:value=> t(:add_comment), :class=>"button") %>
       <% end %>
 
-      <%= link_to image_tag("/images/tt-big1.png"), {:controller => :link, :action => :tweet_this, :id => @link.id},
-                  :remote => true, :id => "tweet_this_link", :alt => t(:tweet_this) %>
-      <div id="tweet_this"> &nbsp; </div>
+      <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+        <div>
+        <a href="http://twitter.com/share" class="twitter-share-button"
+          data-url="<%= link_full_url(@link) %>"
+          data-text="<%= @link.title %>"
+          >Tweet</a>
+        </div>
     </div>
 <% end %>
 

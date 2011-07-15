@@ -37,7 +37,7 @@ class Link < ActiveRecord::Base
       request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)
     else
-      response = Net::HTTP.start(uri.host, uri.port) { |http| http.get('/') }
+      response = Net::HTTP.start(uri.host, uri.port) { |http| http.head('/') }
     end
     code = response.code
 
