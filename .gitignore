@@ -1,5 +1,6 @@
 .idea
 .gems
+.bundle
 config/unicorn.rb
 config/*.yml
 log/*.log
