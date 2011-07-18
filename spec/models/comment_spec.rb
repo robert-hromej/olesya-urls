@@ -4,6 +4,7 @@ require "spec_helper"
 describe "CommentModel" do
 
   before(:each) do
+    # test comment
     @attr={:user_id => 1, :link_id => 1, :body=>'Lorem ipsum dolor sit amet'}
   end
 

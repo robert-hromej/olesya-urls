@@ -5,6 +5,7 @@ describe TwitterController do
   render_views
 
   it "should not fail when login" do
+    # twitter login redirects to twitter.com
     get :login
     response.should be_redirect
   end

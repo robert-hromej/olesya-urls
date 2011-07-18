@@ -4,6 +4,7 @@ require "spec_helper"
 describe "LinkModel" do
 
   before(:each) do
+    # create default link
     @attr = {:user_id=>1, :title=>"title", :url=>"http://sample.com/"}
   end
 
