@@ -14,7 +14,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
 
-    # Add this to load Capybara integration:
+  # Add this to load Capybara integration:
   require 'capybara/rspec'
   require 'capybara/rails'
 
@@ -32,12 +32,12 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-      # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-      # If you're not using ActiveRecord, or you'd prefer not to run each of your
-      # examples within a transaction, remove the following line or assign false
-      # instead of true.
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # examples within a transaction, remove the following line or assign false
+    # instead of true.
     config.use_transactional_fixtures = true
     #config.include(Capybara, :type => :integration)
   end
@@ -47,7 +47,13 @@ Spork.prefork do
   def login(user)
     session[:current_user_id] = user.nil? ? Factory(:user, :screen_name => Factory.next(:screen_name)) : user
   end
-
+  #  <b>==DOCUMENTATION==</b>
+  #  <b>logs in with twitter to create session</b>
+  #
+  #  <b>Usage</b>
+  #    integration_login
+  #
+  #    note you can add parameters when using this function to login by other user
   def integration_login(options=nil)
     #require 'selenium/webdriver'
     #driver = Selenium::WebDriver.for :chrome
@@ -62,6 +68,14 @@ Spork.prefork do
     click_link LOGOUT_BUTTON
   end
 
+  #  <b>==DOCUMENTATION==</b>
+  #  <b>creates new link</b>
+  #
+  #  <b>Usage</b>
+  #    create_link(:title=>'new_link_title', :url=>'http://valid_url')
+  #    create_link(:test=>false, :title=>'new_link_title', :url=>'http://valid_url')
+  #
+  #    parameter [test] must be false to add new link if it already exists
   def create_link(options={})
     test = !(options[:test].nil? ? true : options[:test])
     visit root_path

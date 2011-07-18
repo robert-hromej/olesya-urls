@@ -6,13 +6,22 @@ describe "IntegrationTesting", :js => true do
   before(:all) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
-    DatabaseCleaner.start
-    integration_login
+    DatabaseCleaner.start #cleaning database
+    integration_login #creates twitter session and logs out
   end
+  describe "not registered user" do
+    it 'should not be able to add link' do
+      visit root_path
+      click_link 'add_link_button'
+      fill_in NEW_LINK_TITLE_FIELD, :with => 'sample link'
+      fill_in NEW_LINK_URL_FIELD, :with => 'google.com'
+      click_button CREATE_LINK_BUTTON
+      page.html.should have_html_tag('span', :content => I18n.t(:please_login) )
+    end
+  end
+  describe "registered user" do
 
-  describe "registered" do
-
-    before(:each) do
+    before(:each) do #logs in
       visit root_path
       click_link LOGIN_BUTTON
     end
@@ -64,19 +73,6 @@ describe "IntegrationTesting", :js => true do
         click_button "comment_submit"
       end
       page.should have_selector("a[href*=page]")
-    end
-
-    it "should be able to twit link" do
-      create_link(:title=>'google', :url=>'google.com')
-      click_link 'google'
-      click_link 'tweet_this_link'
-#      page.html.should have_html_tag(:textarea, :id=>'body',:content=>'google http//:.*',:print=>true)
-      data = rand(10000).to_s+'test'
-      fill_in 'body', :with => data
-      click_button 'Tweet'
-#      page.html.should have_html_tag(:span, :content=>' Message successfuly posted ',:print => true)
-      visit "http://twitter.com/#{TWITTER_CREDENTIALS[:login]}"
-      page.html.should have_html_tag(:span, :class=>'entry-content',:content=>"#{data}",:print=>false)
     end
   end
 end
