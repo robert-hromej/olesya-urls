@@ -1,7 +1,6 @@
 * {
-    margin: 0px;
-    padding: 0px;
-
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -93,15 +92,16 @@ body {
 }
 
 .VoteArrows {
-    float: left;
+/*float: left;*/
 }
 
 .Plus {
     background: url("../images/button_thumbsup_left_100.png") repeat scroll 0 0 transparent;
+    border-width: 0;
     cursor: pointer;
+    float: left;
     height: 25px;
     width: 40px;
-    border-width: 0;
 }
 
 .Plus:hover {
@@ -110,11 +110,11 @@ body {
 
 .Minus {
     background: url("../images/button_thumbsdown_left_100.png") no-repeat scroll left 0 transparent;
+    border-width: 0;
     cursor: pointer;
     float: left;
     height: 25px;
     width: 40px;
-    border-width: 0;
 }
 
 .Minus:hover {
@@ -160,7 +160,7 @@ body {
 .RCount {
     float: left;
     padding-left: 20px;
-    width: 130px;
+    width: 90px;
 }
 
 .Number {
@@ -168,7 +168,8 @@ body {
     float: left;
     font-size: 16px;
     margin-right: 10px;
-    padding-top: 17px;
+    padding-left: 10px;
+    padding-top: 5px;
     width: 80px;
 }
 
@@ -177,7 +178,7 @@ body {
     font-size: 11px;
     margin-top: 10px;
     padding-left: 20px;
-    width: 100px;
+    width: 80px;
 }
 
 .Tab_header {
@@ -298,7 +299,7 @@ body {
 .underbutton {
     font-size: 20px;
     text-decoration: none;
-    margin: 0 125px;
+    margin: 0 122px;
 }
 
 .button:hover {
@@ -469,4 +470,7 @@ body {
     font-weight: bold;
     height: 26px;
 }
-
+.RTwit{
+    float: left;
+    margin-top: -7px;
+}
