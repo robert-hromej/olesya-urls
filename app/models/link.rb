@@ -40,7 +40,7 @@ class Link < ActiveRecord::Base
       response = Net::HTTP.start(uri.host, uri.port) { |http| http.head('/') }
     end
 
-    return [Net::HTTPSuccess, Net::HTTPSuccess].include?(response.class.superclass)
+    return [Net::HTTPSuccess, Net::HTTPRedirection].include?(response.class.superclass)
   rescue => e
     logger.error("HTTP/HTTPS: #{e} \n #{e.backtrace.join("\n")}")
     return false
