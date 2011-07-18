@@ -49,6 +49,15 @@ body {
     padding-top: 10px;
     width: 740px;
 }
+.UnderRow{
+    background-color: #F1F1F1;
+    border-top: 3px solid #B5CAD0;
+    height: 38px;
+    margin: 0 auto 0 -25px;
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 740px;
+}
 
 .PageRow {
     border-bottom: 3px solid #B5CAD0;
@@ -269,6 +278,11 @@ body {
     margin: 10px 0;
     padding: 4px 8px;
 }
+.underbutton{
+    font-size: 20px;
+    text-decoration: none;
+    margin: 0 125px;
+}
 
 .button:hover {
     cursor: pointer;
@@ -421,4 +435,20 @@ body {
     padding: 5px;
     color: #F05681;
     text-decoration: none;
+}
+
+#logo {
+    float: left;
+}
+
+#small_text {
+    color: #66BBFF;
+    font-size: 12px;
+}
+
+#big_text {
+    color: #F05681;
+    font-size: 19px;
+    font-weight: bold;
+    height:26px;
 }
