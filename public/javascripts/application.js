@@ -1,9 +1,10 @@
 var URL_REGEXP = /[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/;
+document.write('<style>.noscript { display:none }</style>');
 
 jQuery(function($) {
     matroska('all_comments');
     observe_element('paginator');
-    jQuery('#new_link_form').css('display', 'none');
+//    jQuery('#new_link_form').css('display', 'none');
 });
 
 function show_element(element) {
