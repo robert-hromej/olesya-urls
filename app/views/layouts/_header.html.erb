@@ -1,22 +1,29 @@
 <div id="page_header">
-  <% if controller.authorized? %>
-      <div class="menu">
+  <div class="menu">
+
+    <% if controller.authorized? %>
         <div class="log_in_out">
           <%= link_to t(:logout), :controller => :twitter, :action => :logout %>
         </div>
         <div class="log_in_out">
           <a href="#" id="add_link" onclick="show_element('new_link_form')"> <%= t(:add_link) %> </a>
         </div>
-        <div class="log_in_out">
-          <a href="/link/list"><%= t(:all_links) %></a>
+    <% else %>
+        <div class="twitter_but">
+          <%= link_to image_tag("/images/twitter_button.gif"), {:controller => :twitter, :action => :login}, :id => "twitter_login_but" %>
         </div>
-        <div class="log_in_out">
-          <%= link_to t(:home), root_url %>
-        </div>
-      </div>
+    <% end %>
+    <div class="log_in_out">
+      <a href="/link/list"><%= t(:all_links) %></a>
+    </div>
+    <div class="log_in_out">
+      <%= link_to t(:home), root_url %>
+    </div>
+  </div>
+
+  <% if controller.authorized? %>
       <div id="ruller"></div>
       <div id="user_section">
-
         <div id="user_ava">
           <img src="<%= controller.current_user.profile_image %>" alt=""/>
         </div>
@@ -24,18 +31,10 @@
           <h3>Welcome <%= link_to controller.current_user.screen_name, controller.current_user.profile_url, :class=>"welcome_link" %></h3>
         </div>
       </div>
-  <% else %>
-      <div class="menu">
-        <div class="twitter_but">
-          <%= link_to image_tag("/images/twitter_button.gif"), {:controller => :twitter, :action => :login}, :id => "twitter_login_but" %>
-        </div>
-        <div class="log_in_out">
-          <%= link_to t(:home), root_url %>
-        </div>
-      </div>
   <% end %>
 
   <div id="system_message"> <%= system_messages %> </div>
+
   <div id="new_link_form">
     <div id="close_but" onclick="hide_element('new_link_form')">
     </div>
@@ -51,5 +50,6 @@
         <%= button_to_function t(:cancel), "hide_element('new_link_form')", :class=>"button" %>
     <% end %>
   </div>
+
 </div>
 

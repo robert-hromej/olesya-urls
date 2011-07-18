@@ -36,9 +36,9 @@ module ApplicationHelper
     this_link_url
 
     content_tag(:a, "Tweet", :class => "twitter-share-button",
-                  :href => "http://twitter.com/share",
-                  "data-url" => this_link_url,
-                  "data-text" => link.title)
+                :href => "http://twitter.com/share",
+                "data-url" => this_link_url,
+                "data-text" => link.title)
   end
 
 
