@@ -25,7 +25,7 @@ class Link < ActiveRecord::Base
 
     #wrapper around calculated field "voted"
   def voted?
-    self.voted != "0"
+    self.voted != 0
   end
 
   def self.valid_url?(url)
