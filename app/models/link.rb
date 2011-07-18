@@ -39,11 +39,8 @@ class Link < ActiveRecord::Base
     else
       response = Net::HTTP.start(uri.host, uri.port) { |http| http.head('/') }
     end
-    code = response.code
 
-      # todo maybe exists more elegant way to check status code?
-    return (/[23](\d){2}/i === code)
-
+    return [Net::HTTPSuccess, Net::HTTPSuccess].include?(response.class.superclass)
   rescue => e
     logger.error("HTTP/HTTPS: #{e} \n #{e.backtrace.join("\n")}")
     return false
