@@ -1,6 +1,11 @@
 class AddVoteAddTrigger < ActiveRecord::Migration
   def self.up
-    execute("CREATE TRIGGER `votes_compute` AFTER INSERT ON `votes` FOR EACH ROW BEGIN  update links set votes=(SELECT sum(votes.kind) FROM votes where link_id=links.id) where links.id=NEW.link_id; END;")
+    execute <<__SQL
+      CREATE TRIGGER `votes_compute` AFTER INSERT ON `votes`
+      FOR EACH ROW BEGIN
+        UPDATE links SET votes=(SELECT SUM(votes.kind) FROM votes WHERE link_id = links.id) WHERE links.id = NEW.link_id;
+      END;
+__SQL
   end
 
   def self.down

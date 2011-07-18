@@ -1,4 +1,6 @@
 require "spec_helper"
+
+# todo COMMENTS!
 describe HomeController do
 
   before(:each) do

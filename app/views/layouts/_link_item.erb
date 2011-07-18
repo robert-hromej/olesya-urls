@@ -9,7 +9,7 @@
   <%= link_to truncate(link.title.to_s, :length => 50), comment_path(:id=>link.id), :class=>"title_link" %>
   <div class="url_link">
     <a href="<%= link.url %>" target="_blank">
-      <%= truncate(link.url.to_s, :length => 50) %>
+      <%= truncate(link.url.to_s, :length => 45) %>
     </a>
   </div>
 </div>

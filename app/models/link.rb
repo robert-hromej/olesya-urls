@@ -23,11 +23,12 @@ class Link < ActiveRecord::Base
         joins("LEFT JOIN votes v ON (v.link_id = links.id and v.user_id = #{(current_user ? current_user.id : 0)})")
   end
 
+    #wrapper around calculated field "voted"
   def voted?
-    return (self.voted.to_i == 1)
+    self.voted != "0"
   end
 
-  def self.valid_url? url
+  def self.valid_url?(url)
     uri = URI.parse(url)
 
     if url.include?('https')

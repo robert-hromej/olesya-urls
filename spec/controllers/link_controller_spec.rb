@@ -1,4 +1,6 @@
 require "spec_helper"
+
+# todo COMMENTS!
 describe LinkController do
   render_views
 

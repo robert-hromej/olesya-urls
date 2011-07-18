@@ -1,4 +1,6 @@
 require "spec_helper"
+
+# todo COMMENTS!
 describe "CommentModel" do
 
   before(:each) do

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
     # add message
-  def push_message type, msg
+  def push_message(type, msg)
     session[:system_message] ||= {:notice => [], :error => []}
     session[:system_message][type] << msg
   end

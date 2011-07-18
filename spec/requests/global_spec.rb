@@ -1,5 +1,6 @@
 require "spec_helper"
 
+# todo COMMENTS!
 describe "IntegrationTesting", :js => true do
 
   before(:all) do
@@ -13,7 +14,7 @@ describe "IntegrationTesting", :js => true do
 
     before(:each) do
       visit root_path
-      click_link 'twitter_login_but'
+      click_link LOGIN_BUTTON
     end
 
     it 'should have link to show all page' do
@@ -23,14 +24,15 @@ describe "IntegrationTesting", :js => true do
 
     it "should add link" do
       create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
-      page.html.should have_html_tag('span', :content=>'Link successfully added')
+      page.html.should have_html_tag('span', :content => I18n.t(:link_added) )
     end
 
     it "should not add the same link twice" do
       create_link(:title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       create_link(:test=>false, :title=>'new_link_title', :url=>'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
-      page.html.should have_html_tag('span', :content=>' Link with such URL is already added. You can comment it or give you vote ')
+      page.html.should have_html_tag('span', :content => I18n.t(:link_already_added))
     end
+
     it "should not add invalid or unavailable link" do
       create_link(:title=>'unavailable_link_title', :url=>'unavailable_link.com')
       page.html.should_not have_html_tag(:a, :class=>'title_link', :content=>'unavailable_link_title', :print=>false)
@@ -63,6 +65,7 @@ describe "IntegrationTesting", :js => true do
       end
       page.should have_selector("a[href*=page]")
     end
+
     it "should be able to twit link" do
       create_link(:title=>'google', :url=>'google.com')
       click_link 'google'
