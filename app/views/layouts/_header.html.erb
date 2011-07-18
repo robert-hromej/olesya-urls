@@ -1,16 +1,19 @@
 <div id="page_header">
   <div class="menu">
-    
+
     <div id="logo">
-      <div id="big_text">
-        <!--Ancjias URLS-->
-        <%= image_tag("logo4.png") %>
-      </div>
+      <a href="/">
+        <div id="big_text">
+          <!--Ancjias URLS-->
+          <%= image_tag("logo4.png") %>
+        </div>
+      </a>
+
       <div id="small_text">
         the social networks integration with rails example
       </div>
     </div>
-    
+
     <% if controller.authorized? %>
         <div class="log_in_out">
           <%= link_to t(:logout), :controller => :twitter, :action => :logout %>
@@ -46,11 +49,10 @@
   <div id="system_message"> <%= system_messages %> </div>
 
   <div id="new_link_form">
-    <div id="close_but" onclick="hide_element('new_link_form')">
-    </div>
-    <noscript>
-      <div style="text-align:center;width:100%;"> <%= t(:add_link) %> </div>
-    </noscript>
+    <div id="close_but" onclick="hide_element('new_link_form')"></div>
+
+    <noscript> <div class="new_link_title"> <%= t(:add_link) %> </div> </noscript>
+
     <%= form_tag '/link/create', :id => "new_link", :remote=>true, :onSubmit => "return verify_new_link();" do %>
         <span id="new_link_title_label"> <%= t(:title) %>:</span></br>
         <%= text_field_tag :new_link_title, nil, :class => "inp" %> </br>

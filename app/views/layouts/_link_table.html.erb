@@ -1,5 +1,5 @@
 <div class="TitleRow">
-  <div class="Tab_header"><%= tab_header %></div>
+  <div class="Tab_header"><%= header %></div>
 </div>
 
 <% links.each_with_index do |link, index| %>
@@ -10,7 +10,9 @@
     </div>
 <% end %>
 
-<div class="UnderRow">
-  <a href="#" class="button underbutton" onclick="show_element('new_link_form')"> <%= t(:add_link) %> </a>
-  <a href="/link/list" class="button underbutton" ><%= t(:all_links) %></a>
-</div>
+<% if under_btns %>
+    <div class="UnderRow">
+      <a href="#" class="button underbutton" onclick="show_element('new_link_form')"> <%= t(:add_link) %> </a>
+      <a href="/link/list" class="button underbutton"> <%= t(:more_links) %> </a>
+    </div>
+<% end %>

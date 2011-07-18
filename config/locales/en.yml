@@ -36,6 +36,7 @@ en:
   body: "Body"
   tweet: "Tweet"
   all_links: "ALL LINKS"
+  more_links: "MORE LINKS"
   backend_error: "Unknown Error"
   comment_not_valid: "comment is not a valid"
   link_is_not_valid: "Link is not valid"

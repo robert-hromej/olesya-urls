@@ -49,7 +49,8 @@ body {
     padding-top: 10px;
     width: 740px;
 }
-.UnderRow{
+
+.UnderRow {
     background-color: #F1F1F1;
     border-top: 3px solid #B5CAD0;
     height: 38px;
@@ -190,7 +191,17 @@ body {
 }
 
 #page_header {
+}
 
+#system_message {
+}
+
+#system_message .notice {
+    color: green;
+}
+
+#system_message .error {
+    color: red;
 }
 
 #user_ava {
@@ -237,6 +248,11 @@ body {
     width: 210px;
 }
 
+.new_link_title {
+    text-align: center;
+    width: 100%;
+}
+
 #user_section {
     background-color: #F1F1F1;
     border: 2px solid #B5CAD0;
@@ -278,7 +294,8 @@ body {
     margin: 10px 0;
     padding: 4px 8px;
 }
-.underbutton{
+
+.underbutton {
     font-size: 20px;
     text-decoration: none;
     margin: 0 125px;
@@ -450,5 +467,6 @@ body {
     color: #F05681;
     font-size: 19px;
     font-weight: bold;
-    height:26px;
+    height: 26px;
 }
+

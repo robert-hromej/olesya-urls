@@ -9,6 +9,7 @@
 
 <div class="cont">
   <table id="all_comments" cellpadding="0" cellspacing="0">
+    <!-- todo dont use Inline Styles -->
     <tr id="no_comments_message" style="display:<%= !@comments.blank? ? "none" : "table-row" %>">
       <td colspan="4"> <%= t(:not_comments) %> </td>
     </tr>

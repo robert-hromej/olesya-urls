@@ -1,7 +1,7 @@
 <div class="cont">
-  <%= render :partial => "layouts/link_table", :locals => {:links=>@popular_links, :tab_header => t(:header_most_popular)} %>
+  <%= render :partial => "layouts/link_table", :locals => {:links=>@popular_links, :header => t(:header_most_popular), :under_btns => true} %>
 </div>
 
 <div class="cont">
-  <%= render :partial => "layouts/link_table", :locals => {:links=>@new_links, :tab_header => t(:header_most_recent)} %>
+  <%= render :partial => "layouts/link_table", :locals => {:links=>@new_links, :header => t(:header_most_recent), :under_btns => true} %>
 </div>
