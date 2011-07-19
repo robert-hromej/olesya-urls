@@ -6,7 +6,7 @@
 
 
 <div class="RName">
-  <%= link_to truncate(link.title.to_s, :length => 50), comment_path(:id=>link.id), :class=>"title_link" %>
+  <%= link_to truncate(link.title.to_s, :length => 50), link_path(link.id), :class=>"title_link" %>
   <div class="url_link">
     <a href="<%= link.url %>" target="_blank">
       <%= truncate(link.url.to_s, :length => 45) %>
@@ -19,7 +19,7 @@
   <br>
 
   <div>
-    <a href="<%= comment_path(:id => link.id) %>">
+    <a href="<%= link_path(:id => link.id) %>">
       <%= t(:comments) %>
       <span id="LinkCommentCountId<%= link.id %>">
         <%= link.comments_count %>

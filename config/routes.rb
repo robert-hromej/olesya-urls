@@ -9,7 +9,7 @@ AncjaUrls::Application.routes.draw do
   match '/link/comment/', :to => "link#comment", :as => "comments_path"
 #  match 'link/vote/:id', :to=>"link#vote"
 
-  match "/comments" => "link#show", :as=>"comment"
+#  match "/comments/:id" => "link#show", :as=>"comment"
   match "link/tweet_this/:id" => "link#tweet_this"
 
   get "twitter/login"

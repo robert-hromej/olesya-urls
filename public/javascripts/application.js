@@ -69,7 +69,7 @@ function add_comment(id, comment_partial) {
         (jQuery('.comment_body').length >= 5 && jQuery('a.next_page').length == 0)) {
 
         jQuery('#ajax_comments').html('');
-        var url = jQuery('a[rel*=start]').attr('href');
+        var url = window.location.pathname;
         jQuery.ajax({
             dataType:'script',
             url:url,

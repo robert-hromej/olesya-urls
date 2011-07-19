@@ -47,6 +47,7 @@ Spork.prefork do
   def login(user)
     session[:current_user_id] = user.nil? ? Factory(:user, :screen_name => Factory.next(:screen_name)) : user
   end
+
   #  <b>==DOCUMENTATION==</b>
   #  <b>logs in with twitter to create session</b>
   #
@@ -93,6 +94,17 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   require "have_htm_tag_helper"
+
+  #constants
+  LOGIN_BUTTON = 'twitter_login_but'
+  TWITTER_LOGIN_FIELD = "username_or_email"
+  TWITTER_PASSWORD_FIELD = "password"
+  ALLOW_BUTTON = 'allow'
+  LOGOUT_BUTTON = 'LOGOUT'
+  ADD_LINK_BUTTON = 'add_link'
+  NEW_LINK_TITLE_FIELD = 'new_link_title'
+  NEW_LINK_URL_FIELD = 'new_link_url'
+  CREATE_LINK_BUTTON = 'Create'
 end
 
 # --- Instructions ---
@@ -106,12 +118,3 @@ end
 #   feel free to delete them.
 #
 
-LOGIN_BUTTON = 'twitter_login_but'
-TWITTER_LOGIN_FIELD = "username_or_email"
-TWITTER_PASSWORD_FIELD = "password"
-ALLOW_BUTTON = 'allow'
-LOGOUT_BUTTON = 'LOGOUT'
-ADD_LINK_BUTTON = 'add_link'
-NEW_LINK_TITLE_FIELD = 'new_link_title'
-NEW_LINK_URL_FIELD = 'new_link_url'
-CREATE_LINK_BUTTON = 'Create'
