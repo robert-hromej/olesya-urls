@@ -33,7 +33,6 @@ describe "IntegrationTesting", :js => true do
       visit root_path
       click_link SHOW_ALL_LINK
       page.html.should have_html_tag(:a, :class=>'next_page')
-      sleep(150)
     end
   end
 
