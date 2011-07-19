@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  title: url_title
-  url: "http://www.botsvsbrowsers.com/details/415562/index.html"
-
-two:
-  title: url_title
-  url: "http://russian.railstutorial.org/chapters/beginning#sec:install_git"
