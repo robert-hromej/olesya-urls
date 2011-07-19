@@ -32,6 +32,7 @@ group :development, :test do
   gem 'database_cleaner'
                  #gem "selenium-webdriver", "0.2.2" # for Chrome WebDrive
   gem 'capistrano-deploy', '~> 0.1.1', :require => nil
+
 end
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)

@@ -8,6 +8,7 @@ describe "IntegrationTesting", :js => true do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.start #cleaning database
+    25.times {Factory(:link,:user_id => 1, :url=>Factory.next(:url))}
     # perform twitter login
     integration_login #creates twitter session and logs out
   end
@@ -27,6 +28,12 @@ describe "IntegrationTesting", :js => true do
 
       # we must see error message
       page.html.should have_html_tag('span', :content => I18n.t(:please_login) )
+    end
+    it 'should se all links page with pagination' do
+      visit root_path
+      click_link SHOW_ALL_LINK
+      page.html.should have_html_tag(:a, :class=>'next_page')
+      sleep(150)
     end
   end
 

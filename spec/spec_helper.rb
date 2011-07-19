@@ -105,6 +105,7 @@ Spork.each_run do
   NEW_LINK_TITLE_FIELD = 'new_link_title'
   NEW_LINK_URL_FIELD = 'new_link_url'
   CREATE_LINK_BUTTON = 'Create'
+  SHOW_ALL_LINK = 'show_all_links'
 end
 
 # --- Instructions ---

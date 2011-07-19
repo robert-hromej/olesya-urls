@@ -7,6 +7,9 @@ end
 Factory.sequence :screen_name do |n|
   "name-#{n}"
 end
+Factory.sequence :url do |n|
+  "http://sample.com/#{n}"
+end
 
 Factory.define :link do |link|
   link.title "title"
