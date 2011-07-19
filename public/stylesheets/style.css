@@ -253,6 +253,10 @@ body {
     width: 100%;
 }
 
+.error_field {
+    color: #ff0000;
+}
+
 #user_section {
     background-color: #F1F1F1;
     border: 2px solid #B5CAD0;

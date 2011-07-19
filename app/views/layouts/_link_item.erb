@@ -34,7 +34,7 @@
   <br>
 
   <div>
-    <a href="/link/show/<%= link.id %>">
+    <a href="<%= comment_path(:id => link.id) %>">
       <%= t(:comments) %>
       <span id="LinkCommentCountId<%= link.id %>">
         <%= link.comments_count %>

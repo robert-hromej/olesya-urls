@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rails', '3.0.9'
 
-#gem 'jquery_rails3'
+gem 'jquery-rails'
 
 #gem "rack", "1.2.3"
 #gem 'rake', '0.8.7'
@@ -27,10 +27,10 @@ group :development, :test do
   gem 'factory_girl_rails', '1.0'
   gem 'capybara'
   gem "redgreen" # for ruby187
-  #gem 'mynyml-redgreen' # for ruby192
+                 #gem 'mynyml-redgreen' # for ruby192
   gem 'spork', '0.9.0.rc5'
   gem 'database_cleaner'
-  #gem "selenium-webdriver", "0.2.2" # for Chrome WebDrive
+                 #gem "selenium-webdriver", "0.2.2" # for Chrome WebDrive
   gem 'capistrano-deploy', '~> 0.1.1', :require => nil
 end
 

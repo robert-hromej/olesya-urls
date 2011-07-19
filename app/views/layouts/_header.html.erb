@@ -41,7 +41,7 @@
           <img src="<%= controller.current_user.profile_image %>" alt=""/>
         </div>
         <div id="greeting">
-          <h3>Welcome <%= link_to controller.current_user.screen_name, controller.current_user.profile_url, :class=>"welcome_link" %></h3>
+          <h3> <%= t(:welocme) %> <%= link_to controller.current_user.screen_name, controller.current_user.profile_url, :class=>"welcome_link" %></h3>
         </div>
       </div>
   <% end %>
@@ -51,9 +51,11 @@
   <div id="new_link_form" class="noscript">
     <div id="close_but" onclick="hide_element('new_link_form')"></div>
 
-    <noscript> <div class="new_link_title"> <%= t(:add_link) %> </div> </noscript>
+    <noscript>
+      <div class="new_link_title"> <%= t(:add_link) %> </div>
+    </noscript>
 
-    <%= form_tag '/link/create', :id => "new_link", :remote=>true, :onSubmit => "return verify_new_link();" do %>
+    <%= form_tag '/link/create', :id => "new_link", :remote => true, :onSubmit => "return verify_new_link();" do %>
         <span id="new_link_title_label"> <%= t(:title) %>:</span></br>
         <%= text_field_tag :new_link_title, nil, :class => "inp" %> </br>
         <span id="new_link_url_label"><%= t(:url) %>:</span></br>

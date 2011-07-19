@@ -73,9 +73,7 @@ class LinkController < ApplicationController
       format.html
       format.js {
         render :update do |page|
-          page.replace_html "comments", :partial => "comments"
-          page.call "matroska", 'all_comments'
-          page.call "observe_element", 'paginator'
+          page.call "replace_html", "comments", render(:partial => "comments")
         end
       }
     end
@@ -139,7 +137,7 @@ class LinkController < ApplicationController
         render :update do |page|
           if comment.valid?
             page.call "add_comment", comment.id, render(:partial => "comment", :locals => {:comment => comment})
-            page.replace_html "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
+            page.call "replace_html", "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
           else
             controller.push_error_message t(:comment_not_valid)
             page.call "system_message", system_messages
