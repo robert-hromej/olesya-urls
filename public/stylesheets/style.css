@@ -53,9 +53,8 @@ body {
     border-top: 3px solid #B5CAD0;
     height: 38px;
     margin: 0 auto 0 -25px;
-    padding-left: 10px;
     padding-top: 10px;
-    width: 740px;
+    width: 750px;
 }
 
 .PageRow {
@@ -284,8 +283,8 @@ body {
 
 .underbutton {
     font-size: 20px;
+    margin-left: 165px;
     text-decoration: none;
-    margin: 0 122px;
 }
 
 .button:hover {
@@ -459,6 +458,9 @@ body {
 
 .RTwit {
     float: left;
-    margin-top: -7px;
-    /*padding-left: 10px;*/
+    margin-top: -7px; /*padding-left: 10px;*/
+}
+
+a img {
+    border: none;
 }
