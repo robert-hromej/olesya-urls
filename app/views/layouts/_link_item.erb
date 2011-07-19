@@ -21,8 +21,8 @@
   <div class="VoteArrows">
     <div class="VoteArrowsId<%= link.id %>">
       <% if controller.current_user != nil and !link.voted? %>
-          <%= vote :up, link %>
           <%= vote :down, link %>
+          <%= vote :up, link %>
       <% end %>
     </div>
   </div>
@@ -40,7 +40,9 @@
         <%= link.comments_count %>
       </span>
     </a>
-    <%= tweet_button(link) %>
-  </div>
 
+  </div>
+</div>
+<div class="RTwit">
+  <%= tweet_button(link) %>
 </div>
