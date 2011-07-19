@@ -3,6 +3,6 @@
         <%= render :partial => "comment", :locals => {:comment => comment} %>
     <% end %>
 <% end %>
-<div id="paginator">
+<div id="paginator" class="ajax_paginator">
   <%= will_paginate @comments %>
 </div>

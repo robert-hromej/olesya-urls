@@ -5,7 +5,7 @@ var URL_REGEXP = /[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/;
 document.write('<style>.noscript { display:none }</style>');
 
 jQuery(function($) {
-    observe_element('paginator');
+    observe_element('ajax_paginator');
 });
 
 /**
@@ -45,7 +45,7 @@ function vote(link_id, votes) {
 }
 
 function observe_element(element) {
-    jQuery('.pagination a').bind('click', function () {
+    jQuery('.' + element + ' a').bind('click', function () {
         jQuery.ajax({
             dataType:'script',
             url:this.href,
@@ -119,4 +119,5 @@ function system_message(msg) {
 
 function replace_html(id, html) {
     jQuery("#" + id).html(html);
+//    jQuery("." + id).html(html);
 }
