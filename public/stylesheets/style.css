@@ -92,11 +92,11 @@ body {
 }
 
 .VoteArrows {
-/*float: left;*/
+    /*float: left;*/
 }
 
 .Plus {
-    background: url("../images/button_thumbsup_left_100.png") repeat scroll 0 0 transparent;
+    background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
     border-width: 0;
     cursor: pointer;
     float: left;
@@ -109,7 +109,7 @@ body {
 }
 
 .Minus {
-    background: url("../images/button_thumbsdown_left_100.png") no-repeat scroll left 0 transparent;
+    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
     border-width: 0;
     cursor: pointer;
     float: left;
@@ -119,15 +119,6 @@ body {
 
 .Minus:hover {
     background: url("../images/button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
-}
-
-.right_but {
-    background: url("../images/button_thumbs_right.png") no-repeat scroll right 0 transparent;
-    left: 10px;
-    line-height: 22px;
-    margin: 0 0 0 14px;
-    padding: 4px 14px 4px 6px;
-    position: relative;
 }
 
 .RAvatar {
@@ -153,14 +144,14 @@ body {
 }
 
 .RName {
-    width: 300px;
+    width: 310px;
     float: left;
 }
 
 .RCount {
     float: left;
-    padding-left: 20px;
-    width: 90px;
+    /*padding-left: 20px;*/
+    width: 100px;
 }
 
 .Number {
@@ -474,7 +465,9 @@ body {
     font-weight: bold;
     height: 26px;
 }
-.RTwit{
+
+.RTwit {
     float: left;
     margin-top: -7px;
+    /*padding-left: 10px;*/
 }
