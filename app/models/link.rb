@@ -25,7 +25,7 @@ class Link < ActiveRecord::Base
 
     #wrapper around calculated field "voted"
   def voted?
-    self.voted != 0
+    self.voted.to_i != 0
   end
 
   def self.valid_url?(url)
@@ -43,7 +43,6 @@ class Link < ActiveRecord::Base
 
     return [Net::HTTPSuccess, Net::HTTPRedirection].include?(response.class.superclass)
   rescue => e
-    logger.error("HTTP/HTTPS: #{e} \n #{e.backtrace.join("\n")}")
     return false
   end
 

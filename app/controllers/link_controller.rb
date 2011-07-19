@@ -32,12 +32,7 @@ class LinkController < ApplicationController
 
     respond_to do |format|
       format.html {
-        if link.id == nil
-          redirect_to root_path
-        else
-          # redirect to link page
-          redirect_to "/link/show/#{link.id}"
-        end
+        redirect_to (link.id ? "/link/show/#{link.id}" : root_path)
       }
       format.js {
         render :update do |page|
