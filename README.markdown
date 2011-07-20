@@ -2,9 +2,10 @@ Ancja URLS
 ==========
 
 Simple link aggregator. Allows add own link into global list of links. Shows links in two forms: top 20 most popular links
-and top 20 most recent. Using Twitter authorization for users. Allows share links on Twitter using Twitter share button.
+and top 20 most recent. Uses Twitter authorization for users. Allows share links on Twitter using "Twitter share button".
+Covered with RSpec unit tests and Selenium & Capybara automate UI tests.
 
-Public web site <http://http://ancja-urls.no-ip.info/>.
+Public web site <http://ancja-urls.no-ip.info/>.
 
 Platform
 --------
@@ -54,10 +55,3 @@ To run rspec and selenium tests
     rake spec:requests -- integration tests
     rake spec -- all tests
 
-Team
-----
-
-* Robert Hromej <robert.hromej@gmail.com>
-* Fedir Kovbel <kfedia@gmail.com>
-* Edik Kozempel <kedgark@gmail.com>
-* Miroslav Nastenko <slawikdft@gmail.com>
