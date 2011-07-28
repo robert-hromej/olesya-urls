@@ -8,4 +8,6 @@ class Comment < ActiveRecord::Base
   validates :body, :presence => true, :length => {:maximum => 255}
   validates :link_id, :presence => true
   validates :user_id, :presence => true
+
+  scope :by_link_id, lambda {|link_id| where(:link_id => link_id).includes(:user).order("created_at desc") }
 end

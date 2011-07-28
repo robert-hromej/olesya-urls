@@ -12,7 +12,7 @@ class LinkController < ApplicationController
     end
 
       # Allows create only unique links
-    link = Link.where(:url => link_url).first
+    link = Link.by_url(link_url).first
 
     if link
       #if user try to create link which is already created
@@ -50,19 +50,16 @@ class LinkController < ApplicationController
     # show all page
   def list
     # show all links using pagination with 20 links per page
-    @links = Link.select("links.*").join_voted_field(current_user).join_users.
-        order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
+    @links = Link.all_links(current_user).paginate(:page => params[:page], :per_page => 20)
   end
 
     # link page
   def show
-    @link = Link.select("links.*").join_voted_field(current_user).join_users.
-        where({:id => params[:id]}).order("created_at DESC").first
+    @link = Link.by_id(params[:id],current_user).first
 
     raise t(:not_such_link) if @link.blank?
 
-    @comments = Comment.where({:link_id => @link.id}).includes(:user).
-        order("created_at desc").paginate(:page => params[:page], :per_page => 5)
+    @comments = Comment.by_link_id(@link.id).paginate(:page => params[:page], :per_page => 5)
     @comment = Comment.new(:link_id => @link.id) if current_user != nil
     respond_to do |format|
       format.html
@@ -120,7 +117,7 @@ class LinkController < ApplicationController
     # ajax post method for creating comments.
   def comment
     # Usese form fields values on link page ('show').
-    raise t(:link_not_found) if Link.where(:id => params[:comment][:link_id]).first == nil
+    raise t(:link_not_found) if Link.find(params[:comment][:link_id]) == nil
 
     params[:comment][:user_id] = current_user.id
     comment = Comment.create(params[:comment])

@@ -14,16 +14,19 @@ class Link < ActiveRecord::Base
   validates :url, :presence => true, :length => {:maximum => 255}, :uniqueness => true
   validates :user_id, :presence => true
 
-  def self.join_users
-    joins("INNER JOIN users u ON u.id = links.user_id")
-  end
+  scope :full_links,    lambda {|current_user| select("links.*").join_voted_field(current_user).joins(:user) }
+  scope :all_links,     lambda {|current_user| full_links(current_user).order("created_at DESC") }
+  scope :popular_links, lambda {|current_user| full_links(current_user).order("votes_count DESC").includes(:user).limit(20) }
+  scope :new_links,     lambda {|current_user| all_links(current_user).includes(:user).limit(20)}
+  scope :by_id,         lambda {|id,current_user| all_links(current_user).where(:id => id) }
+  scope :by_url,        lambda {|url| where(:url => url) }
 
   def self.join_voted_field(current_user)
     select("(v.id IS NOT NULL) voted").
         joins("LEFT JOIN votes v ON (v.link_id = links.id and v.user_id = #{(current_user ? current_user.id : 0)})")
   end
 
-    #wrapper around calculated field "voted"
+  #wrapper around calculated field "voted"
   def voted?
     self.voted.to_i != 0
   end
