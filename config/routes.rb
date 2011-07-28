@@ -1,16 +1,12 @@
 AncjaUrls::Application.routes.draw do
+
   post "link/create"
-  get "link/list"
+  get "link", :to => "link#list"
+  match 'link/:id', :to => "link#show", :as => "link"
+  post "link/tweet_this/:id" => "link#tweet_this"
 
-  post "link/vote"
-
-#  get "link/show"
-  match '/link/show/:id', :to => "link#show", :as => "link"
-  match '/link/comment/', :to => "link#comment", :as => "comments_path"
-#  match 'link/vote/:id', :to=>"link#vote"
-
-#  match "/comments/:id" => "link#show", :as=>"comment"
-  match "link/tweet_this/:id" => "link#tweet_this"
+  post "vote/create", :to => "link#vote"
+  post 'comment/create', :to => "link#comment", :as => "comments_path"
 
   get "twitter/login"
   get "twitter/logout"
