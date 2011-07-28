@@ -47,7 +47,7 @@ describe LinkController do
           login @user
           @comment_attr = {:body=>'this_is_the_comment_body', :link_id => @link.id}
           # simulate login from link page
-          @request.env['HTTP_REFERER'] = "#{DEFAULT_HOST}link/show/#{@link.id}"
+          @request.env['HTTP_REFERER'] = "#{DEFAULT_HOST}link/#{@link.id}"
         end
 
         it "should be available for comments with signing in" do
@@ -61,7 +61,7 @@ describe LinkController do
           # send 'new comment' form
           post :comment, :comment => @comment_attr
           # we must see new link on list
-          response.body.should have_html_tag('a', :href => "#{DEFAULT_HOST}link/show/#{@link.id}")
+          response.body.should have_html_tag('a', :href => "#{DEFAULT_HOST}link/#{@link.id}")
         end
 
         it "(comment) should appear in the db" do
