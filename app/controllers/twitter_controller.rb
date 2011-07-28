@@ -4,7 +4,7 @@ class TwitterController < ApplicationController
 
   TWITTER_API_URL = "https://api.twitter.com"
 
-    # perform first step in oauth authenticating
+  # perform first step in oauth authenticating
   def login
     # get request token
     request_token = twitter_oauth.get_request_token(:oauth_callback => oauth_callback)
@@ -20,7 +20,7 @@ class TwitterController < ApplicationController
     redirect_to root_url
   end
 
-    # perform logout
+  # perform logout
   def logout
     # simply clean current user value in session
     set_current_user(nil)
@@ -74,13 +74,13 @@ class TwitterController < ApplicationController
 
   private
 
-    # return OAuth::Consumer object
+  # return OAuth::Consumer object
   def twitter_oauth
     OAuth::Consumer.new(APP_CONFIG[:twitter][:consumer_token], APP_CONFIG[:twitter][:consumer_secret],
                         {:site => TWITTER_API_URL, :request_endpoint => TWITTER_API_URL})
   end
 
-    # generate callback url for twitter login
+  # generate callback url for twitter login
   def oauth_callback
     @callback_url ||= "http://#{request.host_with_port}/twitter/after_login"
     return @callback_url

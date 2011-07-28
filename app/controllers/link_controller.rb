@@ -3,7 +3,7 @@
 class LinkController < ApplicationController
   before_filter :is_logged?, :except => [:list, :show]
 
-    # creates new link.
+  # creates new link.
   def create
     # add 'http://' to url if it isn't
     link_url = params[:new_link_url]
@@ -11,7 +11,7 @@ class LinkController < ApplicationController
       link_url = "http://" + link_url
     end
 
-      # Allows create only unique links
+    # Allows create only unique links
     link = Link.by_url(link_url).first
 
     if link
@@ -32,7 +32,7 @@ class LinkController < ApplicationController
 
     respond_to do |format|
       format.html {
-        redirect_to (link.id ? "/link/show/#{link.id}" : root_path)
+        redirect_to (link.id ? link_path(link.id) : root_path)
       }
       format.js {
         render :update do |page|
@@ -40,22 +40,22 @@ class LinkController < ApplicationController
             page.call "system_message", system_messages
           else
             # redirect to link page
-            page.call "redirect_to", "/link/show/#{link.id}"
+            page.call "redirect_to", link_path(link.id)
           end
         end
       }
     end
   end
 
-    # show all page
+  # show all page
   def list
     # show all links using pagination with 20 links per page
     @links = Link.all_links(current_user).paginate(:page => params[:page], :per_page => 20)
   end
 
-    # link page
+  # link page
   def show
-    @link = Link.by_id(params[:id],current_user).first
+    @link = Link.by_id(params[:id], current_user).first
 
     raise t(:not_such_link) if @link.blank?
 
@@ -74,7 +74,7 @@ class LinkController < ApplicationController
     redirect_to root_url
   end
 
-    # ajax method for performing voting.
+  # ajax method for performing voting.
   def vote
     # Takes to url params 'link_id' and 'kind'.
     link = Link.find(params[:link_id])
@@ -84,10 +84,10 @@ class LinkController < ApplicationController
     vote.user = current_user
     vote.kind = params[:kind].to_i
 
-      # every user can vote only once per one link.
+    # every user can vote only once per one link.
     raise t(:already_voted) if !vote.save
 
-      # reload link from table to see new votes count
+    # reload link from table to see new votes count
     link.reload
 
     respond_to do |format|
@@ -98,7 +98,7 @@ class LinkController < ApplicationController
         end
       }
     end
-      # Cleans cache fragments for this link, to force rails update votes count on link's partial
+    # Cleans cache fragments for this link, to force rails update votes count on link's partial
     expire_fragment(%r{link_id_#{link.id}_author_id_\d*_voted_\d*})
 
   rescue StandardError => e
@@ -114,12 +114,13 @@ class LinkController < ApplicationController
     end
   end
 
-    # ajax post method for creating comments.
+  # ajax post method for creating comments.
   def comment
-    # Usese form fields values on link page ('show').
+    # Uses form fields values on link page ('show').
     raise t(:link_not_found) if Link.find(params[:comment][:link_id]) == nil
 
     params[:comment][:user_id] = current_user.id
+
     comment = Comment.create(params[:comment])
     controller = self
 
@@ -138,7 +139,7 @@ class LinkController < ApplicationController
       }
     end
 
-      #Cleans cache fragments for this link, to force rails update comments count on link's partial
+    #Cleans cache fragments for this link, to force rails update comments count on link's partial
     expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
   rescue StandardError => e
     push_error_message e

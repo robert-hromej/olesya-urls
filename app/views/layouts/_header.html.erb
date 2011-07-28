@@ -1,6 +1,5 @@
 <div id="page_header">
   <div class="menu">
-
     <div id="logo">
       <a href="/">
         <div id="big_text">
@@ -13,7 +12,6 @@
         the social networks integration with rails example
       </div>
     </div>
-
     <% if controller.authorized? %>
         <div class="log_in_out">
           <%= link_to t(:logout), :controller => :twitter, :action => :logout %>
@@ -27,13 +25,12 @@
         </div>
     <% end %>
     <div class="log_in_out">
-      <a id='show_all_links' href="/link/list"><%= t(:all_links) %></a>
+      <a id='show_all_links' href="/link"><%= t(:all_links) %></a>
     </div>
     <div class="log_in_out">
       <%= link_to t(:home), root_url %>
     </div>
   </div>
-
   <% if controller.authorized? %>
       <div id="ruller"></div>
       <div id="user_section">
@@ -45,16 +42,12 @@
         </div>
       </div>
   <% end %>
-
   <div id="system_message"> <%= system_messages %> </div>
-
   <div id="new_link_form" class="noscript">
     <div id="close_but" onclick="hide_element('new_link_form')"></div>
-
     <noscript>
       <div class="new_link_title"> <%= t(:add_link) %> </div>
     </noscript>
-
     <%= form_tag '/link/create', :id => "new_link", :remote => true, :onSubmit => "return verify_new_link();" do %>
         <span id="new_link_title_label"> <%= t(:title) %>:</span></br>
         <%= text_field_tag :new_link_title, nil, :class => "inp" %> </br>
