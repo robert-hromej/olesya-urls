@@ -48,7 +48,7 @@
     <noscript>
       <div class="new_link_title"> <%= t(:add_link) %> </div>
     </noscript>
-    <%= form_tag '/link/create', :id => "new_link", :remote => true, :onSubmit => "return verify_new_link();" do %>
+    <%= form_tag '/link', :id => "new_link", :remote => true, :onSubmit => "return verify_new_link();" do %>
         <span id="new_link_title_label"> <%= t(:title) %>:</span></br>
         <%= text_field_tag :new_link_title, nil, :class => "inp" %> </br>
         <span id="new_link_url_label"><%= t(:url) %>:</span></br>

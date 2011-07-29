@@ -20,11 +20,10 @@ module ApplicationHelper
     c = (kind == :up ? "Plus" : "Minus")
 
     fields = ""
-    fields << hidden_field_tag("link_id", link.id)
     fields << hidden_field_tag("kind", k)
     fields << submit_tag("", {:class => c})
 
-    form_for(Vote.new, :url => "/vote/create", :method=>"post", :remote => true) { fields.html_safe }
+    form_for(Vote.new, :url => "/link/#{link.id}/vote", :method=>"post", :remote => true) { fields.html_safe }
   end
 
   def tweet_button(link)

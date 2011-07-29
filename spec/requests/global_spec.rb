@@ -29,7 +29,7 @@ describe "IntegrationTesting", :js => true do
       # we must see error message
       page.html.should have_html_tag('span', :content => I18n.t(:please_login) )
     end
-    it 'should se all links page with pagination' do
+    it 'should see all links page with pagination' do
       visit root_path
       click_link SHOW_ALL_LINK
       page.html.should have_html_tag(:a, :class=>'next_page')

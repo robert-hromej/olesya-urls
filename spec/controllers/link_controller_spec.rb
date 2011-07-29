@@ -29,7 +29,7 @@ describe LinkController do
 
       it "should show link list" do
         # show show all page
-        get :list
+        get :index
         response.should be_success
       end
 
@@ -57,29 +57,10 @@ describe LinkController do
           response.body.should have_html_tag("textarea", :id => "comment_body")
         end
 
-        it "should create comment" do
-          # send 'new comment' form
-          post :comment, :comment => @comment_attr
-          # we must see new link on list
-          response.body.should have_html_tag('a', :href => "#{DEFAULT_HOST}link/#{@link.id}")
-        end
-
-        it "(comment) should appear in the db" do
-          lambda do
-            post :comment, :comment => @comment_attr
-          end.should change(Comment, :count).by(1)
-        end
-
         it "should have paginator" do
           6.times { Comment.create!(@comment_attr.merge(:user_id => @user.id)) }
           get :show, :id => @link.id
           response.body.should have_html_tag('a', :class => "next_page")
-        end
-
-        it "should add vote to the db" do
-          lambda do
-            post :vote, :kind => 1, :link_id => @link.id
-          end.should change(Vote, :count).by(1)
         end
 
         it "should create new link" do

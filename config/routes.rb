@@ -1,12 +1,12 @@
 AncjaUrls::Application.routes.draw do
 
-  post "link/create"
-  get "link", :to => "link#list"
-  match 'link/:id', :to => "link#show", :as => "link"
-  post "link/tweet_this/:id" => "link#tweet_this"
+  resources :link do
+    resource :vote, :controller => 'vote'
+    resource :comment, :controller => 'comment'
 
-  post "vote/create", :to => "link#vote"
-  post 'comment/create', :to => "link#comment", :as => "comments_path"
+    # for comments ajax pagination
+    post 'show', :on => :member
+  end
 
   get "twitter/login"
   get "twitter/logout"

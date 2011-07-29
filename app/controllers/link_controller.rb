@@ -1,7 +1,7 @@
 # main functional controller. contain functionality for creating new links, displaying, voting and tweeting them.
 # all method requires authorization, except list and show
 class LinkController < ApplicationController
-  before_filter :is_logged?, :except => [:list, :show]
+  before_filter :is_logged?, :except => [:index, :show]
 
   # creates new link.
   def create
@@ -48,7 +48,7 @@ class LinkController < ApplicationController
   end
 
   # show all page
-  def list
+  def index
     # show all links using pagination with 20 links per page
     @links = Link.all_links(current_user).paginate(:page => params[:page], :per_page => 20)
   end
@@ -72,85 +72,6 @@ class LinkController < ApplicationController
   rescue StandardError => e
     push_notice_message e
     redirect_to root_url
-  end
-
-  # ajax method for performing voting.
-  def vote
-    # Takes to url params 'link_id' and 'kind'.
-    link = Link.find(params[:link_id])
-
-    vote = Vote.new
-    vote.link = link
-    vote.user = current_user
-    vote.kind = params[:kind].to_i
-
-    # every user can vote only once per one link.
-    raise t(:already_voted) if !vote.save
-
-    # reload link from table to see new votes count
-    link.reload
-
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        render :update do |page|
-          page.call "vote", link.id, link.votes_count
-        end
-      }
-    end
-    # Cleans cache fragments for this link, to force rails update votes count on link's partial
-    expire_fragment(%r{link_id_#{link.id}_author_id_\d*_voted_\d*})
-
-  rescue StandardError => e
-    push_error_message e
-
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        render :update do |page|
-          page.call "system_message", system_messages
-        end
-      }
-    end
-  end
-
-  # ajax post method for creating comments.
-  def comment
-    # Uses form fields values on link page ('show').
-    raise t(:link_not_found) if Link.find(params[:comment][:link_id]) == nil
-
-    params[:comment][:user_id] = current_user.id
-
-    comment = Comment.create(params[:comment])
-    controller = self
-
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        render :update do |page|
-          if comment.valid?
-            page.call "add_comment", comment.id, render(:partial => "comment", :locals => {:comment => comment})
-            page.call "replace_html", "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
-          else
-            controller.push_error_message t(:comment_not_valid)
-            page.call "system_message", system_messages
-          end
-        end
-      }
-    end
-
-    #Cleans cache fragments for this link, to force rails update comments count on link's partial
-    expire_fragment(%r{link_id_#{comment.link_id}_author_id_\d*_voted_\d*})
-  rescue StandardError => e
-    push_error_message e
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        render :update do |page|
-          page.call "system_message", system_messages
-        end
-      }
-    end
   end
 
   private
