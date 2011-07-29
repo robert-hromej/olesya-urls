@@ -1,8 +1,8 @@
 AncjaUrls::Application.routes.draw do
 
   resources :link do
-    resource :vote, :controller => 'vote'
-    resource :comment, :controller => 'comment'
+    resources :vote
+    resources :comment
 
     # for comments ajax pagination
     post 'show', :on => :member
