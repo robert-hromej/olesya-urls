@@ -33,10 +33,10 @@ module AncjaUrls
     # JavaScript files you want as :defaults (application.js is always included).
     config.action_view.javascript_expansions[:defaults] = %w(jquery-1.6.2 rails application)
 
-      # Configure the default encoding used in templates for Ruby 1.9.
+    # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
-      # Configure sensitive parameters which will be filtered from the log file.
+    # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
     #config.action_controller.perform_caching = true

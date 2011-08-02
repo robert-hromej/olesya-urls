@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     if current_user.blank?
       respond_to do |format|
         format.html {
-          redirect_to :controller => :twitter, :action => :login
+          redirect_to login_url
         }
         format.js {
           push_notice_message t(:please_login)

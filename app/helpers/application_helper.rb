@@ -15,7 +15,7 @@ module ApplicationHelper
     "comment_id_#{comment.id}_author_id_#{comment.user_id}"
   end
 
-  def vote kind, link
+  def vote(kind, link)
     k = (kind == :up ? 1 : -1)
     c = (kind == :up ? "Plus" : "Minus")
 
@@ -23,7 +23,7 @@ module ApplicationHelper
     fields << hidden_field_tag("kind", k)
     fields << submit_tag("", {:class => c})
 
-    form_for(Vote.new, :url => "/link/#{link.id}/vote", :method=>"post", :remote => true) { fields.html_safe }
+    form_for(Vote.new, :url => "/link/#{link.id}/vote", :method => "post", :remote => true) { fields.html_safe }
   end
 
   def tweet_button(link)
@@ -34,7 +34,7 @@ module ApplicationHelper
 
     content_tag(:a, "Tweet", :class => "twitter-share-button",
                 :href => "http://twitter.com/share",
-                "data-count"=>"vertical",
+                "data-count" => "vertical",
                 "counturl" => this_link_url,
                 "data-url" => this_link_url,
                 "data-text" => link.title)

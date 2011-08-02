@@ -1,6 +1,5 @@
 require "spec_helper"
 
-# todo COMMENTS!
 describe TwitterController do
   render_views
 

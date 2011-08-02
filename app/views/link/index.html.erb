@@ -3,7 +3,8 @@
 </div>
 
 <div class="cont">
-  <%= render :partial => "layouts/link_table", :locals => {:links => @links, :header=> t(:all_links), :under_btns => false} %>
+  <%= render :partial => "link/table",
+             :locals => {:links => @links, :header => t(:all_links), :under_btns => false} %>
 </div>
 
 <div class="paginator">

@@ -1,8 +1,9 @@
 <% @comments.each do |comment| %>
     <% cache comment_cache_key(comment) do %>
-        <%= render :partial => "comment", :locals => {:comment => comment} %>
+        <%= render :partial => "comment/item", :locals => {:comment => comment} %>
     <% end %>
 <% end %>
+
 <div id="paginator" class="ajax_paginator">
   <%= will_paginate @comments %>
 </div>

@@ -1,4 +1,4 @@
-# Link's vote.  After adding new vote special trigger is performed, which recalculate votes sum and
+# Link's vote. After adding new vote special trigger is performed, which recalculate votes sum and
 # stores this value in 'votes_count' field. Verifies uniqueness of vote for user and link
 class Vote < ActiveRecord::Base
   belongs_to :user

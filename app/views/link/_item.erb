@@ -4,19 +4,17 @@
   </a>
 </div>
 
-
 <div class="RName">
-  <%= link_to truncate(link.title.to_s, :length => 50), link_path(link.id), :class=>"title_link" %>
+  <%= link_to truncate(link.title.to_s, :length => 50), link_path(link.id), :class => "title_link" %>
   <div class="url_link">
-    <a href="<%= link.url %>" target="_blank">
-      <%= truncate(link.url.to_s, :length => 45) %>
-    </a>
+    <%= link_to truncate(link.url.to_s, :length => 45), link.url, {:target => "_blank"} %>
   </div>
 </div>
 
 <div class="RDate">
   <%= link.created_at.strftime("%d %B %Y") %>
   <br>
+
   <div>
     <a href="<%= link_path(:id => link.id) %>">
       <%= t(:comments) %>

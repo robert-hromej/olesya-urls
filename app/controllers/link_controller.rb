@@ -65,23 +65,13 @@ class LinkController < ApplicationController
       format.html
       format.js {
         render :update do |page|
-          page.call "replace_html", "comments", render(:partial => "comments")
+          page.call "replace_html", "comments", render(:partial => "comment/list")
         end
       }
     end
   rescue StandardError => e
     push_notice_message e
     redirect_to root_url
-  end
-
-  private
-
-  def previous_url
-    request.nil? ? '/' : request.env['HTTP_REFERER']
-  end
-
-  def get_bit_ly_api_url(url)
-    return "http://api.bit.ly/v3/shorten?login=#{APP_CONFIG[:bitly][:login]}&apiKey=#{APP_CONFIG[:bitly][:api_key]}&longUrl=#{CGI::escape(url)}&format=txt"
   end
 
 end

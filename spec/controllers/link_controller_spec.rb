@@ -1,6 +1,5 @@
 require "spec_helper"
 
-# todo COMMENTS!
 describe LinkController do
   render_views
 
@@ -45,7 +44,7 @@ describe LinkController do
         before(:each) do
           # login under test user
           login @user
-          @comment_attr = {:body=>'this_is_the_comment_body', :link_id => @link.id}
+          @comment_attr = {:body => 'this_is_the_comment_body', :link_id => @link.id}
           # simulate login from link page
           @request.env['HTTP_REFERER'] = "#{DEFAULT_HOST}link/#{@link.id}"
         end

@@ -2,7 +2,7 @@ class CommentController < ApplicationController
   before_filter :is_logged?
 
   def create
-   # Uses form fields values on link page ('show').
+    # Uses form fields values on link page ('show').
     raise t(:link_not_found) if Link.find(params[:comment][:link_id]) == nil
 
     params[:comment][:user_id] = current_user.id
@@ -11,11 +11,11 @@ class CommentController < ApplicationController
     controller = self
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to link_path(comment.link_id) }
       format.js {
         render :update do |page|
           if comment.valid?
-            page.call "add_comment", comment.id, render(:partial => "link/comment", :locals => {:comment => comment})
+            page.call "add_comment", comment.id, render(:partial => "comment/item", :locals => {:comment => comment})
             page.call "replace_html", "LinkCommentCountId#{comment.link_id}", comment.link.comments_count
           else
             controller.push_error_message t(:comment_not_valid)
@@ -37,9 +37,6 @@ class CommentController < ApplicationController
         end
       }
     end
-  end
-
-  def index
   end
 
 end

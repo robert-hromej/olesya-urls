@@ -3,7 +3,6 @@ require 'rubygems'
 require 'spork'
 #require 'redgreen' # for ruby19
 
-# todo COMMENTS!
 Spork.prefork do
 
   # Loading more in this block will cause your tests to run faster. However, 
@@ -55,7 +54,7 @@ Spork.prefork do
   #    integration_login
   #
   #    note you can add parameters when using this function to login by other user
-  def integration_login(options=nil)
+  def integration_login(options = nil)
     #require 'selenium/webdriver'
     #driver = Selenium::WebDriver.for :chrome
     #Capybara.current_driver = driver
@@ -77,14 +76,14 @@ Spork.prefork do
   #    create_link(:test=>false, :title=>'new_link_title', :url=>'http://valid_url')
   #
   #    parameter [test] must be false to add new link if it already exists
-  def create_link(options={})
+  def create_link(options = {})
     test = !(options[:test].nil? ? true : options[:test])
     visit root_path
-    if ((!page.html.has_html_tag?(:a, :class=>'title_link', :content=>options[:title], :print=>false)) || test)
+    if ((!page.html.has_html_tag?(:a, :class => 'title_link', :content => options[:title], :print => false)) || test)
       page.should have_selector('a#add_link')
       click_link ADD_LINK_BUTTON
-      fill_in NEW_LINK_TITLE_FIELD, :with=>options[:title]
-      fill_in NEW_LINK_URL_FIELD, :with=>options[:url]
+      fill_in NEW_LINK_TITLE_FIELD, :with => options[:title]
+      fill_in NEW_LINK_URL_FIELD, :with => options[:url]
       click_button CREATE_LINK_BUTTON
     end
   end
@@ -100,11 +99,11 @@ Spork.each_run do
   TWITTER_LOGIN_FIELD = "username_or_email"
   TWITTER_PASSWORD_FIELD = "password"
   ALLOW_BUTTON = 'allow'
-  LOGOUT_BUTTON = 'LOGOUT'
+  LOGOUT_BUTTON = 'logout'
   ADD_LINK_BUTTON = 'add_link'
   NEW_LINK_TITLE_FIELD = 'new_link_title'
   NEW_LINK_URL_FIELD = 'new_link_url'
-  CREATE_LINK_BUTTON = 'Create'
+  CREATE_LINK_BUTTON = 'create_lick_btn'
   SHOW_ALL_LINK = 'show_all_links'
 end
 

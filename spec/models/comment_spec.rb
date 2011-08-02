@@ -5,7 +5,7 @@ describe "CommentModel" do
 
   before(:each) do
     # test comment
-    @attr={:user_id => 1, :link_id => 1, :body=>'Lorem ipsum dolor sit amet'}
+    @attr = {:user_id => 1, :link_id => 1, :body => 'Lorem ipsum dolor sit amet'}
   end
 
   it "should be valid with write parameters" do
@@ -14,7 +14,7 @@ describe "CommentModel" do
   end
 
   it "should have valid body" do
-    comment = Comment.new(@attr.merge(:body=>""))
+    comment = Comment.new(@attr.merge(:body => ""))
     comment.should_not be_valid
   end
 

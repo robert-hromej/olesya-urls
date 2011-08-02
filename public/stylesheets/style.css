@@ -285,7 +285,7 @@ body {
     font-size: 20px;
     /*margin-left: 166px;*/
     text-decoration: none;
-    text-align:center;
+    text-align: center;
 }
 
 .button:hover {
@@ -465,13 +465,15 @@ body {
 a img {
     border: none;
 }
-.under_left{
-    width:370px;
-    float:left;
-    text-align:center;
+
+.under_left {
+    width: 370px;
+    float: left;
+    text-align: center;
 }
-.under_right{
-    width:370px;
-    float:right;
-    text-align:center;
+
+.under_right {
+    width: 370px;
+    float: right;
+    text-align: center;
 }

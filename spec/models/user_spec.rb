@@ -4,7 +4,7 @@ require 'spec_helper'
 describe "UserModel" do
 
   before(:each) do
-    @attr={:screen_name=>"Name", :oauth_token=>"token", :oauth_secret => "secret"}
+    @attr = {:screen_name => "Name", :oauth_token => "token", :oauth_secret => "secret"}
   end
 
   it "should create a new instance given valid attributes" do
@@ -12,7 +12,7 @@ describe "UserModel" do
   end
 
   it "should require screen_name" do
-    no_name_user=User.new(@attr.merge(:screen_name=>""))
+    no_name_user = User.new(@attr.merge(:screen_name => ""))
     no_name_user.should_not be_valid
   end
 

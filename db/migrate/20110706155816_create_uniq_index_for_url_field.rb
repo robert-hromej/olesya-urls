@@ -1,5 +1,4 @@
 class CreateUniqIndexForUrlField < ActiveRecord::Migration
-
   def self.up
     Link.transaction do
       Link.find_by_sql("SELECT l.url, count(l.id) s FROM links l GROUP BY l.url HAVING s > 1 ORDER BY s DESC ").each do |l|
@@ -14,5 +13,4 @@ class CreateUniqIndexForUrlField < ActiveRecord::Migration
   def self.down
     remove_index :links, :url
   end
-
 end

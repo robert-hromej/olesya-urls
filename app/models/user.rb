@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   # return url for profile image
-  def profile_image(user = nil)
+  def profile_image
     (self.avatar_url ? self.avatar_url : "/images/no-avatar.png")
   end
 

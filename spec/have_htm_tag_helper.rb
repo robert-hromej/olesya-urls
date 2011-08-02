@@ -7,7 +7,7 @@ String.class_eval do
   #
   #  <b>output</b> -->
   #    tru or false
-  def has_html_tag?(tag,options={})
+  def has_html_tag?(tag, options = {})
     tag_search = options[:content].nil? ? Regexp.new('< ?'+tag.to_s+'[^<>]*>') : Regexp.new('< ?'+tag.to_s+'[^<>]*>.*</ ?'+tag.to_s+' ?>')
     content = options[:content].nil? ? '' : options[:content]
     print = (!options[:print].nil? && options[:print])
@@ -18,7 +18,7 @@ String.class_eval do
     matches.each do |match|
       result = true
       options.each_pair do |key, value|
-        pat = Regexp.new(' '+key.to_s+'=("|\')'+value+'("|\')')
+        pat = Regexp.new(' ' + key.to_s + '=("|\')'+value+'("|\')')
         result &= (pat === match)
         break unless result
       end

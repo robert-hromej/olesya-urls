@@ -1,5 +1,4 @@
 class CreateVotes < ActiveRecord::Migration
-
   def self.up
     create_table :votes do |t|
       t.references :user, :link
@@ -14,5 +13,4 @@ class CreateVotes < ActiveRecord::Migration
     remove_index :votes, :column => [:user_id, :link_id]
     drop_table :votes
   end
-
 end

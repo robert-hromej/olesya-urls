@@ -1,6 +1,5 @@
 require "spec_helper"
 
-# todo COMMENTS!
 describe HomeController do
 
   before(:each) do
@@ -43,15 +42,15 @@ describe HomeController do
       # move to front page
       get :index
       # Arrows for voting has classes Plus and Minus
-      response.body.should have_html_tag(:input, :class=>'Plus')
-      response.body.should have_html_tag(:input, :class=>'Minus')
+      response.body.should have_html_tag(:input, :class => 'Plus')
+      response.body.should have_html_tag(:input, :class => 'Minus')
     end
 
     it "should show registered user avatar" do
       # move to front page
       get :index
       # if user has no avatar - display special avatar
-      response.body.should have_html_tag(:img, :src=>"/images/no-avatar.png")
+      response.body.should have_html_tag(:img, :src => "/images/no-avatar.png")
     end
 
   end

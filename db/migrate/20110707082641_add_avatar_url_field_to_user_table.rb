@@ -1,5 +1,4 @@
 class AddAvatarUrlFieldToUserTable < ActiveRecord::Migration
-
   def self.up
     add_column :users, :avatar_url, :string
   end
@@ -7,5 +6,4 @@ class AddAvatarUrlFieldToUserTable < ActiveRecord::Migration
   def self.down
     remove_column :users, :avatar_url
   end
-
 end

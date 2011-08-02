@@ -2,7 +2,7 @@ class VoteController < ApplicationController
   before_filter :is_logged?
 
   def create
-   # Takes to url params 'id' and 'kind'.
+    # Takes to url params 'id' and 'kind'.
     link = Link.find(params[:link_id])
 
     vote = Vote.new
