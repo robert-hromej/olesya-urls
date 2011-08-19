@@ -18,4 +18,8 @@ AncjaUrls::Application.routes.draw do
   get "twitter/after_login"
 
   root :to => "home#index"
+
+  mount AssetServer.instance => 'javascripts'
+  mount AssetServer.instance => 'stylesheets'
+
 end

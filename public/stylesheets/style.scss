@@ -1,3 +1,6 @@
+$text_color: #4A586C;
+$border_color: #B5CAD0;
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +8,7 @@
 
 body {
     background: url("/images/pattern_1.png") repeat scroll left top transparent;
-    color: #4A586C;
+    color: $text_color;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -22,7 +25,7 @@ body {
 
 .cont {
     background: none repeat scroll 0 0 #D5E4E8;
-    border: 3px solid #B5CAD0;
+    border: 3px solid $border_color;
     margin: 10px auto 20px;
     padding: 0 25px;
     width: 700px;
@@ -30,7 +33,7 @@ body {
 
 .comm_cont {
     background: none repeat scroll 0 0 #F4F3E8;
-    border: 3px solid #B5CAD0;
+    border: 3px solid $border_color;
     margin: 10px auto 20px;
     padding: 0 25px;
     width: 700px;
@@ -38,7 +41,7 @@ body {
 
 .TitleRow {
     background-color: #F1F1F1;
-    border-bottom: 3px solid #B5CAD0;
+    border-bottom: 3px solid $border_color;
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 14px;
     height: 24px;
@@ -50,7 +53,7 @@ body {
 
 .UnderRow {
     background-color: #F1F1F1;
-    border-top: 3px solid #B5CAD0;
+    border-top: 3px solid $border_color;
     height: 38px;
     margin: 0 auto 0 -25px;
     padding-top: 10px;
@@ -58,7 +61,7 @@ body {
 }
 
 .PageRow {
-    border-bottom: 3px solid #B5CAD0;
+    border-bottom: 3px solid $border_color;
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 12px;
     height: 58px;
@@ -67,15 +70,13 @@ body {
     padding-right: 20px;
     padding-top: 10px;
     width: 650px;
-}
-
-.PageRow a {
-    color: #4A586C;
-    text-decoration: none;
-}
-
-.PageRow a:hover {
-    text-decoration: underline;
+    a {
+        color: $text_color;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 #TableHeader {
@@ -87,32 +88,6 @@ body {
 #TableRow {
     font-size: 13px;
     height: 20px;
-}
-
-.Plus {
-    background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
-    border-width: 0;
-    cursor: pointer;
-    float: left;
-    height: 25px;
-    width: 40px;
-}
-
-.Plus:hover {
-    background: url("../images/button_thumbsup_left.png") repeat scroll left -100px transparent;
-}
-
-.Minus {
-    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
-    border-width: 0;
-    cursor: pointer;
-    float: left;
-    height: 25px;
-    width: 40px;
-}
-
-.Minus:hover {
-    background: url("../images/button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
 }
 
 .RAvatar {
@@ -143,6 +118,28 @@ body {
 .RCount {
     float: left;
     width: 100px;
+    .Plus {
+        background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
+        border-width: 0;
+        cursor: pointer;
+        float: left;
+        height: 25px;
+        width: 40px;
+        &:hover {
+            background: url("../images/button_thumbsup_left.png") repeat scroll left -100px transparent;
+        }
+    }
+    .Minus {
+        background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
+        border-width: 0;
+        cursor: pointer;
+        float: left;
+        height: 25px;
+        width: 40px;
+        &:hover {
+            background: url("../images/button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
+        }
+    }
 }
 
 .Number {
@@ -177,14 +174,12 @@ body {
 }
 
 #system_message {
-}
-
-#system_message .notice {
-    color: green;
-}
-
-#system_message .error {
-    color: red;
+    .notice {
+        color: green;
+    }
+    .error {
+        color: red;
+    }
 }
 
 #user_ava {
@@ -198,33 +193,30 @@ body {
     padding-top: 15px;
 }
 
-.log_in_out {
-    float: right;
-    padding: 10px;
-}
-
 .twitter_but {
     float: right;
     margin: 5px;
 }
 
-.log_in_out:hover {
-    border-bottom: 3px solid #F489A7;
-}
-
-.log_in_out a {
-    color: #AFC1C5;
+.log_in_out {
+    float: right;
     padding: 10px;
-    text-decoration: none;
-}
-
-.log_in_out a:hover {
-    color: #F489A7;
+    &:hover {
+        border-bottom: 3px solid #F489A7;
+    }
+    a {
+        color: #AFC1C5;
+        padding: 10px;
+        text-decoration: none;
+    }
+    &:hover {
+        color: #F489A7;
+    }
 }
 
 #new_link_form {
     background: none repeat scroll 0 0 #D5E4E8;
-    border: 3px solid #B5CAD0;
+    border: 3px solid $border_color;
     margin: 0 auto;
     padding: 10px 10px 0;
     width: 210px;
@@ -241,7 +233,7 @@ body {
 
 #user_section {
     background-color: #F1F1F1;
-    border: 2px solid #B5CAD0;
+    border: 2px solid $border_color;
     border-top: none;
     margin-bottom: 10px;
 }
@@ -254,31 +246,32 @@ body {
 .pagination {
     float: right;
     padding-right: 10px;
-}
-
-.pagination a {
-    background: none repeat scroll 0 0 #B5CAD0;
-    border: 1px solid #435266;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 10px 0;
-    padding: 2px 5px;
-    text-decoration: none;
-}
-
-.pagination a:hover {
-    color: #F05681;
+    a {
+        background: none repeat scroll 0 0 $border_color;
+        border: 1px solid #435266;
+        color: #FFFFFF;
+        font-size: 12px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 2px 5px;
+        text-decoration: none;
+        &:hover {
+            color: #F05681;
+        }
+    }
 }
 
 .button {
-    background: none repeat scroll 0 0 #B5CAD0;
+    background: none repeat scroll 0 0 $border_color;
     border: 1px solid #435266;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
     margin: 10px 0;
     padding: 4px 8px;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .underbutton {
@@ -286,10 +279,6 @@ body {
     /*margin-left: 166px;*/
     text-decoration: none;
     text-align: center;
-}
-
-.button:hover {
-    cursor: pointer;
 }
 
 .last {
@@ -315,31 +304,26 @@ body {
     color: #F05681;
     font-size: 16px;
     text-decoration: none;
-}
-
-.title_link:hover {
-    text-decoration: underline;
-}
-
-.PageRow .url_link {
-    margin-top: 5px;
-}
-
-.PageRow .url_link a {
-    text-decoration: none;
-}
-
-.PageRow .url_link a:hover {
-    text-decoration: underline;
+    &:hover {
+        text-decoration: underline;
+    }
+    .url_link {
+        margin-top: 5px;
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .welcome_link {
-    color: #4A586C;
-    text-decoration: none
-}
-
-.welcome_link:hover {
-    text-decoration: underline
+    color: $text_color;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline
+    }
 }
 
 .paginator {
@@ -377,7 +361,7 @@ body {
 }
 
 .even_tr {
-    background-color: #B5CAD0;
+    background-color: $border_color;
 }
 
 .head {
@@ -430,15 +414,16 @@ body {
     text-decoration: none;
 }
 
-.username a:hover {
-    text-decoration: underline;
-}
-
-.username a {
-    width: 110px;
-    padding: 5px;
-    color: #F05681;
-    text-decoration: none;
+.username{
+    a {
+        width: 110px;
+        padding: 5px;
+        color: #F05681;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 #logo {
