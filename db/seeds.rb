@@ -86,28 +86,28 @@ Link.transaction do
   end
 end
 
-comments = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            " Lorem Ipsum has been the industry's standard dummy",
-            " text ever since the 1500s, when an unknown printer took",
-            " a galley of type and scrambled it to make a",
-            "type specimen book. It has survived not only five centuries",
-            " but also the leap into electronic typesetting, remaining essentially",
-            " unchanged. It was popularised in the 1960s with the release of Letraset",
-            " sheets containing Lorem Ipsum passages, and more recently with desktop",
-            " publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "Ruby on Rails Tutorial owes a lot to my previous Rails book, RailsSpace, and hence to my coauthor Aurelius Prochazka.",
-            " I’d like to thank Aure both for the work he did on that book and for his support of this one.",
-            " I’d also like to thank Debra Williams Cauley, my editor on both RailsSpace and Rails Tutorial;",
-            "as long as she keeps taking me to baseball games, I’ll keep writing books for her.",
-            "Finally, many, many readers—far too many to list—have contributed a huge number of bug reports and suggestions during the writing of this book",
-            "and I gratefully acknowledge their help in making it as good as it can be. ",
-            "Ruby on Rails Tutorial follows essentially the same approach as my previous Rails book,",
-            "2 teaching web development with Rails by building a substantial sample application from scratch. ",
-            "As Derek Sivers notes in the foreword, this book is structured as a linear narrative, designed to be read from start to finish. ",
-            "If you are used to skipping around in technical books, taking this linear approach might require some adjustment, ",
-            "but I suggest giving it a try. You can think of Ruby on Rails Tutorial as a video game where you are the main character, ",
-            "and where you level up as a Rails developer in each chapter. (The exercises are the minibosses.)"
-
+comments = [
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    " Lorem Ipsum has been the industry's standard dummy",
+    " text ever since the 1500s, when an unknown printer took",
+    " a galley of type and scrambled it to make a",
+    "type specimen book. It has survived not only five centuries",
+    " but also the leap into electronic typesetting, remaining essentially",
+    " unchanged. It was popularised in the 1960s with the release of Letraset",
+    " sheets containing Lorem Ipsum passages, and more recently with desktop",
+    " publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "Ruby on Rails Tutorial owes a lot to my previous Rails book, RailsSpace, and hence to my coauthor Aurelius Prochazka.",
+    " I'd like to thank Aure both for the work he did on that book and for his support of this one.",
+    " I'd also like to thank Debra Williams Cauley, my editor on both RailsSpace and Rails Tutorial;",
+    "as long as she keeps taking me to baseball games, I'll keep writing books for her.",
+    "Finally, many, many readers-far too many to list-have contributed a huge number of bug reports and suggestions during the writing of this book",
+    "and I gratefully acknowledge their help in making it as good as it can be. ",
+    "Ruby on Rails Tutorial follows essentially the same approach as my previous Rails book,",
+    "2 teaching web development with Rails by building a substantial sample application from scratch. ",
+    "As Derek Sivers notes in the foreword, this book is structured as a linear narrative, designed to be read from start to finish. ",
+    "If you are used to skipping around in technical books, taking this linear approach might require some adjustment, ",
+    "but I suggest giving it a try. You can think of Ruby on Rails Tutorial as a video game where you are the main character, ",
+    "and where you level up as a Rails developer in each chapter. (The exercises are the minibosses.)"
 ]
 
 Comment.transaction do

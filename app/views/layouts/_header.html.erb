@@ -18,7 +18,7 @@
         </div>
     <% else %>
         <div class="twitter_but">
-          <%= link_to image_tag("/images/twitter_button.gif"), login_url, :id => "twitter_login_but" %>
+          <%= link_to image_tag("twitter_button.gif"), login_url, :id => "twitter_login_but" %>
         </div>
     <% end %>
     <div class="log_in_out">
@@ -33,7 +33,7 @@
       <div id="ruller"></div>
       <div id="user_section">
         <div id="user_ava">
-          <img src="<%= controller.current_user.profile_image %>" alt=""/>
+          <%= image_tag(controller.current_user.profile_image, :alt => "") %>
         </div>
         <div id="greeting">
           <h3>

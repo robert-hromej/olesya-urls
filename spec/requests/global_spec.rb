@@ -52,14 +52,14 @@ describe "IntegrationTesting", :js => true do
     it "should add link" do
       create_link(:title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       # test info message after successful creation
-      page.html.should have_html_tag('span', :content => I18n.t(:link_added))
+      page.html.should have_html_tag(:span, :content => I18n.t(:link_added))
     end
 
     it "should not add the same link twice" do
       create_link(:title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       create_link(:test => false, :title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       # test error message after failed creation
-      page.html.should have_html_tag('span', :content => I18n.t(:link_already_added))
+      page.html.should have_html_tag(:span, :content => I18n.t(:link_already_added))
     end
 
     it "should not add invalid or unavailable link" do

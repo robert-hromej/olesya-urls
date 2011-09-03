@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def link_cache_key(link)
-    "link_id_#{link.id}_author_id_#{link.user_id}_voted_#{controller.current_user != nil ? link.voted : 1}"
+    "link_id_#{link.id}_author_id_#{link.user_id}_voted_#{controller.current_user != nil ? link.voted? : 1}"
   end
 
   def comment_cache_key(comment)

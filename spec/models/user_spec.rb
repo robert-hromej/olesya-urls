@@ -37,7 +37,7 @@ describe "UserModel" do
     end
 
     it "should have valid profile_image" do
-      (@user.profile_image == '/images/no-avatar.png').should be_true
+      (@user.profile_image == '/assets/no-avatar.png').should be_true
     end
 
     it "should have profile_url method" do

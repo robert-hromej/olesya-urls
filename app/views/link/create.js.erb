@@ -1,0 +1,5 @@
+<% if @link.new_record? %>
+    <%= render :partial => 'layouts/js_sys_messages' %>
+<% else %>
+    redirect_to('<%= link_path(@link.id) %>');
+<% end %>

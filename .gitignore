@@ -8,3 +8,4 @@ log/*.log
 tmp/cache/**
 tmp/**/*.pid
 tmp/**/*.sock
+db/*.sqlite3

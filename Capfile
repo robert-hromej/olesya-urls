@@ -2,10 +2,10 @@ deploy_to = "/home/xcosmix2010/ancja-urls"
 rails_env = 'production'
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
-require "rvm/capistrano"                  # Load RVM's capistrano plugin.
+require "rvm/capistrano" # Load RVM's capistrano plugin.
 set :using_rvm, true
 set :rvm_type, :user
-set :rvm_ruby_string, '1.8.7@ancjaurls'        # Or whatever env you want it to run in.
+set :rvm_ruby_string, '1.8.7@ancjaurls' # Or whatever env you want it to run in.
 
 require 'capistrano-deploy'
 use_recipes :git, :rails, :bundle, :unicorn
@@ -15,7 +15,7 @@ set :user, 'xcosmix2010'
 set :deploy_to, deploy_to
 set :repository, 'git@github.com:robert-hromej/olesya-urls.git'
 
-after 'deploy:update',  'bundle:install'
+after 'deploy:update', 'bundle:install'
 after 'deploy:restart', 'unicorn:restart'
 
 after 'deploy:setup' do

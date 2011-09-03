@@ -50,7 +50,7 @@ describe HomeController do
       # move to front page
       get :index
       # if user has no avatar - display special avatar
-      response.body.should have_html_tag(:img, :src => "/images/no-avatar.png")
+      response.body.should have_html_tag(:img, :src => "/assets/no-avatar.png")
     end
 
   end

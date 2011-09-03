@@ -19,7 +19,4 @@ AncjaUrls::Application.routes.draw do
 
   root :to => "home#index"
 
-  mount AssetServer.instance => 'javascripts'
-  mount AssetServer.instance => 'stylesheets'
-
 end

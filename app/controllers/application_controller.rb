@@ -41,16 +41,12 @@ class ApplicationController < ActionController::Base
   # can be used in 'before_filter' to verify user authorization
   def is_logged?
     if current_user.blank?
+      push_notice_message t(:please_login)
       respond_to do |format|
         format.html {
           redirect_to login_url
         }
-        format.js {
-          push_notice_message t(:please_login)
-          render :update do |page|
-            page.call "system_message", system_messages
-          end
-        }
+        format.js { render :partial => "layouts/js_sys_messages" }
       end
     end
   end

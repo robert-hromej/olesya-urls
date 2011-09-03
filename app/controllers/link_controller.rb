@@ -12,18 +12,18 @@ class LinkController < ApplicationController
     end
 
     # Allows create only unique links
-    link = Link.by_url(link_url).first
+    @link = Link.by_url(link_url).first
 
-    if link
+    if @link
       #if user try to create link which is already created
       push_notice_message t(:link_already_added)
     else
       # save new link
-      link = Link.new(:title => params[:new_link_title],
-                      :url => link_url,
-                      :user => current_user)
+      @link = Link.new(:title => params[:new_link_title],
+                       :url => link_url,
+                       :user => current_user)
 
-      if Link.valid_url?(link_url) and link.save()
+      if Link.valid_url?(link_url) and @link.save()
         push_notice_message t(:link_added)
       else
         push_notice_message t(:link_is_not_valid)
@@ -31,18 +31,9 @@ class LinkController < ApplicationController
     end
 
     respond_to do |format|
+      format.js
       format.html {
-        redirect_to (link.id ? link_path(link.id) : root_path)
-      }
-      format.js {
-        render :update do |page|
-          if link.id == nil
-            page.call "system_message", system_messages
-          else
-            # redirect to link page
-            page.call "redirect_to", link_path(link.id)
-          end
-        end
+        redirect_to (@link.id ? link_path(@link.id) : root_path)
       }
     end
   end
@@ -55,22 +46,14 @@ class LinkController < ApplicationController
 
   # link page
   def show
-    @link = Link.by_id(params[:id], current_user).first
+    @link = Link.by_id(params[:id]).first
 
     raise t(:not_such_link) if @link.blank?
 
     @comments = Comment.by_link_id(@link.id).paginate(:page => params[:page], :per_page => 5)
     @comment = Comment.new(:link_id => @link.id) if current_user != nil
-    respond_to do |format|
-      format.html
-      format.js {
-        render :update do |page|
-          page.call "replace_html", "comments", render(:partial => "comment/list")
-        end
-      }
-    end
   rescue StandardError => e
-    push_notice_message e
+    push_notice_message e.message
     redirect_to root_url
   end
 

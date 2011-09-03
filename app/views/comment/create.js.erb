@@ -1,0 +1,6 @@
+<% if @comment.valid? %>
+    add_comment('<%= @comment.id %>', '<%= escape_javascript(render(:partial => "comment/item", :locals => {:comment => @comment})) %>');
+    $("#LinkCommentCountId<%= @comment.link_id %>").html('<%= @comment.link.comments_count %>');
+<% end %>
+
+<%= render :partial => "layouts/js_sys_messages" %>

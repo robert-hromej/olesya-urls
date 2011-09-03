@@ -7,7 +7,7 @@ $border_color: #B5CAD0;
 }
 
 body {
-    background: url("/images/pattern_1.png") repeat scroll left top transparent;
+    background: url("pattern_1.png") repeat scroll left top transparent;
     color: $text_color;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -19,7 +19,7 @@ body {
 }
 
 #top_bar {
-    background: url("/images/dark-bg.png") repeat scroll center top transparent;
+    background: url("dark-bg.png") repeat scroll center top transparent;
     height: 49px;
 }
 
@@ -119,25 +119,25 @@ body {
     float: left;
     width: 100px;
     .Plus {
-        background: url("../images/button_thumbsup_left.png") repeat scroll 0 0 transparent;
+        background: url("button_thumbsup_left.png") repeat scroll 0 0 transparent;
         border-width: 0;
         cursor: pointer;
         float: left;
         height: 25px;
         width: 40px;
         &:hover {
-            background: url("../images/button_thumbsup_left.png") repeat scroll left -100px transparent;
+            background: url("button_thumbsup_left.png") repeat scroll left -100px transparent;
         }
     }
     .Minus {
-        background: url("../images/button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
+        background: url("button_thumbsdown_left.png") no-repeat scroll left 0 transparent;
         border-width: 0;
         cursor: pointer;
         float: left;
         height: 25px;
         width: 40px;
         &:hover {
-            background: url("../images/button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
+            background: url("button_thumbsdown_left.png") no-repeat scroll left -100px transparent;
         }
     }
 }
@@ -239,7 +239,7 @@ body {
 }
 
 #ruller {
-    background: url("/images/ruler.png") repeat-x scroll 0 0 transparent; /*float: left;*/
+    background: url("ruler.png") repeat-x scroll 0 0 transparent; /*float: left;*/
     height: 7px;
 }
 
@@ -290,7 +290,7 @@ body {
 }
 
 #close_but {
-    background-image: url("/images/pcCloseButton.png");
+    background-image: url("pcCloseButton.png");
     height: 14px;
     margin: -8px 0 0 204px;
     width: 14px;

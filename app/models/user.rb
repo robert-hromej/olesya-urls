@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   # return url for profile image
   def profile_image
-    (self.avatar_url ? self.avatar_url : "/images/no-avatar.png")
+    (self.avatar_url ? self.avatar_url : "/assets/no-avatar.png")
   end
 
   # generate twitter's url for getting profile image using screen name

@@ -1,5 +1,6 @@
 class AddCommentsTrigger < ActiveRecord::Migration
-  def self.up
+
+  def change
     rename_column :links, :comments, :comments_count
     change_column_default :links, :comments_count, 0
     execute <<__SQL
@@ -8,11 +9,5 @@ class AddCommentsTrigger < ActiveRecord::Migration
         UPDATE links SET comments_count=(SELECT COUNT(comments.id) FROM comments WHERE link_id = links.id) WHERE links.id = NEW.link_id;
       END;
 __SQL
-  end
-
-  def self.down
-    rename_column :links, :comments_count, :comments
-    change_column_default :links, :comments, nil
-    execute("DROP TRIGGER `comments_compute`;")
   end
 end
