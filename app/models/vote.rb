@@ -13,3 +13,16 @@ class Vote < ActiveRecord::Base
   # user can vote 'good' or 'bad' for link. 'good' vote is a +1 point, 'bad' is -1 point.
   validates :kind, :inclusion => [-1, 1], :presence => true
 end
+
+# == Schema Information
+#
+# Table name: votes
+#
+#  id         :integer         not null, primary key
+#  user_id    :integer
+#  link_id    :integer
+#  kind       :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+

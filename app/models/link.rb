@@ -60,3 +60,18 @@ class Link < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+#
+# Table name: links
+#
+#  id             :integer         not null, primary key
+#  user_id        :integer
+#  title          :string(255)
+#  url            :string(255)
+#  votes_count    :integer         default(0)
+#  comments_count :integer         default(0)
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
