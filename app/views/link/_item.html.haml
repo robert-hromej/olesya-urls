@@ -1,0 +1,26 @@
+.RAvatar
+  %a{:href=> link.user.profile_url, :target=> "_blank" }= image_tag(link.user.profile_image)
+
+.RName
+  = link_to truncate(link.title.to_s, :length => 50), link_path(link.id), :class => "title_link"
+  .url_link= link_to truncate(link.url.to_s, :length => 45), link.url, {:target => "_blank"}
+
+.RDate
+  = link.created_at.strftime("%d %B %Y")
+  %br
+  %div
+    %a{:href=> link_path(:id => link.id) }
+      = t(:comments)
+      %span{:id=> "LinkCommentCountId#{ link.id }" }= link.comments_count
+
+.RCount
+  .Number
+    = "#{t(:votes)}:"
+    %span{:class=> "VotesCountId#{ link.id }"}= link.votes_count
+  .VoteArrows
+    %div{:class=>"VoteArrowsId#{link.id}"}
+      - if controller.current_user != nil and !link.voted?
+        = vote :down, link
+        = vote :up, link
+
+.RTwit= tweet_button(link)

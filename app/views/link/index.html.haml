@@ -1,0 +1,3 @@
+.paginator= will_paginate @links
+.cont= render :partial => "link/table", :locals => {:links => @links, :header => t(:all_links), :under_btns => false}
+.paginator= will_paginate @links

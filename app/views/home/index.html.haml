@@ -1,0 +1,6 @@
+.cont
+  = render :partial => "link/table", :locals => {:links => @popular_links, :header => t(:header_most_popular), :under_btns => true}
+
+.cont
+  = render :partial => "link/table", :locals => {:links => @new_links, :header => t(:header_most_recent), :under_btns => true}
+

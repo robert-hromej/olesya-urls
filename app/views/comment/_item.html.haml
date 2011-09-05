@@ -1,0 +1,11 @@
+.comment_col
+  .comment_author
+    .avatar
+      %a{:href=> comment.user.profile_url }= image_tag(comment.user.profile_image)
+    .username= link_to comment.user.screen_name, comment.user.profile_url
+    .comment_date= comment.created_at.strftime("%d %B %Y")
+
+  .single_comment
+    %img.comment_arrow{:width=>"17", :height=>"31", :alt=>"Comment Arrow", :src=>"/images/comment_arrow.png"}
+    .comment_body= comment.body
+

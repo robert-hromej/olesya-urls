@@ -1,0 +1,45 @@
+#page_header
+  .menu
+    #logo
+      %a{:href=>"/"}
+        #big_text= image_tag("logo7.png")
+      #small_text the social networks integration with rails example
+
+    - if controller.authorized?
+      .log_in_out= link_to t(:logout), logout_url, {:id => "logout"}
+      .log_in_out
+        %a#add_link{:href=>"#", :onclick=>"show_element('new_link_form')" }= t(:add_link)
+    - else
+      .twitter_but= link_to image_tag("/images/twitter_button.gif"), login_url, :id => "twitter_login_but"
+
+    #show_all_links.log_in_out= link_to t(:all_links), link_index_path
+    .log_in_out= link_to t(:home), root_url
+
+  - if controller.authorized?
+    #ruller
+    #user_section
+      #user_ava
+        %img{:src=>controller.current_user.profile_image, :alt=>""}
+      #greeting
+        %h3
+          = t(:welocme)
+          = link_to controller.current_user.screen_name, controller.current_user.profile_url, :class => "welcome_link"
+
+  #system_message= system_messages
+
+  #new_link_form.noscript
+    #close_but{:onclick=>"hide_element('new_link_form')"}
+    %noscript
+      .new_link_title= t(:add_link)
+    = form_tag '/link', :id => "new_link", :remote => true, :onSubmit => "return verify_new_link();" do
+      %span#new_link_title_label
+      = "#{t(:title)}:"
+      = text_field_tag :new_link_title, nil, :class => "inp"
+      %br
+      %span#new_link_url_label= "#{t(:url)}:"
+      = text_field_tag :new_link_url, nil, :class => "inp"
+      %br
+      = submit_tag t(:create), {:id => "create_lick_btn", :class => "button"}
+      = button_to_function t(:cancel), "hide_element('new_link_form')", :class => "button"
+
+

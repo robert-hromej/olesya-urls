@@ -1,0 +1,14 @@
+.TitleRow
+  .Tab_header= header
+
+- links.each_with_index do |link, index|
+  .PageRow{:class=> (index == links.size-1) && "last" }
+    - cache link_cache_key(link) do
+      = render :partial => "link/item", :locals => {:link => link}
+
+- if under_btns
+  .UnderRow
+    .under_left
+      %a{ :href=> "#", :id=>"add_link_button", :class=>"button underbutton", :onclick=>"show_element('new_link_form')" }= t(:add_link)
+    .under_right= link_to t(:more_links), "/link", {:class => "button underbutton"}
+

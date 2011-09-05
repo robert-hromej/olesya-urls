@@ -1,0 +1,5 @@
+- session[:system_message][:notice].each do |msg|
+  %span.notice= msg
+
+- session[:system_message][:error].each do |msg|
+  %span.error= msg

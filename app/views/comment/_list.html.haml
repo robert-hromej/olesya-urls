@@ -1,0 +1,5 @@
+- @comments.each do |comment|
+  - cache comment_cache_key(comment) do
+    = render :partial => "comment/item", :locals => {:comment => comment}
+
+#paginator.ajax_paginator= will_paginate @comments

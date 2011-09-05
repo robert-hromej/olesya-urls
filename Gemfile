@@ -5,6 +5,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.9'
 
 gem 'jquery-rails'
+gem 'haml'
 
 #gem "rack", "1.2.3"
 #gem 'rake', '0.8.7'
