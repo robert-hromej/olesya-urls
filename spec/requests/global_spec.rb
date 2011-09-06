@@ -3,13 +3,21 @@ require "spec_helper"
 describe "IntegrationTesting", :js => true do
 
   before(:all) do
-    # setup DatabaseCleaner
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with :truncation
-    DatabaseCleaner.start #cleaning database
+    Capybara.server_port = 4323
+    Capybara.current_driver = :selenium
+    Capybara.app_host = "http://localhost:#{Capybara.server_port}"
+
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.start
+
     25.times { Factory(:link, :user_id => 1, :url => Factory.next(:url)) }
-                          # perform twitter login
-    integration_login #creates twitter session and logs out
+    # perform twitter login
+    #creates twitter session and logs out
+    integration_login
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   describe "not registered user" do
@@ -26,13 +34,13 @@ describe "IntegrationTesting", :js => true do
       click_button CREATE_LINK_BUTTON
 
       # we must see error message
-      page.html.should have_html_tag('span', :content => I18n.t(:please_login))
+      page.should have_content(I18n.t(:please_login))
     end
 
     it 'should see all links page with pagination' do
       visit root_path
       click_link SHOW_ALL_LINK
-      page.html.should have_html_tag(:a, :class => 'next_page')
+      page.html.should have_html_tag("a", :class => 'next_page')
     end
   end
 
@@ -52,14 +60,14 @@ describe "IntegrationTesting", :js => true do
     it "should add link" do
       create_link(:title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       # test info message after successful creation
-      page.html.should have_html_tag(:span, :content => I18n.t(:link_added))
+      page.should have_html_tag("span", :content => I18n.t(:link_added))
     end
 
     it "should not add the same link twice" do
       create_link(:title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       create_link(:test => false, :title => 'new_link_title', :url => 'http://stackoverflow.com/questions/6085718/migrating-from-webrat-to-capybara-unsuccessfully')
       # test error message after failed creation
-      page.html.should have_html_tag(:span, :content => I18n.t(:link_already_added))
+      page.should have_html_tag("span", :content => I18n.t(:link_already_added))
     end
 
     it "should not add invalid or unavailable link" do
@@ -73,13 +81,13 @@ describe "IntegrationTesting", :js => true do
       # vote 'good' for link
       page.find('input.Plus').click
       # check votes sum
-      page.html.should have_html_tag(:span, :class => 'VotesCountId\d+', :content => '1')
+      page.should have_html_tag(:span, :class => 'VotesCountId\d+', :content => '1')
 
       create_link(:title => 'google', :url => 'google.com')
       # vote 'bad' for link
       page.find('input.Minus').click
       # check votes sum
-      page.html.should have_html_tag(:span, :class => 'VotesCountId\d+', :content => '-1')
+      page.html.should have_html_tag("span", :class => 'VotesCountId\d+', :content => '-1')
     end
 
     it "should have comments page and user can add one" do

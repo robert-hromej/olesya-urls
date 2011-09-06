@@ -27,7 +27,7 @@
           <%= t.hidden_field :user_id %>
           <%= t(:your_comment) %>:
           <%= t.text_area :body, :rows => 9, :cols => 49 %>
-          <%= t.submit(:value => t(:add_comment), :class => "button", :namespace => "comment_submit") %>
+          <%= t.submit(:value => t(:add_comment), :class => "button", :name => "comment_submit") %>
       <% end %>
     </div>
 <% end %>
